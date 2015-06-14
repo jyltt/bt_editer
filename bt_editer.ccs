@@ -1,0 +1,12 @@
+<Solution>
+  <PropertyGroup Name="bt_editer" Version="2.2.9.0" Type="CocosStudio" />
+  <SolutionFolder>
+    <Group ctype="ResourceGroup">
+      <RootFolder Name=".">
+        <Project Name="MainScene.csd" Type="Scene" />
+        <Project Name="bt_node.csd" Type="Node" />
+        <PlistInfo Name="Plist.csi" Type="Plist" />
+      </RootFolder>
+    </Group>
+  </SolutionFolder>
+</Solution>
