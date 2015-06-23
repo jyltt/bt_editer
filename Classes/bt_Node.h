@@ -30,6 +30,16 @@ public:
 	BtNode();
 	~BtNode();
 	void Update();
+	void onDraw();
+
+	bool isTouch(Vec2 vec);
+	void addNode(BtNode* node);
+	void removeNode(BtNode* node);
+	void ClearData();
+	void Delete();
+	CC_SYNTHESIZE(BtNode*, m_ParentNode, ParentNode);
+	CC_SYNTHESIZE(int, m_uuid,UUID);
+	CC_PROPERTY(int, m_Index, Level);
 protected:
 	struct Line
 	{
@@ -49,15 +59,15 @@ protected:
 	void onDelete(Ref* obj);
 	void onTouchMove(Ref* obj,ui::Widget::TouchEventType type);
 	void onAddNode(Ref* obj,ui::Widget::TouchEventType type);
+	bool hasNode(BtNode* node,bool isDeep=false);
 
-	void draw(Renderer *renderer, const Mat4& transform, uint32_t flags)override;
 private:
 	NodeType m_ENodeType;
 	ClassType m_EClassType;
-	int m_Index;
 	std::string m_Name;
-	std::vector<Node*> m_Child;
 	Line *m_AddLine;
+	std::vector<Line *> m_ChildLine;
+	std::vector<BtNode*> m_ChildNode;
 
 	ui::Layout *m_LyotBk;
 	ui::Button *m_BtnNodeType;

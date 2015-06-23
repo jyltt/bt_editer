@@ -18,22 +18,15 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 private:
+	void onDoubleClick(cocos2d::Ref* ref);
+	void onClick(cocos2d::Ref* ref);
+	void funcallback(float time);
 	void getAllChild(cocos2d::Node* parent,bool write_file = true);
 	void WriteFile(cocos2d::Node* parent, cocos2d::Node* child);
-	std::list<BtNode*> m_list;
-	struct Line
-	{
-		Line(cocos2d::Vec2 a1, cocos2d::Vec2 b1)
-		{
-			a = a1;
-			b = b1;
-		}
-		cocos2d::Vec2 b;
-		cocos2d::Vec2 a;
-	};
-	std::list<Line> m_rect;
 	cocos2d::Node* root;
 	std::string file;
+	ui::ScrollView* m_scroll;
+	bool isClick;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

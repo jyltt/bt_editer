@@ -2,6 +2,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
 #include "bt_Node.h"
+#include "bt_node_manager.h"
 
 USING_NS_CC;
 using namespace cocostudio::timeline;
@@ -24,6 +25,7 @@ Scene* HelloWorld::createScene()
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
+	isClick = false;
     //////////////////////////////
     // 1. super init first
     if ( !Layer::init() )
@@ -33,8 +35,41 @@ bool HelloWorld::init()
     
     auto rootNode = CSLoader::createNode("MainScene.csb");
     addChild(rootNode);
+	m_scroll = (ui::ScrollView*)rootNode->getChildByName("bk");
+	m_scroll->addClickEventListener(CC_CALLBACK_1(HelloWorld::onClick,this));
+	auto inner = m_scroll->getInnerContainer();
+	inner->setPosition(inner->getContentSize()/2*-1+m_scroll->getContentSize()/2);
 
     return true;
+}
+
+void HelloWorld::onDoubleClick(cocos2d::Ref* ref)
+{
+	auto node = BtNodeManager::getSingleton().CreateNode();
+	auto localPos = ((ui::Widget*)ref)->getTouchBeganPosition();
+	auto inner = m_scroll->getInnerContainer();
+	auto pos = inner->convertToNodeSpace(localPos);
+	node->setPosition(pos);
+	m_scroll->addChild(node);
+}
+
+void HelloWorld::onClick(cocos2d::Ref* ref)
+{
+	if (isClick)
+	{
+		isClick = false;
+		onDoubleClick(ref);
+	}
+	else
+	{
+		isClick = true;
+		scheduleOnce(CC_CALLBACK_1(HelloWorld::funcallback,this),0.4f,"click");
+	}
+}
+
+void HelloWorld::funcallback(float time)
+{
+	isClick = false;
 }
 
 void HelloWorld::getAllChild(cocos2d::Node* parent,bool write_file)
@@ -71,14 +106,5 @@ void HelloWorld::WriteFile(cocos2d::Node* parent, cocos2d::Node* child)
 
 void HelloWorld::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 {
-	for (auto bt:m_list)
-	{
-		bt->Update();
-	}
-	m_rect.clear();
-	getAllChild(root,false);
-	for (auto line :m_rect)
-	{
-		DrawPrimitives::drawLine(line.a, line.b);
-	}
+	BtNodeManager::getSingleton().onDraw();
 }

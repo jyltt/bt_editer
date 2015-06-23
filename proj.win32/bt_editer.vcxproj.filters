@@ -24,6 +24,9 @@
     <ClCompile Include="..\Classes\bt_node.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\bt_node_manager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -38,6 +41,12 @@
     <ClInclude Include="..\Classes\bt_Node.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\bt_node_manager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Singleton.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
@@ -45,10 +54,10 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resources\MainScene.csb">
+    <None Include="..\Resources\bt_node.csb">
       <Filter>resource</Filter>
     </None>
-    <None Include="..\Resources\bt_node.csb">
+    <None Include="..\Resources\MainScene.csb">
       <Filter>resource</Filter>
     </None>
   </ItemGroup>
