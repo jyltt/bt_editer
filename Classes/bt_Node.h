@@ -37,6 +37,8 @@ public:
 	void removeNode(BtNode* node);
 	void ClearData();
 	void Delete();
+	bool TopLevel(BtNode* node);
+	bool DownLevel(BtNode* node);
 	CC_SYNTHESIZE(BtNode*, m_ParentNode, ParentNode);
 	CC_SYNTHESIZE(int, m_uuid,UUID);
 	CC_PROPERTY(int, m_Index, Level);

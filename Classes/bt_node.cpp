@@ -99,14 +99,37 @@ void BtNode::onChangeClassType(Ref* obj)
 
 void BtNode::onTopLevel(Ref* obj)
 {
-	if (m_Index == -1) return;
-
+	if (m_Index <= 1) return;
+	if (m_ParentNode == nullptr) return;
+	m_ParentNode->TopLevel(this);
 }
 
 void BtNode::onDownLevel(Ref* obj)
 {
 	if (m_Index == -1) return;
-
+	if (m_ParentNode == nullptr) return;
+	m_ParentNode->DownLevel(this);
+}
+bool BtNode::DownLevel(BtNode* node)
+{
+	if (node->getLevel() == m_ChildNode.size())
+		return false;
+	auto index = node->getLevel() - 1;
+	m_ChildNode[index] = m_ChildNode[index+1];
+	m_ChildNode[index]->setLevel(index+1);
+	m_ChildNode[index+1] = node;
+	node->setLevel(index+2);
+	return true;
+}
+bool BtNode::TopLevel(BtNode* node)
+{
+	if (node->getLevel() <= 1) return false;
+	auto index = node->getLevel() - 1;
+	m_ChildNode[index] = m_ChildNode[index-1];
+	m_ChildNode[index]->setLevel(index+1);
+	m_ChildNode[index-1] = node;
+	node->setLevel(index);
+	return true;
 }
 
 void BtNode::onAddNode(Ref* obj, ui::Widget::TouchEventType type)
