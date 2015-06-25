@@ -42,6 +42,9 @@ public:
 	CC_SYNTHESIZE(BtNode*, m_ParentNode, ParentNode);
 	CC_SYNTHESIZE(int, m_uuid,UUID);
 	CC_PROPERTY(int, m_Index, Level);
+	CC_PROPERTY(NodeType, m_ENodeType,NodeType);
+	CC_PROPERTY(std::string, m_Name, ClassName);
+	std::vector<BtNode*> m_ChildNode;
 protected:
 	struct Line
 	{
@@ -55,7 +58,6 @@ protected:
 		cocos2d::Vec2 a;
 	};
 	void onChangeNodeType(Ref* obj);
-	void onChangeClassType(Ref* obj);
 	void onTopLevel(Ref* obj);
 	void onDownLevel(Ref* obj);
 	void onDelete(Ref* obj);
@@ -64,16 +66,11 @@ protected:
 	bool hasNode(BtNode* node,bool isDeep=false);
 
 private:
-	NodeType m_ENodeType;
-	ClassType m_EClassType;
-	std::string m_Name;
 	Line *m_AddLine;
 	std::vector<Line *> m_ChildLine;
-	std::vector<BtNode*> m_ChildNode;
 
 	ui::Layout *m_LyotBk;
 	ui::Button *m_BtnNodeType;
-	ui::Button *m_BtnClassType;
 	ui::Button *m_BtnTop;
 	ui::Button *m_BtnDown;
 	ui::Button *m_BtnAdd;

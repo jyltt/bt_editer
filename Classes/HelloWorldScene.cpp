@@ -40,7 +40,21 @@ bool HelloWorld::init()
 	auto inner = m_scroll->getInnerContainer();
 	inner->setPosition(inner->getContentSize()/2*-1+m_scroll->getContentSize()/2);
 
+	auto btn = (ui::Button*)rootNode->getChildByName("create");
+	btn->addClickEventListener(CC_CALLBACK_1(HelloWorld::onCreateCode, this));
+
+	m_bk = (ui::Layout *)rootNode->getChildByName("message");
+	m_bk->addClickEventListener(CC_CALLBACK_1(HelloWorld::onClose, this));
+	m_bk->setVisible(false);
+	m_text = (ui::Text *)m_bk->getChildByName("text");
+
     return true;
+}
+
+void HelloWorld::onCreateCode(cocos2d::Ref* ref)
+{
+	m_bk->setVisible(true);
+	m_text->setString(BtNodeManager::getSingleton().WriteFile());
 }
 
 void HelloWorld::onDoubleClick(cocos2d::Ref* ref)
@@ -70,6 +84,11 @@ void HelloWorld::onClick(cocos2d::Ref* ref)
 void HelloWorld::funcallback(float time)
 {
 	isClick = false;
+}
+
+void HelloWorld::onClose(cocos2d::Ref* ref)
+{
+	m_bk->setVisible(false);
 }
 
 void HelloWorld::getAllChild(cocos2d::Node* parent,bool write_file)

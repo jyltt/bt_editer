@@ -10,7 +10,6 @@ USING_NS_CC::ui;
 BtNode::BtNode()
 	:m_AddLine(nullptr)
 	, m_ENodeType(NodeType::Sequence)
-	, m_EClassType(ClassType::Class)
 	, m_Index(-1)
 	, m_ParentNode(nullptr)
 {
@@ -22,9 +21,6 @@ BtNode::BtNode()
 
 	m_BtnNodeType = (ui::Button*)m_LyotBk->getChildByName("node_type");
 	m_BtnNodeType->addClickEventListener(CC_CALLBACK_1(BtNode::onChangeNodeType,this));
-
-	m_BtnClassType = (ui::Button *)m_LyotBk->getChildByName("class_type");
-	m_BtnClassType->addClickEventListener(CC_CALLBACK_1(BtNode::onChangeClassType, this));
 
 	m_BtnTop = (ui::Button *)m_LyotBk->getChildByName("top");
 	m_BtnTop->addClickEventListener(CC_CALLBACK_1(BtNode::onTopLevel, this));
@@ -40,6 +36,7 @@ BtNode::BtNode()
 
 	m_TextIndex = (ui::Text*)m_LyotBk->getChildByName("level");
 	m_TextName = (ui::TextField*)m_LyotBk->getChildByName("class_name");
+	m_TextName->setInsertText(true);
 }
 
 void BtNode::onChangeNodeType(Ref* obj)
@@ -76,25 +73,6 @@ void BtNode::onChangeNodeType(Ref* obj)
 		break;
 	}
 	m_BtnNodeType->setTitleText(name);
-}
-
-void BtNode::onChangeClassType(Ref* obj)
-{
-	std::string name;
-	switch (m_EClassType)
-	{
-	case BtNode::ClassType::Function:
-		m_EClassType = ClassType::Class;
-		name = "Class";
-		break;
-	case BtNode::ClassType::Class:
-		m_EClassType = ClassType::Function;
-		name = "Function";
-		break;
-	default:
-		break;
-	}
-	m_BtnClassType->setTitleText(name);
 }
 
 void BtNode::onTopLevel(Ref* obj)
@@ -178,10 +156,16 @@ void BtNode::onAddNode(Ref* obj, ui::Widget::TouchEventType type)
 
 void BtNode::onDelete(Ref* obj)
 {
+	BtNodeManager::getSingleton().DeleteNode(this);
 }
 
 void BtNode::Delete()
 {
+	getParentNode()->removeNode(this);
+	for (auto node:m_ChildNode)
+	{
+		node->setParentNode(nullptr);
+	}
 	removeFromParent();
 }
 
@@ -291,6 +275,53 @@ void BtNode::setLevel(int var)
 int BtNode::getLevel()
 {
 	return m_Index;
+}
+
+BtNode::NodeType BtNode::getNodeType()
+{
+	return m_ENodeType;
+}
+
+void BtNode::setNodeType(BtNode::NodeType node_type)
+{
+	m_ENodeType = node_type;
+	std::string name;
+	switch (m_ENodeType)
+	{
+	case BtNode::NodeType::Sequence:
+		name = "Sequence";
+		m_BtnAdd->setVisible(true);
+		break;
+	case BtNode::NodeType::Selector:
+		name = "Selector";
+		m_BtnAdd->setVisible(true);
+		break;
+	case BtNode::NodeType::Parallel:
+		name = "Parallel";
+		m_BtnAdd->setVisible(true);
+		break;
+	case BtNode::NodeType::Condition:
+		name = "Condition";
+		m_BtnAdd->setVisible(false);
+		break;
+	case BtNode::NodeType::Action:
+		name = "Action";
+		m_BtnAdd->setVisible(false);
+		break;
+	default:
+		break;
+	}
+	m_BtnNodeType->setTitleText(name);
+}
+std::string BtNode::getClassName()
+{
+	m_Name = m_TextName->getString();
+	return m_Name;
+}
+void BtNode::setClassName(std::string var)
+{
+	m_Name = var;
+	m_TextName->setString(var);
 }
 
 BtNode::~BtNode()

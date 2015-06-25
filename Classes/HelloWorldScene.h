@@ -20,12 +20,16 @@ public:
 private:
 	void onDoubleClick(cocos2d::Ref* ref);
 	void onClick(cocos2d::Ref* ref);
+	void onClose(cocos2d::Ref* ref);
+	void onCreateCode(cocos2d::Ref* ref);
 	void funcallback(float time);
 	void getAllChild(cocos2d::Node* parent,bool write_file = true);
 	void WriteFile(cocos2d::Node* parent, cocos2d::Node* child);
 	cocos2d::Node* root;
 	std::string file;
 	ui::ScrollView* m_scroll;
+	ui::Layout *m_bk;
+	ui::Text *m_text;
 	bool isClick;
 };
 
