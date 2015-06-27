@@ -47,14 +47,15 @@ std::string BtNodeManager::WriteFile()
 {
 	if (m_RootNode == nullptr)
 		return "m_RootNode is nullptr!";
-	auto name = m_RootNode->getClassName();
-	if (name == "")
+	auto class_name = m_RootNode->getClassName();
+	if (class_name == "")
 		return "m_RootNode class name is nullptr!";
+	auto name = class_name + std::to_string(m_RootNode->getUUID());
 	auto type = GetEnumToString(m_RootNode->getNodeType());
 	if (type == "")
 		return "m_RootNode type is nullptr!";
 	char buff[300];
-	sprintf(buff, "auto %s = BT_Factory::Create(EBTNode::%s, \"%s\");\nm_root = %s;\n", name.c_str(), type.c_str(), name.c_str(), name.c_str());
+	sprintf(buff, "auto %s = new Bt%sNode(\"%s\");\nm_root = %s;\n", name.c_str(), type.c_str(), name.c_str(), name.c_str());
 	m_FileBuff = buff;
 	for (int i = 0; i < m_RootNode->m_ChildNode.size(); i++)
 	{
@@ -104,15 +105,25 @@ std::string BtNodeManager::GetEnumToString(BtNode::NodeType type)
 
 std::string BtNodeManager::GetChild(BtNode* parent, BtNode* node)
 {
-	auto parent_name = parent->getClassName();
-	auto child_name = node->getClassName();
-	if (child_name == "")
+	auto parent_name = parent->getClassName()+std::to_string(parent->getUUID());
+	auto class_name = node->getClassName();
+	if (class_name == "")
 		return parent_name + "has child(level " + std::to_string(node->getLevel()) +") class name is nullptr!";
+	auto child_name = class_name+std::to_string(node->getUUID());
 	auto type = GetEnumToString(node->getNodeType());
 	if (type == "")
 		return child_name+" type is nullptr!";
 	char buff[300];
-	sprintf(buff, "auto %s = dynamic_cast <Bt%sNode*>(BT_Factory::Create(EBTNode::%s, \"%s\", %s));\n", child_name.c_str(), type.c_str(), type.c_str(), child_name.c_str(), parent_name.c_str());
+	switch (node->getNodeType())
+	{
+	case BtNode::NodeType::Action:
+	case BtNode::NodeType::Condition:
+		sprintf(buff, "auto %s = new %s(\"%s\");\n%s->AddChild(%s);\n", child_name.c_str(), class_name.c_str(), child_name.c_str(), parent_name.c_str(),child_name.c_str());
+		break;
+	default:
+		sprintf(buff, "auto %s = new Bt%sNode(\"%s\");\n%s->AddChild(%s);\n", child_name.c_str(), type.c_str(), child_name.c_str(), parent_name.c_str(), child_name.c_str());
+		break;
+	}
 	m_FileBuff += buff;
 	for (int i = 0; i<node->m_ChildNode.size(); i++)
 	{
