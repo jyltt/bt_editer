@@ -324,6 +324,11 @@ void BtNode::setClassName(std::string var)
 	m_TextName->setString(var);
 }
 
+std::vector<BtNode*> BtNode::GetChild()
+{
+	return m_ChildNode;
+}
+
 BtNode::~BtNode()
 {
 	ClearData();

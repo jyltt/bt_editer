@@ -15,9 +15,10 @@ public:
 	BtNode* TouchNode(Vec2 vec);
 	void onDraw();
 	std::string WriteFile();
+	std::string GetEnumToString(BtNode::NodeType type);
+	BtNode* FindBtNode(int uuid);
 protected:
 	std::string GetChild(BtNode* parent,BtNode* node);
-	std::string GetEnumToString(BtNode::NodeType type);
 private:
 	std::string m_FileBuff = "";
 	int id = 0;

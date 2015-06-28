@@ -44,7 +44,7 @@ public:
 	CC_PROPERTY(int, m_Index, Level);
 	CC_PROPERTY(NodeType, m_ENodeType,NodeType);
 	CC_PROPERTY(std::string, m_Name, ClassName);
-	std::vector<BtNode*> m_ChildNode;
+	std::vector<BtNode*> GetChild();
 protected:
 	struct Line
 	{
@@ -68,6 +68,7 @@ protected:
 private:
 	Line *m_AddLine;
 	std::vector<Line *> m_ChildLine;
+	std::vector<BtNode*> m_ChildNode;
 
 	ui::Layout *m_LyotBk;
 	ui::Button *m_BtnNodeType;

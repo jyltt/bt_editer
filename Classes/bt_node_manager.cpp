@@ -57,10 +57,10 @@ std::string BtNodeManager::WriteFile()
 	char buff[300];
 	sprintf(buff, "auto %s = new Bt%sNode(\"%s\");\nm_root = %s;\n", name.c_str(), type.c_str(), name.c_str(), name.c_str());
 	m_FileBuff = buff;
-	for (int i = 0; i < m_RootNode->m_ChildNode.size(); i++)
+	for (int i = 0; i < m_RootNode->GetChild().size(); i++)
 	{
 		std::string ret = "successs!!!";
-		ret = GetChild(m_RootNode, m_RootNode->m_ChildNode[i]);
+		ret = GetChild(m_RootNode, m_RootNode->GetChild()[i]);
 		if (ret != "successs!!!")
 			return ret;
 	}
@@ -125,14 +125,26 @@ std::string BtNodeManager::GetChild(BtNode* parent, BtNode* node)
 		break;
 	}
 	m_FileBuff += buff;
-	for (int i = 0; i<node->m_ChildNode.size(); i++)
+	for (int i = 0; i<node->GetChild().size(); i++)
 	{
 		std::string ret = "successs!!!";
-		ret = GetChild(node, node->m_ChildNode[i]);
+		ret = GetChild(node, node->GetChild()[i]);
 		if (ret != "successs!!!")
 			break;
 	}
 	return "successs!!!";
+}
+
+BtNode *BtNodeManager::FindBtNode(int uuid)
+{
+	for (auto node:m_NodeList)
+	{
+		if (node->getUUID() == uuid)
+		{
+			return node;
+		}
+	}
+	return nullptr;
 }
 
 void BtNodeManager::onDraw()

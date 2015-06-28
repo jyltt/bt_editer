@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include <list>
 #include "bt_Node.h"
+#include "tinyxml2/tinyxml2.h"
 
 class HelloWorld : public cocos2d::Layer
 {
@@ -26,7 +27,9 @@ private:
 
 	void CreateNode();
 	void WriteFile();
+	void GetChild(BtNode* node);
 
+	tinyxml2::XMLDocument *m_pDoc;
 	ui::ScrollView* m_scroll;
 	ui::Layout *m_bk;
 	ui::Text *m_text;
