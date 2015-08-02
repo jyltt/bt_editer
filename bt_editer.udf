@@ -1,4 +1,4 @@
-<UserData>
+<UserData Version="2.3.1.1">
   <Properties>
     <Item Key="PackageParamsKey">
       <Value ctype="PackageParams">
@@ -11,6 +11,7 @@
         <iOS_Target Value="bt_editer iOS" />
         <iOS_BundleID Value="" />
         <Platform Value="None" />
+        <RunPlatform Value="None" />
         <FrameworkVersion Value="cocos2d-x-3.6" />
         <IsDebugKeystore Value="True" />
         <KeystorePassword Value="" />
@@ -22,14 +23,18 @@
     </Item>
     <Item Key="CocosRecentOperation">
       <Value ctype="CocosRecentOperation">
-        <LastPublishType Value="VS" />
+        <LastPublishType Value="Resource" />
         <IsLastPublish Value="True" />
         <LastRunType Value="Windows" />
       </Value>
     </Item>
     <Item Key="TabsParamsKey">
       <Value ctype="TabsInfo">
-        <ActiveDocument />
+        <OpenedDocuments>
+          <FilePathData Path="MainScene.csd" />
+          <FilePathData Path="bt_node.csd" />
+        </OpenedDocuments>
+        <ActiveDocument Path="bt_node.csd" />
       </Value>
     </Item>
   </Properties>

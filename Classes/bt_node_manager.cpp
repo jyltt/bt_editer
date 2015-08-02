@@ -2,6 +2,7 @@
 
 BtNodeManager::BtNodeManager()
 :m_RootNode(nullptr)
+, m_btNode(nullptr)
 {}
 BtNodeManager::~BtNodeManager() {}
 
@@ -24,6 +25,10 @@ void BtNodeManager::DeleteNode(BtNode* node)
 	{
 		if ((*it) == node)
 		{
+			if (getChoseNode() && node->getUUID() == getChoseNode()->getUUID())
+			{
+				setChoseNode(nullptr);
+			}
 			(*it)->Delete();
 			m_NodeList.erase(it);
 			break;
@@ -51,12 +56,14 @@ std::string BtNodeManager::WriteFile()
 	if (class_name == "")
 		return "m_RootNode class name is nullptr!";
 	auto name = class_name + std::to_string(m_RootNode->getUUID());
-	auto type = GetEnumToString(m_RootNode->getNodeType());
+	auto type = Tools::GetEnumToString(m_RootNode->getNodeType());
 	if (type == "")
 		return "m_RootNode type is nullptr!";
+
+	m_FileBuff = FileCreateNode(m_RootNode->getNodeType(),name,class_name);
 	char buff[300];
-	sprintf(buff, "auto %s = new Bt%sNode(\"%s\");\nm_root = %s;\n", name.c_str(), type.c_str(), name.c_str(), name.c_str());
-	m_FileBuff = buff;
+	sprintf(buff, "m_root = %s; \n",name.c_str());
+	m_FileBuff += buff;
 	for (int i = 0; i < m_RootNode->GetChild().size(); i++)
 	{
 		std::string ret = "successs!!!";
@@ -77,32 +84,6 @@ std::string BtNodeManager::WriteFile()
 
 }
 
-std::string BtNodeManager::GetEnumToString(BtNode::NodeType type)
-{
-	std::string type_str = "";
-	switch (type)
-	{
-	case BtNode::NodeType::Sequence:
-		type_str = "Sequence";
-		break;
-	case BtNode::NodeType::Selector:
-		type_str = "Selector";
-		break;
-	case BtNode::NodeType::Parallel:
-		type_str = "Parallel";
-		break;
-	case BtNode::NodeType::Condition:
-		type_str = "Condition";
-		break;
-	case BtNode::NodeType::Action:
-		type_str = "Action";
-		break;
-	default:
-		break;
-	}
-	return type_str;
-}
-
 std::string BtNodeManager::GetChild(BtNode* parent, BtNode* node)
 {
 	auto parent_name = parent->getClassName()+std::to_string(parent->getUUID());
@@ -110,21 +91,13 @@ std::string BtNodeManager::GetChild(BtNode* parent, BtNode* node)
 	if (class_name == "")
 		return parent_name + "has child(level " + std::to_string(node->getLevel()) +") class name is nullptr!";
 	auto child_name = class_name+std::to_string(node->getUUID());
-	auto type = GetEnumToString(node->getNodeType());
+	auto type = Tools::GetEnumToString(node->getNodeType());
 	if (type == "")
 		return child_name+" type is nullptr!";
-	char buff[300];
-	switch (node->getNodeType())
-	{
-	case BtNode::NodeType::Action:
-	case BtNode::NodeType::Condition:
-		sprintf(buff, "auto %s = new %s(\"%s\");\n%s->AddChild(%s);\n", child_name.c_str(), class_name.c_str(), child_name.c_str(), parent_name.c_str(),child_name.c_str());
-		break;
-	default:
-		sprintf(buff, "auto %s = new Bt%sNode(\"%s\");\n%s->AddChild(%s);\n", child_name.c_str(), type.c_str(), child_name.c_str(), parent_name.c_str(), child_name.c_str());
-		break;
-	}
-	m_FileBuff += buff;
+
+	m_FileBuff += FileCreateNode(node->getNodeType(),child_name,class_name);
+	m_FileBuff += FileSetAbort(node->getAbortType(),child_name);
+	m_FileBuff += FileAddChild(child_name,parent_name);
 	for (int i = 0; i<node->GetChild().size(); i++)
 	{
 		std::string ret = "successs!!!";
@@ -133,6 +106,34 @@ std::string BtNodeManager::GetChild(BtNode* parent, BtNode* node)
 			break;
 	}
 	return "successs!!!";
+}
+std::string BtNodeManager::FileCreateNode(NodeType type, std::string var, std::string class_name)
+{
+	char buff[300];
+	switch (type)
+	{
+	case NodeType::Action:
+	case NodeType::Condition:
+		sprintf(buff, "auto %s = BT_Create(%s,\"%s\");\n", var.c_str(), class_name.c_str(), class_name.c_str());
+		break;
+	default:
+		sprintf(buff, "auto %s = BT_Create(Bt%sNode,\"%s\");\n", var.c_str(), Tools::GetEnumToString(type).c_str(), class_name.c_str());
+		break;
+	}
+	return buff;
+}
+std::string BtNodeManager::FileAddChild(std::string child, std::string parent)
+{
+	char buff[300];
+	sprintf(buff, "%s->AddChild(%s);\n",parent.c_str(),child.c_str());
+	return buff;
+}
+std::string BtNodeManager::FileSetAbort(AbortType type, std::string var)
+{
+	// TODO:  
+	char buff[300];
+	sprintf(buff, "%s->SetAbortType(EBTAbortType::%s);\n",var.c_str(),Tools::GetEnumToString(type).c_str());
+	return buff;
 }
 
 BtNode *BtNodeManager::FindBtNode(int uuid)

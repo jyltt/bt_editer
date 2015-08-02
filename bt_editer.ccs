@@ -1,5 +1,5 @@
 <Solution>
-  <PropertyGroup Name="bt_editer" Version="2.3.0.1" Type="CocosStudio" />
+  <PropertyGroup Name="bt_editer" Version="2.3.1.1" Type="CocosStudio" />
   <SolutionFolder>
     <Group ctype="ResourceGroup">
       <RootFolder Name=".">

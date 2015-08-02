@@ -48,7 +48,21 @@ bool HelloWorld::init()
 	m_bk->setVisible(false);
 	m_text = (ui::Text *)m_bk->getChildByName("text");
 
-	HelloWorld::CreateNode();
+	m_btnOpen = (ui::Button *)rootNode->getChildByName("open");
+	m_btnOpen->addClickEventListener(CC_CALLBACK_1(HelloWorld::onOpenInfo, this));
+	m_btnOpen->setVisible(false);
+
+	m_scrInfo = (ui::ScrollView*)rootNode->getChildByName("info");
+	m_fileClassName = (ui::TextField *)m_scrInfo->getChildByName("class_name");
+	m_fileClassName->addEventListener(CC_CALLBACK_2(HelloWorld::onChangeClassName, this));
+	m_btnNodeType = (ui::Button *)m_scrInfo->getChildByName("node_type");
+	m_btnNodeType->addClickEventListener(CC_CALLBACK_1(HelloWorld::onChangeNodeType, this));
+	m_btnAbortType = (ui::Button *)m_scrInfo->getChildByName("abort_type");
+	m_btnAbortType->addClickEventListener(CC_CALLBACK_1(HelloWorld::onChangeAbortType, this));
+	m_btnClose = (ui::Button *)m_scrInfo->getChildByName("close");
+	m_btnClose->addClickEventListener(CC_CALLBACK_1(HelloWorld::onCloseInfo, this));
+
+	CreateNode();
 
     return true;
 }
@@ -60,6 +74,7 @@ void HelloWorld::CreateNode()
 	{
 		auto root = m_pDoc->RootElement();
 		tinyxml2::XMLElement *node = root;
+		BtNode *_node;
 		while (node)
 		{
 			int type;
@@ -90,18 +105,20 @@ void HelloWorld::CreateNode()
 			}
 			node = node->NextSiblingElement();
 
-			auto node = BtNodeManager::getSingleton().CreateNode();
-			node->setNodeType((BtNode::NodeType)type);
-			node->setClassName(class_name);
-			node->setUUID(uuid);
-			node->setPosition(pos);
+			_node = BtNodeManager::getSingleton().CreateNode();
+			_node->setClickCallback(CC_CALLBACK_1(HelloWorld::onChoseNode, this));
+			_node->setNodeType((NodeType)type);
+			_node->setClassName(class_name);
+			_node->setUUID(uuid);
+			_node->setPosition(pos);
 			for (int i = 0; i<child_list.size(); i++)
 			{
 				auto id = child_list[i];
-				node->addNode(BtNodeManager::getSingleton().FindBtNode(id));
+				_node->addNode(BtNodeManager::getSingleton().FindBtNode(id));
 			}
-			m_scroll->addChild(node);
+			m_scroll->addChild(_node);
 		}
+		BtNodeManager::getSingleton().setRootNode(_node);
 	}
 }
 
@@ -185,14 +202,79 @@ void HelloWorld::onCreateCode(cocos2d::Ref* ref)
 	WriteFile();
 }
 
+void HelloWorld::onChangeNodeType(cocos2d::Ref* obj)
+{
+	auto node = BtNodeManager::getSingleton().getChoseNode();
+	if (node)
+	{
+		node->onChangeNodeType(nullptr);
+		updateInfo();
+	}
+}
+
+void HelloWorld::onChangeAbortType(cocos2d::Ref* obj)
+{
+	auto node = BtNodeManager::getSingleton().getChoseNode();
+	if (node)
+	{
+		node->onChangeAbortType(nullptr);
+		updateInfo();
+	}
+}
+
+void HelloWorld::onChangeClassName(cocos2d::Ref* obj, ui::TextField::EventType type)
+{
+	auto node = BtNodeManager::getSingleton().getChoseNode();
+	if (node)
+	{
+		node->setClassName(m_fileClassName->getString());
+	}
+}
+
 void HelloWorld::onDoubleClick(cocos2d::Ref* ref)
 {
 	auto node = BtNodeManager::getSingleton().CreateNode();
 	auto localPos = ((ui::Widget*)ref)->getTouchBeganPosition();
 	auto inner = m_scroll->getInnerContainer();
 	auto pos = inner->convertToNodeSpace(localPos);
+	node->setClickCallback(CC_CALLBACK_1(HelloWorld::onChoseNode,this));
 	node->setPosition(pos);
 	m_scroll->addChild(node);
+}
+
+void HelloWorld::onChoseNode(cocos2d::Ref* obj)
+{
+	BtNodeManager::getSingleton().setChoseNode((BtNode*)obj);
+	updateInfo();
+}
+
+void HelloWorld::updateInfo()
+{
+	auto node = BtNodeManager::getSingleton().getChoseNode();
+	if (node)
+	{
+		m_fileClassName->setString(node->getClassName());
+		switch (node->getNodeType())
+		{
+		case NodeType::Sequence:
+		case NodeType::Selector:
+		case NodeType::Parallel:
+			m_btnAbortType->setVisible(true);
+			m_btnNodeType->setTitleText(Tools::GetEnumToString(node->getNodeType()));
+			break;
+		case NodeType::Condition:
+		case NodeType::Action:
+			m_btnAbortType->setVisible(false);
+			break;
+		default:
+			break;
+		}
+	}
+	else
+	{
+		m_fileClassName->setString("class name");
+		m_btnNodeType->setTitleText("");
+	}
 }
 
 void HelloWorld::onClick(cocos2d::Ref* ref)
@@ -217,6 +299,18 @@ void HelloWorld::funcallback(float time)
 void HelloWorld::onClose(cocos2d::Ref* ref)
 {
 	m_bk->setVisible(false);
+}
+
+void HelloWorld::onCloseInfo(cocos2d::Ref* ref)
+{
+	m_scrInfo->setVisible(false);
+	m_btnOpen->setVisible(true);
+}
+
+void HelloWorld::onOpenInfo(cocos2d::Ref* ref)
+{
+	m_scrInfo->setVisible(true);
+	m_btnOpen->setVisible(false);
 }
 
 void HelloWorld::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)

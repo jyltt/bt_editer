@@ -22,17 +22,31 @@ private:
 	void onDoubleClick(cocos2d::Ref* ref);
 	void onClick(cocos2d::Ref* ref);
 	void onClose(cocos2d::Ref* ref);
+	void onChoseNode(cocos2d::Ref* obj);
+	void onChangeNodeType(cocos2d::Ref* obj);
+	void onChangeAbortType(cocos2d::Ref* obj);
+	void onChangeClassName(cocos2d::Ref* obj,ui::TextField::EventType type);
 	void onCreateCode(cocos2d::Ref* ref);
+	void onCloseInfo(cocos2d::Ref* ref);
+	void updateInfo();
+	void onOpenInfo(cocos2d::Ref* ref);
 	void funcallback(float time);
 
 	void CreateNode();
 	void WriteFile();
 	void GetChild(BtNode* node);
 
-	tinyxml2::XMLDocument *m_pDoc;
 	ui::ScrollView* m_scroll;
 	ui::Layout *m_bk;
 	ui::Text *m_text;
+	ui::ScrollView *m_scrInfo;
+	ui::TextField *m_fileClassName;
+	ui::Button *m_btnNodeType;
+	ui::Button *m_btnAbortType;
+	ui::Button *m_btnClose;
+	ui::Button *m_btnOpen;
+
+	tinyxml2::XMLDocument *m_pDoc;
 	bool m_isClick;
 };
 

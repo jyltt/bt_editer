@@ -2,6 +2,7 @@
 #define BT_NODE_H_
 
 #include "cocos2d.h"
+#include "enum.h"
 #include <vector>
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
@@ -13,19 +14,6 @@ class BtNode
 	:public Node
 {
 public:
-	enum class NodeType
-	{
-		Sequence,
-		Selector,
-		Parallel,
-		Condition,
-		Action,
-	};
-	enum class ClassType
-	{
-		Function,
-		Class,
-	};
 	CREATE_FUNC(BtNode);
 	BtNode();
 	~BtNode();
@@ -39,10 +27,14 @@ public:
 	void Delete();
 	bool TopLevel(BtNode* node);
 	bool DownLevel(BtNode* node);
+	void setClickCallback(std::function<void(Ref*)> callback);
+	void onChangeNodeType(Ref* obj);
+	void onChangeAbortType(Ref* obj);
 	CC_SYNTHESIZE(BtNode*, m_ParentNode, ParentNode);
 	CC_SYNTHESIZE(int, m_uuid,UUID);
 	CC_PROPERTY(int, m_Index, Level);
 	CC_PROPERTY(NodeType, m_ENodeType,NodeType);
+	CC_PROPERTY(AbortType, m_EAbortType,AbortType);
 	CC_PROPERTY(std::string, m_Name, ClassName);
 	std::vector<BtNode*> GetChild();
 protected:
@@ -57,21 +49,24 @@ protected:
 		cocos2d::Vec2 b;
 		cocos2d::Vec2 a;
 	};
-	void onChangeNodeType(Ref* obj);
+	void onClick(Ref* obj);
 	void onTopLevel(Ref* obj);
 	void onDownLevel(Ref* obj);
 	void onDelete(Ref* obj);
 	void onTouchMove(Ref* obj,ui::Widget::TouchEventType type);
 	void onAddNode(Ref* obj,ui::Widget::TouchEventType type);
 	bool hasNode(BtNode* node,bool isDeep=false);
+	void NodeTypeCfg(NodeType type);
 
 private:
 	Line *m_AddLine;
 	std::vector<Line *> m_ChildLine;
 	std::vector<BtNode*> m_ChildNode;
+	std::function<void(Ref*)> m_callback;
 
 	ui::Layout *m_LyotBk;
 	ui::Button *m_BtnNodeType;
+	ui::Button *m_BtnAbortType;
 	ui::Button *m_BtnTop;
 	ui::Button *m_BtnDown;
 	ui::Button *m_BtnAdd;
