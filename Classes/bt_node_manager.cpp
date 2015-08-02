@@ -61,6 +61,7 @@ std::string BtNodeManager::WriteFile()
 		return "m_RootNode type is nullptr!";
 
 	m_FileBuff = FileCreateNode(m_RootNode->getNodeType(),name,class_name);
+	m_FileBuff += FileSetAbort(m_RootNode->getAbortType(), name);
 	char buff[300];
 	sprintf(buff, "m_root = %s; \n",name.c_str());
 	m_FileBuff += buff;
@@ -96,8 +97,17 @@ std::string BtNodeManager::GetChild(BtNode* parent, BtNode* node)
 		return child_name+" type is nullptr!";
 
 	m_FileBuff += FileCreateNode(node->getNodeType(),child_name,class_name);
-	m_FileBuff += FileSetAbort(node->getAbortType(),child_name);
+	switch (node->getNodeType())
+	{
+	case NodeType::Action:
+	case NodeType::Condition:
+		break;
+	default:
+		m_FileBuff += FileSetAbort(node->getAbortType(), child_name);
+		break;
+	}
 	m_FileBuff += FileAddChild(child_name,parent_name);
+
 	for (int i = 0; i<node->GetChild().size(); i++)
 	{
 		std::string ret = "successs!!!";
@@ -130,7 +140,6 @@ std::string BtNodeManager::FileAddChild(std::string child, std::string parent)
 }
 std::string BtNodeManager::FileSetAbort(AbortType type, std::string var)
 {
-	// TODO:  
 	char buff[300];
 	sprintf(buff, "%s->SetAbortType(EBTAbortType::%s);\n",var.c_str(),Tools::GetEnumToString(type).c_str());
 	return buff;

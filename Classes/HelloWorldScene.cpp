@@ -77,15 +77,18 @@ void HelloWorld::CreateNode()
 		BtNode *_node;
 		while (node)
 		{
-			int type;
+			int nodt_type;
+			int abort_type;
 			int uuid;
 			Vec2 pos;
 			std::string class_name;
 			std::vector<int> child_list;
 
 			auto n_type = node->FirstChildElement();
-			type = atoi(n_type->GetText());
-			auto n_uuid = n_type->NextSiblingElement();
+			nodt_type = atoi(n_type->GetText());
+			auto a_type = n_type->NextSiblingElement();
+			abort_type = atoi(a_type->GetText());
+			auto n_uuid = a_type->NextSiblingElement();
 			uuid = atoi(n_uuid->GetText());
 			auto n_pos = n_uuid->NextSiblingElement();
 			{
@@ -107,7 +110,8 @@ void HelloWorld::CreateNode()
 
 			_node = BtNodeManager::getSingleton().CreateNode();
 			_node->setClickCallback(CC_CALLBACK_1(HelloWorld::onChoseNode, this));
-			_node->setNodeType((NodeType)type);
+			_node->setNodeType((NodeType)nodt_type);
+			_node->setAbortType((AbortType)abort_type);
 			_node->setClassName(class_name);
 			_node->setUUID(uuid);
 			_node->setPosition(pos);
@@ -137,6 +141,7 @@ void HelloWorld::WriteFile()
 void HelloWorld::GetChild(BtNode* node)
 {
 	auto class_type = node->getNodeType();
+	auto abort_type = node->getAbortType();
 	auto text = node->getClassName();
 	int uuid = node->getUUID();
 	auto pos = node->getPosition();
@@ -151,10 +156,15 @@ void HelloWorld::GetChild(BtNode* node)
 
 	auto n_node = m_pDoc->NewElement("node");
 	{
-		// 类型
+		// 节点类型
 		auto n_type = m_pDoc->NewElement("type");
 		n_type->LinkEndChild(m_pDoc->NewText(std::to_string((int)class_type).c_str()));
 		n_node->LinkEndChild(n_type);
+
+		// 打断类型
+		auto a_type = m_pDoc->NewElement("abort");
+		a_type->LinkEndChild(m_pDoc->NewText(std::to_string((int)abort_type).c_str()));
+		n_node->LinkEndChild(a_type);
 
 		// 唯一id 
 		auto n_uuid = m_pDoc->NewElement("uuid");
@@ -260,7 +270,6 @@ void HelloWorld::updateInfo()
 		case NodeType::Selector:
 		case NodeType::Parallel:
 			m_btnAbortType->setVisible(true);
-			m_btnNodeType->setTitleText(Tools::GetEnumToString(node->getNodeType()));
 			break;
 		case NodeType::Condition:
 		case NodeType::Action:
@@ -269,6 +278,8 @@ void HelloWorld::updateInfo()
 		default:
 			break;
 		}
+		m_btnAbortType->setTitleText(Tools::GetEnumToString(node->getAbortType()));
+		m_btnNodeType->setTitleText(Tools::GetEnumToString(node->getNodeType()));
 	}
 	else
 	{
