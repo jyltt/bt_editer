@@ -141,7 +141,7 @@ std::string BtNodeManager::FileAddChild(std::string child, std::string parent)
 std::string BtNodeManager::FileSetAbort(AbortType type, std::string var)
 {
 	char buff[300];
-	sprintf(buff, "%s->SetAbortType(EBTAbortType::%s);\n",var.c_str(),Tools::GetEnumToString(type).c_str());
+	sprintf(buff, "%s->setAbortType(EBTAbortType::%s);\n",var.c_str(),Tools::GetEnumToString(type).c_str());
 	return buff;
 }
 
