@@ -9,7 +9,7 @@ class BtCompositeNode :
 {
 public:
 	BtCompositeNode(std::string name,EBTNodeType type);
-	~BtCompositeNode();
+	virtual~BtCompositeNode();
 	virtual bool AddChild(BtBaseNode *child);
 	virtual bool RemoveChild(BtBaseNode *child);
 	virtual void Reset()override;

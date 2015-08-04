@@ -8,7 +8,7 @@ class BtActionNode:
 {
 public:
 	BtActionNode(std::string name);
-	~BtActionNode();
+	virtual~BtActionNode();
 	virtual EBTState onUpdate() override;
 	void setCallback(std::function<EBTState()> func);
 protected:

@@ -8,6 +8,7 @@ enum class EBTNodeType
 	Sequence,
 	Selector,
 	Parallel,
+	Decorate,
 };
 
 enum class EBTAbortType

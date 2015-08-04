@@ -7,7 +7,7 @@
 class BtBaseNode
 {
 public:
-	~BtBaseNode();
+	virtual~BtBaseNode();
 	virtual void onBegin();
 	virtual EBTState onUpdate() = 0;
 	virtual void onEnd();

@@ -8,7 +8,7 @@ class BtConditionNode:
 {
 public:
 	BtConditionNode(std::string name);
-	~BtConditionNode();
+	virtual~BtConditionNode();
 	virtual EBTState onUpdate()override;
 	void setCallback(std::function<EBTState()> func);
 protected:
