@@ -7,6 +7,7 @@ enum class NodeType
 	Parallel,
 	Condition,
 	Action,
+	Decorate,
 };
 enum class AbortType
 {

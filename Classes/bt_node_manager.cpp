@@ -90,7 +90,7 @@ std::string BtNodeManager::GetChild(BtNode* parent, BtNode* node)
 	auto parent_name = parent->getClassName()+std::to_string(parent->getUUID());
 	auto class_name = node->getClassName();
 	if (class_name == "")
-		return parent_name + "has child(level " + std::to_string(node->getLevel()) +") class name is nullptr!";
+		return parent_name + " has child(level " + std::to_string(node->getLevel()) +") class name is nullptr!";
 	auto child_name = class_name+std::to_string(node->getUUID());
 	auto type = Tools::GetEnumToString(node->getNodeType());
 	if (type == "")
@@ -101,6 +101,7 @@ std::string BtNodeManager::GetChild(BtNode* parent, BtNode* node)
 	{
 	case NodeType::Action:
 	case NodeType::Condition:
+	case NodeType::Decorate:
 		break;
 	default:
 		m_FileBuff += FileSetAbort(node->getAbortType(), child_name);
@@ -108,14 +109,14 @@ std::string BtNodeManager::GetChild(BtNode* parent, BtNode* node)
 	}
 	m_FileBuff += FileAddChild(child_name,parent_name);
 
+	std::string ret = "successs!!!";
 	for (int i = 0; i<node->GetChild().size(); i++)
 	{
-		std::string ret = "successs!!!";
 		ret = GetChild(node, node->GetChild()[i]);
 		if (ret != "successs!!!")
 			break;
 	}
-	return "successs!!!";
+	return ret;
 }
 std::string BtNodeManager::FileCreateNode(NodeType type, std::string var, std::string class_name)
 {
@@ -124,6 +125,7 @@ std::string BtNodeManager::FileCreateNode(NodeType type, std::string var, std::s
 	{
 	case NodeType::Action:
 	case NodeType::Condition:
+	case NodeType::Decorate:
 		sprintf(buff, "auto %s = BT_Create(%s,\"%s\");\n", var.c_str(), class_name.c_str(), class_name.c_str());
 		break;
 	default:

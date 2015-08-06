@@ -23,6 +23,7 @@ public:
 	bool isTouch(Vec2 vec);
 	void addNode(BtNode* node);
 	void removeNode(BtNode* node);
+	void removeAllNode();
 	void ClearData();
 	void Delete();
 	bool TopLevel(BtNode* node);

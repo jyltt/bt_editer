@@ -273,6 +273,7 @@ void HelloWorld::updateInfo()
 			break;
 		case NodeType::Condition:
 		case NodeType::Action:
+		case NodeType::Decorate:
 			m_btnAbortType->setVisible(false);
 			break;
 		default:

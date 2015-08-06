@@ -144,7 +144,10 @@ void BtNode::onDelete(Ref* obj)
 
 void BtNode::Delete()
 {
-	getParentNode()->removeNode(this);
+	if (getParentNode())
+	{
+		getParentNode()->removeNode(this);
+	}
 	for (auto node:m_ChildNode)
 	{
 		node->setParentNode(nullptr);
@@ -218,9 +221,19 @@ void BtNode::addNode(BtNode* node)
 	{
 		node->getParentNode()->removeNode(node);
 	}
-	m_ChildNode.push_back(node);
-	node->setParentNode(this);
-	node->setLevel(m_ChildNode.size());
+	if (m_ENodeType != NodeType::Decorate)
+	{
+		m_ChildNode.push_back(node);
+		node->setParentNode(this);
+		node->setLevel(m_ChildNode.size());
+	}
+	else
+	{
+		removeAllNode();
+		m_ChildNode.push_back(node);
+		node->setParentNode(this);
+		node->setLevel(m_ChildNode.size());
+	}
 }
 bool BtNode::hasNode(BtNode* node,bool isDeep)
 {
@@ -254,6 +267,15 @@ void BtNode::removeNode(BtNode* node)
 		}
 	}
 	m_ChildNode.pop_back();
+}
+void BtNode::removeAllNode()
+{
+	for (int i = 0; i<m_ChildNode.size(); i++)
+	{
+		m_ChildNode[i]->setParentNode(nullptr);
+		m_ChildNode[i]->setLevel(-1);
+	}
+	m_ChildNode.clear();
 }
 void BtNode::ClearData()
 {
@@ -307,6 +329,10 @@ void BtNode::NodeTypeCfg(NodeType type)
 	case NodeType::Condition:
 	case NodeType::Action:
 		m_BtnAdd->setVisible(false);
+		m_BtnAbortType->setVisible(false);
+		break;
+	case NodeType::Decorate:
+		m_BtnAdd->setVisible(true);
 		m_BtnAbortType->setVisible(false);
 		break;
 	default:

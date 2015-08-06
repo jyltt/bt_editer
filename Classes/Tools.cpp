@@ -20,6 +20,9 @@ std::string Tools::GetEnumToString(NodeType type)
 	case NodeType::Action:
 		type_str = "Action";
 		break;
+	case NodeType::Decorate:
+		type_str = "Decorate";
+		break;
 	default:
 		break;
 	}
@@ -62,6 +65,8 @@ NodeType Tools::GetNextEnum(NodeType type)
 	case NodeType::Condition:
 		return NodeType::Action;
 	case NodeType::Action:
+		return NodeType::Decorate;
+	case NodeType::Decorate:
 		return NodeType::Sequence;
 	}
 }
