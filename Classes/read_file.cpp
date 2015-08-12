@@ -64,9 +64,9 @@ void ReadFile::ReadClass(std::string path)
 			m_ClassList[fileName] = data;
 			data->className = str;
 			bool isPublic = false;
+			
 			while (file)
 			{
-				//需要判断是否在public：内
 				file.getline(buff, 1000);
 				if (strstr(buff, "public:"))
 					isPublic = true;

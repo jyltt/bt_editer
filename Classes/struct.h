@@ -42,6 +42,7 @@ struct Attr
 struct ClassData
 {
 	std::string className;
+	NodeType type;
 	std::vector<Attr*> attrList;
 	~ClassData()
 	{

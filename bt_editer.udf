@@ -28,15 +28,5 @@
         <LastRunType Value="Windows" />
       </Value>
     </Item>
-    <Item Key="TabsParamsKey">
-      <Value ctype="TabsInfo">
-        <OpenedDocuments>
-          <FilePathData Path="MainScene.csd" />
-          <FilePathData Path="bt_node.csd" />
-          <FilePathData Path="RightList.csd" />
-        </OpenedDocuments>
-        <ActiveDocument Path="RightList.csd" />
-      </Value>
-    </Item>
   </Properties>
 </UserData>
