@@ -2,6 +2,7 @@
 #define TOOLS_H_
 
 #include <iostream>
+#include <vector>
 #include "enum.h"
 
 class Tools
@@ -11,6 +12,9 @@ public:
 	static std::string GetEnumToString(AbortType type);
 	static NodeType GetNextEnum(NodeType type);
 	static AbortType GetNextEnum(AbortType type);
+	static std::string FormPathToName(std::string path);
+	static std::vector<std::string> StringSegment(std::string str,std::string delim);
+	static std::string StringRemoveChar(std::string str, char ch);
 protected:
 private:
 };

@@ -37,8 +37,7 @@ BtNode::BtNode()
 	m_BtnDelete->addClickEventListener(CC_CALLBACK_1(BtNode::onDelete, this));
 
 	m_TextIndex = (ui::Text*)m_LyotBk->getChildByName("level");
-	m_TextName = (ui::TextField*)m_LyotBk->getChildByName("class_name");
-	m_TextName->setInsertText(false);
+	m_TextName = (ui::Text*)m_LyotBk->getChildByName("class_name");
 	
 	m_BtnAbortType = (ui::Button *)m_LyotBk->getChildByName("abort_type");
 }

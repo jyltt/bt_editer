@@ -21,4 +21,9 @@ enum class ClassType
 	Function,
 	Class,
 };
+enum class AttrType
+{
+	number,
+	string,
+};
 #endif

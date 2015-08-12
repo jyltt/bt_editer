@@ -73,6 +73,6 @@ private:
 	ui::Button *m_BtnAdd;
 	ui::Button *m_BtnDelete;
 	ui::Text *m_TextIndex;
-	ui::TextField *m_TextName;
+	ui::Text *m_TextName;
 };
 #endif

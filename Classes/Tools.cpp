@@ -85,3 +85,46 @@ AbortType Tools::GetNextEnum(AbortType type)
 		return AbortType::none;
 	}
 }
+
+std::string Tools::FormPathToName(std::string path)
+{
+	auto begin = path.find_last_of("\\");
+	auto end = path.find_last_of(".");
+	auto name = path.substr(begin+1, end-begin-1);
+	return name;
+}
+
+std::vector<std::string> Tools::StringSegment(std::string str,std::string delim)
+{
+	std::vector<std::string> ret;
+	while (true)
+	{
+		str = StringRemoveChar(str,' ');
+		auto begin = str.find(delim);
+		auto buff = str.substr(0, begin);
+		buff = StringRemoveChar(buff,' ');
+		ret.push_back(buff);
+		if (begin != str.npos)
+			str = str.substr(begin+1);
+		else
+			break;
+	}
+	return ret;
+}
+
+std::string Tools::StringRemoveChar(std::string str, char ch)
+{
+	auto begin = str.find(ch);
+	while (begin==0)
+	{
+		str = str.substr(1);
+		begin = str.find(ch);
+	}
+	auto end = str.find_last_of(ch);
+	while (end != str.npos && end==str.size()-1)
+	{
+		str = str.substr(0,end);
+		end = str.find_last_of(ch);
+	}
+	return str;
+}

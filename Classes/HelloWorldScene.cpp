@@ -3,6 +3,7 @@
 #include "ui/CocosGUI.h"
 #include "bt_Node.h"
 #include "bt_node_manager.h"
+#include "read_file.h"
 
 USING_NS_CC;
 using namespace cocostudio::timeline;
@@ -243,13 +244,14 @@ void HelloWorld::onChangeClassName(cocos2d::Ref* obj, ui::TextField::EventType t
 
 void HelloWorld::onDoubleClick(cocos2d::Ref* ref)
 {
-	auto node = BtNodeManager::getSingleton().CreateNode();
-	auto localPos = ((ui::Widget*)ref)->getTouchBeganPosition();
-	auto inner = m_scroll->getInnerContainer();
-	auto pos = inner->convertToNodeSpace(localPos);
-	node->setClickCallback(CC_CALLBACK_1(HelloWorld::onChoseNode,this));
-	node->setPosition(pos);
-	m_scroll->addChild(node);
+	// auto node = BtNodeManager::getSingleton().CreateNode();
+	// auto localPos = ((ui::Widget*)ref)->getTouchBeganPosition();
+	// auto inner = m_scroll->getInnerContainer();
+	// auto pos = inner->convertToNodeSpace(localPos);
+	// node->setClickCallback(CC_CALLBACK_1(HelloWorld::onChoseNode,this));
+	// node->setPosition(pos);
+	// m_scroll->addChild(node);
+	auto a = &ReadFile::getSingleton();
 }
 
 void HelloWorld::onChoseNode(cocos2d::Ref* obj)
