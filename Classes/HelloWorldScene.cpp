@@ -244,14 +244,33 @@ void HelloWorld::onChangeClassName(cocos2d::Ref* obj, ui::TextField::EventType t
 
 void HelloWorld::onDoubleClick(cocos2d::Ref* ref)
 {
-	// auto node = BtNodeManager::getSingleton().CreateNode();
-	// auto localPos = ((ui::Widget*)ref)->getTouchBeganPosition();
-	// auto inner = m_scroll->getInnerContainer();
-	// auto pos = inner->convertToNodeSpace(localPos);
-	// node->setClickCallback(CC_CALLBACK_1(HelloWorld::onChoseNode,this));
-	// node->setPosition(pos);
-	// m_scroll->addChild(node);
-	auto a = &ReadFile::getSingleton();
+	auto localPos = ((ui::Widget*)ref)->getTouchBeganPosition();
+	auto inner = m_scroll->getInnerContainer();
+	auto pos = inner->convertToNodeSpace(localPos);
+	if (m_RightList == nullptr)
+	{
+		m_RightList = MenuList::create();
+		m_RightList->SetFileList(ReadFile::getSingleton().GetDoc("root"));
+		m_RightList->SetNodeRoot(this);
+		m_scroll->addChild(m_RightList);
+	}
+	m_RightList->setPosition(pos);
+	m_RightList->setShow(true);
+}
+
+void HelloWorld::SetNode(cocos2d::Vec2 vec,ClassData *node_info)
+{
+	auto node = BtNodeManager::getSingleton().CreateNode();
+	node->setClickCallback(CC_CALLBACK_1(HelloWorld::onChoseNode, this));
+	node->setPosition(vec);
+	node->setClassName(node_info->className);
+	node->setNodeType(node_info->type);
+	node->setUserData(node_info);
+	m_scroll->addChild(node);
+
+	m_RightList->setShow(false);
+	m_RightList->removeFromParent();
+	m_RightList = nullptr;
 }
 
 void HelloWorld::onChoseNode(cocos2d::Ref* obj)
@@ -293,6 +312,12 @@ void HelloWorld::updateInfo()
 
 void HelloWorld::onClick(cocos2d::Ref* ref)
 {
+	if (m_RightList)
+	{
+		m_RightList->setShow(false);
+		m_RightList->removeFromParent();
+		m_RightList = nullptr;
+	}
 	if (m_isClick)
 	{
 		m_isClick = false;

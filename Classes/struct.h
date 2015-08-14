@@ -9,13 +9,14 @@ struct FileList
 	std::string docName;
 	std::vector<std::string> fileList;
 	std::vector<std::string> docListName;
-	const FileList &FindDoc(std::string name)
+	FileList *FindDoc(std::string name)
 	{
 		for (auto doc :docList)
 		{
 			if (doc->docName == name)
-				return *doc;
+				return doc;
 		}
+		return nullptr;
 	}
 	void PuchDoc(FileList *doc)
 	{
