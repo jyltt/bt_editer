@@ -2,6 +2,7 @@
 #define ENUM_H_
 enum class NodeType
 {
+	Error = -1,
 	Sequence,
 	Selector,
 	Parallel,

@@ -44,9 +44,9 @@ void ReadFile::OpenDoc(std::string filepath,FileList *doc)
 	_findclose(lf);
 }
 
-const FileList &ReadFile::GetDoc(std::string doc)
+FileList *ReadFile::GetDoc(std::string doc)
 {
-	return *m_DecTree;
+	return m_DecTree;
 }
 
 void ReadFile::ReadClass(std::string path)
@@ -59,10 +59,20 @@ void ReadFile::ReadClass(std::string path)
 		auto str = FindClass(buff);
 		if (str != "")
 		{
+			auto type = FindClassType(buff,str);
+			if (type == NodeType::Error)
+			{
+				file.getline(buff, 1000);
+				type = FindClassType(buff,str);
+			}
+			if (type == NodeType::Error)
+				continue;
+
 			auto data = new ClassData();
 			auto fileName = Tools::FormPathToName(path);
 			m_ClassList[fileName] = data;
 			data->className = str;
+			data->type = type;
 			bool isPublic = false;
 			
 			while (file)
@@ -95,10 +105,38 @@ std::string ReadFile::FindClass(char* str)
 		if (end == buff.npos)
 			className = buff.substr(5);
 		else
-			className = buff.substr(5, end-1-5);
+			className = buff.substr(5, end-5);
 		return className.c_str();
 	}
 	return "";
+}
+
+NodeType ReadFile::FindClassType(char* str,std::string class_name)
+{
+	if (strstr(str, "public "))
+	{
+		if (strstr(str, "BtCompositeNode"))
+		{
+			if (class_name.find("BtSequenceNode") != class_name.npos)
+				return NodeType::Sequence;
+			else if (class_name.find("BtSelectorNode") != class_name.npos)
+				return NodeType::Selector;
+			else if (class_name.find("BtParallelNode") != class_name.npos)
+				return NodeType::Parallel;
+			else
+				return NodeType::Error;
+		}
+		else if (strstr(str, "BtActionNode"))
+			return NodeType::Action;
+		else if (strstr(str, "BtConditionNode"))
+			return NodeType::Condition;
+		else if (strstr(str, "BtDecorateNode"))
+			return NodeType::Decorate;
+		else
+			return NodeType::Error;
+	}
+	else
+		return NodeType::Error;
 }
 
 Attr *ReadFile::FindParam(char* str,ClassData* data)
@@ -129,6 +167,11 @@ Attr *ReadFile::FindParam(char* str,ClassData* data)
 		attr->name = list[2];
 	}
 	return attr;
+}
+
+ClassData* ReadFile::GetNodeClassInfo(std::string name)
+{
+	return m_ClassList[name];
 }
 
 ReadFile::~ReadFile()
