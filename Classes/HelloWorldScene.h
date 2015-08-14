@@ -5,7 +5,6 @@
 #include <list>
 #include "bt_Node.h"
 #include "tinyxml2/tinyxml2.h"
-#include "menu_list.h"
 
 class HelloWorld : public cocos2d::Layer
 {
@@ -17,7 +16,6 @@ public:
     virtual bool init();
 	void draw(Renderer *renderer, const Mat4& transform, uint32_t flags)override;
 
-	void SetNode(cocos2d::Vec2 vec,ClassData *node_info);
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 private:
@@ -50,7 +48,6 @@ private:
 
 	tinyxml2::XMLDocument *m_pDoc;
 	bool m_isClick;
-	MenuList *m_RightList=nullptr;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
