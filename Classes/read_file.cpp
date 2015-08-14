@@ -6,7 +6,7 @@
 ReadFile::ReadFile()
 {
 	m_DecTree = new FileList();
-	OpenDoc("Default\\",m_DecTree);
+	OpenDoc("bt\\",m_DecTree);
 }
 
 void ReadFile::OpenDoc(std::string filepath,FileList *doc)
