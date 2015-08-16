@@ -10,25 +10,15 @@ using namespace cocostudio::timeline;
 
 Scene* HelloWorld::createScene()
 {
-    // 'scene' is an autorelease object
     auto scene = Scene::create();
-    
-    // 'layer' is an autorelease object
     auto layer = HelloWorld::create();
-
-    // add layer as a child to scene
     scene->addChild(layer);
-
-    // return the scene
     return scene;
 }
 
-// on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
 	m_isClick = false;
-    //////////////////////////////
-    // 1. super init first
     if ( !Layer::init() )
     {
         return false;
@@ -54,10 +44,8 @@ bool HelloWorld::init()
 	m_btnOpen->setVisible(false);
 
 	m_scrInfo = (ui::ScrollView*)rootNode->getChildByName("info");
-	m_fileClassName = (ui::TextField *)m_scrInfo->getChildByName("class_name");
-	m_fileClassName->addEventListener(CC_CALLBACK_2(HelloWorld::onChangeClassName, this));
-	m_btnNodeType = (ui::Button *)m_scrInfo->getChildByName("node_type");
-	m_btnNodeType->addClickEventListener(CC_CALLBACK_1(HelloWorld::onChangeNodeType, this));
+	m_fileClassName = (ui::Text*)m_scrInfo->getChildByName("class_name");
+	m_labNodeType = (ui::Text*)m_scrInfo->getChildByName("node_type");
 	m_btnAbortType = (ui::Button *)m_scrInfo->getChildByName("abort_type");
 	m_btnAbortType->addClickEventListener(CC_CALLBACK_1(HelloWorld::onChangeAbortType, this));
 	m_btnClose = (ui::Button *)m_scrInfo->getChildByName("close");
@@ -213,16 +201,6 @@ void HelloWorld::onCreateCode(cocos2d::Ref* ref)
 	WriteFile();
 }
 
-void HelloWorld::onChangeNodeType(cocos2d::Ref* obj)
-{
-	auto node = BtNodeManager::getSingleton().getChoseNode();
-	if (node)
-	{
-		node->onChangeNodeType(nullptr);
-		updateInfo();
-	}
-}
-
 void HelloWorld::onChangeAbortType(cocos2d::Ref* obj)
 {
 	auto node = BtNodeManager::getSingleton().getChoseNode();
@@ -230,15 +208,6 @@ void HelloWorld::onChangeAbortType(cocos2d::Ref* obj)
 	{
 		node->onChangeAbortType(nullptr);
 		updateInfo();
-	}
-}
-
-void HelloWorld::onChangeClassName(cocos2d::Ref* obj, ui::TextField::EventType type)
-{
-	auto node = BtNodeManager::getSingleton().getChoseNode();
-	if (node)
-	{
-		node->setClassName(m_fileClassName->getString());
 	}
 }
 
@@ -302,12 +271,12 @@ void HelloWorld::updateInfo()
 			break;
 		}
 		m_btnAbortType->setTitleText(Tools::GetEnumToString(node->getAbortType()));
-		m_btnNodeType->setTitleText(Tools::GetEnumToString(node->getNodeType()));
+		m_labNodeType->setString(Tools::GetEnumToString(node->getNodeType()));
 	}
 	else
 	{
 		m_fileClassName->setString("class name");
-		m_btnNodeType->setTitleText("");
+		m_labNodeType->setString("");
 	}
 }
 

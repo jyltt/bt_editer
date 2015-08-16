@@ -25,9 +25,7 @@ private:
 	void onClick(cocos2d::Ref* ref);
 	void onClose(cocos2d::Ref* ref);
 	void onChoseNode(cocos2d::Ref* obj);
-	void onChangeNodeType(cocos2d::Ref* obj);
 	void onChangeAbortType(cocos2d::Ref* obj);
-	void onChangeClassName(cocos2d::Ref* obj,ui::TextField::EventType type);
 	void onCreateCode(cocos2d::Ref* ref);
 	void onCloseInfo(cocos2d::Ref* ref);
 	void updateInfo();
@@ -42,8 +40,8 @@ private:
 	ui::Layout *m_bk;
 	ui::Text *m_text;
 	ui::ScrollView *m_scrInfo;
-	ui::TextField *m_fileClassName;
-	ui::Button *m_btnNodeType;
+	ui::Text *m_fileClassName;
+	ui::Text *m_labNodeType;
 	ui::Button *m_btnAbortType;
 	ui::Button *m_btnClose;
 	ui::Button *m_btnOpen;

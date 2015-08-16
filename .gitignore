@@ -1,7 +1,6 @@
 .cocos-project.json
 CMakeLists.txt
 cocos2d
-cocosstudio
 res
 bt_editer.opensdf
 bt_editer.sdf

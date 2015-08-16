@@ -21,8 +21,7 @@ BtNode::BtNode()
 	m_LyotBk->addTouchEventListener(CC_CALLBACK_2(BtNode::onTouchMove, this));
 	m_LyotBk->addClickEventListener(CC_CALLBACK_1(BtNode::onClick, this));
 
-	m_BtnNodeType = (ui::Button*)m_LyotBk->getChildByName("node_type");
-	//m_BtnNodeType->addClickEventListener(CC_CALLBACK_1(BtNode::onChangeNodeType,this));
+	m_labNodeType = (ui::Text*)m_LyotBk->getChildByName("node_type");
 
 	m_BtnTop = (ui::Button *)m_LyotBk->getChildByName("top");
 	m_BtnTop->addClickEventListener(CC_CALLBACK_1(BtNode::onTopLevel, this));
@@ -39,14 +38,14 @@ BtNode::BtNode()
 	m_TextIndex = (ui::Text*)m_LyotBk->getChildByName("level");
 	m_TextName = (ui::Text*)m_LyotBk->getChildByName("class_name");
 	
-	m_BtnAbortType = (ui::Button *)m_LyotBk->getChildByName("abort_type");
+	m_labAbortType = (ui::Text*)m_LyotBk->getChildByName("abort_type");
 }
 
 void BtNode::onChangeNodeType(Ref* obj)
 {
 	m_ENodeType = Tools::GetNextEnum(m_ENodeType);
 	std::string name = Tools::GetEnumToString(m_ENodeType);
-	m_BtnNodeType->setTitleText(name);
+	m_labNodeType->setString(name);
 	NodeTypeCfg(m_ENodeType);
 }
 
@@ -54,7 +53,7 @@ void BtNode::onChangeAbortType(Ref* obj)
 {
 	m_EAbortType = Tools::GetNextEnum(m_EAbortType);
 	std::string name = Tools::GetEnumToString(m_EAbortType);
-	m_BtnAbortType->setTitleText(name);
+	m_labAbortType->setString(name);
 }
 
 void BtNode::onTopLevel(Ref* obj)
@@ -295,7 +294,7 @@ void BtNode::setAbortType(AbortType var)
 {
 	m_EAbortType = var;
 	std::string name = Tools::GetEnumToString(m_EAbortType);
-	m_BtnAbortType->setTitleText(name);
+	m_labAbortType->setString(name);
 }
 
 AbortType BtNode::getAbortType()
@@ -312,7 +311,7 @@ void BtNode::setNodeType(NodeType node_type)
 {
 	m_ENodeType = node_type;
 	std::string name = Tools::GetEnumToString(m_ENodeType);
-	m_BtnNodeType->setTitleText(name);
+	m_labNodeType->setString(name);
 	NodeTypeCfg(m_ENodeType);
 }
 void BtNode::NodeTypeCfg(NodeType type)
@@ -323,16 +322,16 @@ void BtNode::NodeTypeCfg(NodeType type)
 	case NodeType::Selector:
 	case NodeType::Parallel:
 		m_BtnAdd->setVisible(true);
-		m_BtnAbortType->setVisible(true);
+		m_labAbortType->setVisible(true);
 		break;
 	case NodeType::Condition:
 	case NodeType::Action:
 		m_BtnAdd->setVisible(false);
-		m_BtnAbortType->setVisible(false);
+		m_labAbortType->setVisible(false);
 		break;
 	case NodeType::Decorate:
 		m_BtnAdd->setVisible(true);
-		m_BtnAbortType->setVisible(false);
+		m_labAbortType->setVisible(false);
 		break;
 	default:
 		break;

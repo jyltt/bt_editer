@@ -66,12 +66,12 @@ private:
 	std::function<void(Ref*)> m_callback;
 
 	ui::Layout *m_LyotBk;
-	ui::Button *m_BtnNodeType;
-	ui::Button *m_BtnAbortType;
 	ui::Button *m_BtnTop;
 	ui::Button *m_BtnDown;
 	ui::Button *m_BtnAdd;
 	ui::Button *m_BtnDelete;
+	ui::Text *m_labNodeType;
+	ui::Text *m_labAbortType;
 	ui::Text *m_TextIndex;
 	ui::Text *m_TextName;
 };

@@ -3,10 +3,8 @@
   <SolutionFolder>
     <Group ctype="ResourceGroup">
       <RootFolder Name=".">
-        <Project Name="MainScene.csd" Type="Scene" />
         <Project Name="bt_node.csd" Type="Node" />
-        <PlistInfo Name="Plist.csi" Type="Plist" />
-        <Project Name="RightList.csd" Type="Node" />
+        <Project Name="MainScene.csd" Type="Scene" />
       </RootFolder>
     </Group>
   </SolutionFolder>
