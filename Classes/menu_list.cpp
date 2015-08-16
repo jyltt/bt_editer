@@ -76,6 +76,7 @@ void MenuList::onClick(Ref*obj)
 		{
 			m_Child = new MenuList();
 			m_Child->SetNodeRoot(m_Root);
+			m_Child->SetRootPosition(m_RootPos);
 			m_Child->setShow(false);
 			addChild(m_Child);
 		}
@@ -96,8 +97,13 @@ void MenuList::onClick(Ref*obj)
 		auto name = Tools::FormPathToName(path);
 		auto class_node = ReadFile::getSingleton().GetNodeClassInfo(name);
 		//创建节点
-		m_Root->SetNode(getPosition(),class_node);
+		m_Root->SetNode(m_RootPos,class_node);
 	}
+}
+
+void MenuList::SetRootPosition(Vec2 pos)
+{
+	m_RootPos = pos;
 }
 
 void MenuList::SetNodeRoot(HelloWorld* node)

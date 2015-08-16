@@ -21,11 +21,13 @@ public:
 	void SetFileList(FileList *list);
 	void SetNodeRoot(HelloWorld* node);
 	CC_PROPERTY(bool, m_isShow, Show);
+	void SetRootPosition(Vec2 pos);
 protected:
 	ui::Button *CreateButton(std::string name);
 	void updateUI();
 	void onClick(Ref*obj);
 private:
+	Vec2 m_RootPos;
 	HelloWorld* m_Root = nullptr;
 	FileList *m_List = nullptr;
 	MenuList *m_Child = nullptr;

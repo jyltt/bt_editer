@@ -254,6 +254,7 @@ void HelloWorld::onDoubleClick(cocos2d::Ref* ref)
 		m_RightList->SetNodeRoot(this);
 		m_scroll->addChild(m_RightList);
 	}
+	m_RightList->SetRootPosition(pos);
 	m_RightList->setPosition(pos);
 	m_RightList->setShow(true);
 }
