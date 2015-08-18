@@ -35,9 +35,17 @@ private:
 };
 struct Attr
 {
+	Attr(Attr *data)
+	{
+		type = data->type;
+		name = data->name;
+		number = data->number;
+		str = data->str;
+	}
+	Attr() {};
 	AttrType type = AttrType::number;
 	std::string name;
-	float number = 0;
+	std::string number = "0";
 	std::string str = "";
 };
 struct ClassData
@@ -45,6 +53,16 @@ struct ClassData
 	std::string className;
 	NodeType type;
 	std::vector<Attr*> attrList;
+	ClassData() {};
+	ClassData(ClassData *data)
+	{
+		className = data->className;
+		type = data->type;
+		for (auto attr:data->attrList)
+		{
+			attrList.push_back(new Attr(attr));
+		}
+	}
 	~ClassData()
 	{
 		for (int i = 0; i<attrList.size(); i++)

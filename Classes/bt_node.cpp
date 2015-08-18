@@ -356,4 +356,6 @@ std::vector<BtNode*> BtNode::GetChild()
 BtNode::~BtNode()
 {
 	ClearData();
+	if (getUserData())
+		delete getUserData();
 }

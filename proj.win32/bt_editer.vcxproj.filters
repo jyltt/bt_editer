@@ -36,6 +36,9 @@
     <ClCompile Include="..\Classes\menu_list.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\attr_item.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -71,6 +74,9 @@
     <ClInclude Include="..\Classes\menu_list.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\attr_item.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
@@ -82,6 +88,9 @@
       <Filter>resource</Filter>
     </None>
     <None Include="..\Resources\MainScene.csb">
+      <Filter>resource</Filter>
+    </None>
+    <None Include="..\Resources\attr_list.csb">
       <Filter>resource</Filter>
     </None>
   </ItemGroup>

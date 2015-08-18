@@ -4,6 +4,7 @@
 #include "bt_Node.h"
 #include "bt_node_manager.h"
 #include "read_file.h"
+#include "attr_item.h"
 
 USING_NS_CC;
 using namespace cocostudio::timeline;
@@ -50,6 +51,8 @@ bool HelloWorld::init()
 	m_btnAbortType->addClickEventListener(CC_CALLBACK_1(HelloWorld::onChangeAbortType, this));
 	m_btnClose = (ui::Button *)m_scrInfo->getChildByName("close");
 	m_btnClose->addClickEventListener(CC_CALLBACK_1(HelloWorld::onCloseInfo, this));
+	m_labNote = (ui::TextField*)m_scrInfo->getChildByName("note");
+	m_AttrList = (ui::ListView*)m_scrInfo->getChildByName("attr_list");
 
 	CreateNode();
 
@@ -235,7 +238,7 @@ void HelloWorld::SetNode(cocos2d::Vec2 vec,ClassData *node_info)
 	node->setPosition(vec);
 	node->setClassName(node_info->className);
 	node->setNodeType(node_info->type);
-	node->setUserData(node_info);
+	node->setUserData(new ClassData(node_info));
 	m_scroll->addChild(node);
 
 	m_RightList->setShow(false);
@@ -254,6 +257,7 @@ void HelloWorld::updateInfo()
 	auto node = BtNodeManager::getSingleton().getChoseNode();
 	if (node)
 	{
+		auto info = (ClassData*)node->getUserData();
 		m_fileClassName->setString(node->getClassName());
 		switch (node->getNodeType())
 		{
@@ -272,11 +276,21 @@ void HelloWorld::updateInfo()
 		}
 		m_btnAbortType->setTitleText(Tools::GetEnumToString(node->getAbortType()));
 		m_labNodeType->setString(Tools::GetEnumToString(node->getNodeType()));
+		auto &attrList = info->attrList;
+		m_AttrList->removeAllItems(); 
+		for (int i = 0; i<attrList.size(); i++)
+		{
+			auto item = AttrItem::create();
+			item->SetAttr(attrList[0]);
+			m_AttrList->addChild(item);
+		}
+		m_AttrList->refreshView();
 	}
 	else
 	{
 		m_fileClassName->setString("class name");
 		m_labNodeType->setString("");
+		m_AttrList->removeAllItems();
 	}
 }
 

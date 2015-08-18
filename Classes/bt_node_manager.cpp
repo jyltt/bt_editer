@@ -25,7 +25,7 @@ void BtNodeManager::DeleteNode(BtNode* node)
 	{
 		if ((*it) == node)
 		{
-			if (getChoseNode() && node->getUUID() == getChoseNode()->getUUID())
+			if (m_btNode && node->getUUID() == m_btNode->getUUID())
 			{
 				setChoseNode(nullptr);
 			}

@@ -37,11 +37,13 @@ private:
 	void GetChild(BtNode* node);
 
 	ui::ScrollView* m_scroll;
+	ui::ScrollView *m_scrInfo;
+	ui::ListView *m_AttrList;
 	ui::Layout *m_bk;
 	ui::Text *m_text;
-	ui::ScrollView *m_scrInfo;
 	ui::Text *m_fileClassName;
 	ui::Text *m_labNodeType;
+	ui::TextField *m_labNote;
 	ui::Button *m_btnAbortType;
 	ui::Button *m_btnClose;
 	ui::Button *m_btnOpen;

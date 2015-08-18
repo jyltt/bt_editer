@@ -140,6 +140,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\attr_item.cpp" />
     <ClCompile Include="..\Classes\bt_node.cpp" />
     <ClCompile Include="..\Classes\bt_node_manager.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
@@ -150,6 +151,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\attr_item.h" />
     <ClInclude Include="..\Classes\bt_node_manager.h" />
     <ClInclude Include="..\Classes\enum.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
@@ -180,6 +182,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y</Command>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Resources\attr_list.csb">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="..\Resources\bt_node.csb" />
     <None Include="..\Resources\MainScene.csb">
       <FileType>Document</FileType>
