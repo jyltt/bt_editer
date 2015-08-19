@@ -17,7 +17,7 @@ public:
     virtual bool init();
 	void draw(Renderer *renderer, const Mat4& transform, uint32_t flags)override;
 
-	void SetNode(cocos2d::Vec2 vec,ClassData *node_info);
+	BtNode *SetNode(cocos2d::Vec2 vec,ClassData *node_info);
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 private:

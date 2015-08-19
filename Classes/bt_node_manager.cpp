@@ -102,6 +102,7 @@ std::string BtNodeManager::GetChild(BtNode* parent, BtNode* node)
 	case NodeType::Action:
 	case NodeType::Condition:
 	case NodeType::Decorate:
+		m_FileBuff += FileSetAttr((ClassData*)node->getUserData(), child_name);
 		break;
 	default:
 		m_FileBuff += FileSetAbort(node->getAbortType(), child_name);
@@ -145,6 +146,27 @@ std::string BtNodeManager::FileSetAbort(AbortType type, std::string var)
 	char buff[300];
 	sprintf(buff, "%s->setAbortType(EBTAbortType::%s);\n",var.c_str(),Tools::GetEnumToString(type).c_str());
 	return buff;
+}
+std::string BtNodeManager::FileSetAttr(ClassData *data, std::string var)
+{
+	std::string attr_str = "";
+	char buff[600];
+	auto &attr_list = data->attrList;
+	for (auto attr:attr_list)
+	{
+		switch (attr->type)
+		{
+		case AttrType::number:
+			sprintf(buff, "%s->set%s(%s);\n",var.c_str(),attr->name.c_str(),attr->str.c_str());
+			break;
+		case AttrType::string:
+			sprintf(buff, "%s->set%s(\"%s\");\n",var.c_str(),attr->name.c_str(),attr->str.c_str());
+		default:
+			break;
+		}
+		attr_str += buff;
+	}
+	return attr_str;
 }
 
 BtNode *BtNodeManager::FindBtNode(int uuid)

@@ -69,15 +69,16 @@ void HelloWorld::CreateNode()
 		BtNode *_node;
 		while (node)
 		{
-			int nodt_type;
+			int node_type;
 			int abort_type;
 			int uuid;
 			Vec2 pos;
 			std::string class_name;
 			std::vector<int> child_list;
+			std::vector<Attr*> attr_list;
 
 			auto n_type = node->FirstChildElement();
-			nodt_type = atoi(n_type->GetText());
+			node_type = atoi(n_type->GetText());
 			auto a_type = n_type->NextSiblingElement();
 			abort_type = atoi(a_type->GetText());
 			auto n_uuid = a_type->NextSiblingElement();
@@ -89,7 +90,24 @@ void HelloWorld::CreateNode()
 				auto n_y = n_x->NextSiblingElement();
 				pos.y = atof(n_y->GetText());
 			}
-			auto n_className = n_pos->NextSiblingElement();
+			auto n_attr = n_pos->NextSiblingElement();
+			{
+				auto attr = n_attr->FirstChildElement();
+				while (attr)
+				{
+					auto a = new Attr();
+					a->name = attr->Name();
+					{
+						auto value = attr->FirstChildElement();
+						a->str = value->GetText();
+						auto type = value->NextSiblingElement();
+						a->type = (AttrType)atoi(type->GetText());
+					}
+					attr_list.push_back(a);
+					attr = attr->NextSiblingElement();
+				} 
+			}
+			auto n_className = n_attr->NextSiblingElement();
 			class_name = n_className->GetText();
 			auto n_childlist = n_className->NextSiblingElement();
 			auto n_child = n_childlist->FirstChildElement();
@@ -100,19 +118,29 @@ void HelloWorld::CreateNode()
 			}
 			node = node->NextSiblingElement();
 
-			_node = BtNodeManager::getSingleton().CreateNode();
-			_node->setClickCallback(CC_CALLBACK_1(HelloWorld::onChoseNode, this));
-			_node->setNodeType((NodeType)nodt_type);
+			// _node = BtNodeManager::getSingleton().CreateNode();
+			// _node->setClickCallback(CC_CALLBACK_1(HelloWorld::onChoseNode, this));
+			// _node->setNodeType((NodeType)node_type);
+			// _node->setAbortType((AbortType)abort_type);
+			// _node->setClassName(class_name);
+			// _node->setUUID(uuid);
+			// _node->setPosition(pos);
+			// m_scroll->addChild(_node);
+			ClassData cd;
+			cd.className = class_name;
+			cd.type = (NodeType)node_type;
+			for (int i = 0; i<attr_list.size(); i++)
+			{
+				cd.attrList.push_back(attr_list[i]);
+			}
+			_node = SetNode(pos, &cd);
 			_node->setAbortType((AbortType)abort_type);
-			_node->setClassName(class_name);
 			_node->setUUID(uuid);
-			_node->setPosition(pos);
 			for (int i = 0; i<child_list.size(); i++)
 			{
 				auto id = child_list[i];
 				_node->addNode(BtNodeManager::getSingleton().FindBtNode(id));
 			}
-			m_scroll->addChild(_node);
 		}
 		BtNodeManager::getSingleton().setRootNode(_node);
 	}
@@ -137,6 +165,7 @@ void HelloWorld::GetChild(BtNode* node)
 	auto text = node->getClassName();
 	int uuid = node->getUUID();
 	auto pos = node->getPosition();
+	auto class_data = (ClassData*)node->getUserData();
 	std::vector<int> child_name;
 
 	for (int i = 0; i< node->GetChild().size(); i++)
@@ -174,6 +203,26 @@ void HelloWorld::GetChild(BtNode* node)
 			n_pos->LinkEndChild(y);
 		}
 		n_node->LinkEndChild(n_pos);
+
+		// ÊôÐÔ
+		auto &attr_list = class_data->attrList;
+		auto n_attr = m_pDoc->NewElement("attr");
+		{
+			for (auto attr:attr_list)
+			{
+				auto attr_e = m_pDoc->NewElement(attr->name.c_str());
+				{
+					auto value = m_pDoc->NewElement("value");
+					value->LinkEndChild(m_pDoc->NewText(attr->str.c_str()));
+					attr_e->LinkEndChild(value);
+					auto type = m_pDoc->NewElement("type");
+					type->LinkEndChild(m_pDoc->NewText(std::to_string((int)attr->type).c_str()));
+					attr_e->LinkEndChild(type);
+				}
+				n_attr->LinkEndChild(attr_e);
+			}
+		}
+		n_node->LinkEndChild(n_attr);
 
 		// ÀàÃû
 		auto n_text = m_pDoc->NewElement("class_name");
@@ -231,7 +280,7 @@ void HelloWorld::onDoubleClick(cocos2d::Ref* ref)
 	m_RightList->setShow(true);
 }
 
-void HelloWorld::SetNode(cocos2d::Vec2 vec,ClassData *node_info)
+BtNode *HelloWorld::SetNode(cocos2d::Vec2 vec,ClassData *node_info)
 {
 	auto node = BtNodeManager::getSingleton().CreateNode();
 	node->setClickCallback(CC_CALLBACK_1(HelloWorld::onChoseNode, this));
@@ -241,9 +290,13 @@ void HelloWorld::SetNode(cocos2d::Vec2 vec,ClassData *node_info)
 	node->setUserData(new ClassData(node_info));
 	m_scroll->addChild(node);
 
-	m_RightList->setShow(false);
-	m_RightList->removeFromParent();
-	m_RightList = nullptr;
+	if (m_RightList)
+	{
+		m_RightList->setShow(false);
+		m_RightList->removeFromParent();
+		m_RightList = nullptr;
+	}
+	return node;
 }
 
 void HelloWorld::onChoseNode(cocos2d::Ref* obj)

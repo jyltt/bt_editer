@@ -39,13 +39,11 @@ struct Attr
 	{
 		type = data->type;
 		name = data->name;
-		number = data->number;
 		str = data->str;
 	}
 	Attr() {};
 	AttrType type = AttrType::number;
 	std::string name;
-	std::string number = "0";
 	std::string str = "";
 };
 struct ClassData
@@ -61,6 +59,17 @@ struct ClassData
 		for (auto attr:data->attrList)
 		{
 			attrList.push_back(new Attr(attr));
+		}
+	}
+	void SetAttr(std::string name,std::string value)
+	{
+		for (int i = 0; i<attrList.size(); i++)
+		{
+			if (attrList[i]->name == name)
+			{
+				attrList[i]->str = value;
+				return;
+			}
 		}
 	}
 	~ClassData()

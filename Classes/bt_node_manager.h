@@ -4,6 +4,7 @@
 #include "bt_Node.h"
 #include "Singleton.h"
 #include "tools.h"
+#include "struct.h"
 #include <Vector>
 
 class BtNodeManager
@@ -23,6 +24,7 @@ protected:
 	std::string FileCreateNode(NodeType type, std::string var,std::string class_name);
 	std::string FileAddChild(std::string child, std::string parent);
 	std::string FileSetAbort(AbortType type, std::string var);
+	std::string FileSetAttr(ClassData *data, std::string var);
 private:
 	std::string m_FileBuff = "";
 	int id = 0;

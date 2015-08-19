@@ -20,33 +20,13 @@ void AttrItem::SetAttr(Attr *attr)
 
 void AttrItem::onChangeValue(Ref *ref, ui::TextField::EventType type)
 {
-	switch (m_Attr->type)
-	{
-	case AttrType::number:
-		m_Attr->number = m_Value->getString();
-		break;
-	case AttrType::string:
-		m_Attr->str = m_Value->getString();
-		break;
-	default:
-		break;
-	}
+	m_Attr->str = m_Value->getString();
 }
 
 void AttrItem::UpdateInfo()
 {
 	m_Text->setString(m_Attr->name);
-	switch (m_Attr->type)
-	{
-	case AttrType::number:
-		m_Value->setString(m_Attr->number);
-		break;
-	case AttrType::string:
-		m_Value->setString(m_Attr->str);
-		break;
-	default:
-		break;
-	}
+	m_Value->setString(m_Attr->str);
 }
 
 AttrItem::~AttrItem()

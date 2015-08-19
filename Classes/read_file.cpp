@@ -103,9 +103,9 @@ std::string ReadFile::FindClass(char* str)
 		std::string className;
 		auto end = buff.find(":");
 		if (end == buff.npos)
-			className = buff.substr(5);
+			className = buff.substr(6);
 		else
-			className = buff.substr(5, end-5);
+			className = buff.substr(6, end-6);
 		return className.c_str();
 	}
 	return "";
