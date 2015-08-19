@@ -9,3 +9,5 @@ main.cpp
 main.h
 resource.h
 Debug.win32
+/Resources/bt.xml
+/Resources/bt_tree.txt
