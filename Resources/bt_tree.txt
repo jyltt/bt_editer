@@ -1,6 +1,0 @@
-auto  BtParallelNode0 = BT_Create(BtParallelNode," BtParallelNode");
- BtParallelNode0->setAbortType(EBTAbortType::self);
-m_root =  BtParallelNode0; 
-auto  BtSelectorNode1 = BT_Create(BtSelectorNode," BtSelectorNode");
- BtSelectorNode1->setAbortType(EBTAbortType::none);
- BtParallelNode0->AddChild( BtSelectorNode1);
