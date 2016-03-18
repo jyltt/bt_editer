@@ -1,12 +1,12 @@
-<GameProjectFile>
-  <PropertyGroup Type="Node" Name="attr_list" ID="28f0fba5-ac5f-4bcb-a3ed-48b50f593e5f" Version="2.3.1.2" />
+<GameFile>
+  <PropertyGroup Name="attr_list" Type="Node" ID="28f0fba5-ac5f-4bcb-a3ed-48b50f593e5f" Version="3.10.0.0" />
   <Content ctype="GameProjectContent">
     <Content>
       <Animation Duration="0" Speed="1.0000" />
       <ObjectData Name="Node" Tag="30" ctype="GameNodeObjectData">
         <Size X="0.0000" Y="0.0000" />
         <Children>
-          <AbstractNodeData Name="bk" ActionTag="1075398863" Tag="32" IconVisible="False" LeftMargin="90.0000" RightMargin="-200.0000" TopMargin="-40.0000" TouchEnable="True" BackColorAlpha="102" ComboBoxIndex="1" ColorAngle="90.0000" ctype="PanelObjectData">
+          <AbstractNodeData Name="bk" ActionTag="1075398863" Tag="32" IconVisible="False" LeftMargin="90.0000" RightMargin="-200.0000" TopMargin="-40.0000" TouchEnable="True" ClipAble="False" BackColorAlpha="102" ComboBoxIndex="1" ColorAngle="90.0000" ctype="PanelObjectData">
             <Size X="110.0000" Y="40.0000" />
             <AnchorPoint />
             <Position X="90.0000" />
@@ -43,4 +43,4 @@
       </ObjectData>
     </Content>
   </Content>
-</GameProjectFile>
+</GameFile>

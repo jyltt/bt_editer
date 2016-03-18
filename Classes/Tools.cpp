@@ -88,7 +88,7 @@ AbortType Tools::GetNextEnum(AbortType type)
 
 std::string Tools::FormPathToName(std::string path)
 {
-	auto begin = path.find_last_of("\\");
+	auto begin = path.find_last_of("/");
 	auto end = path.find_last_of(".");
 	auto name = path.substr(begin+1, end-begin-1);
 	return name;

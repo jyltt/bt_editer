@@ -17,16 +17,9 @@ public:
 	void DeleteNode(BtNode* node);
 	BtNode* TouchNode(Vec2 vec);
 	void onDraw();
-	std::string WriteFile();
 	BtNode* FindBtNode(int uuid);
 protected:
-	std::string GetChild(BtNode* parent,BtNode* node);
-	std::string FileCreateNode(NodeType type, std::string var,std::string class_name);
-	std::string FileAddChild(std::string child, std::string parent);
-	std::string FileSetAbort(AbortType type, std::string var);
-	std::string FileSetAttr(ClassData *data, std::string var);
 private:
-	std::string m_FileBuff = "";
 	int id = 0;
 	std::vector<BtNode*> m_NodeList;
 };

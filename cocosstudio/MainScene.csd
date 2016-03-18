@@ -1,5 +1,5 @@
-<GameProjectFile>
-  <PropertyGroup Type="Scene" Name="MainScene" ID="b60a79ff-e18e-436e-948b-0074fa3e824c" Version="2.3.1.2" />
+<GameFile>
+  <PropertyGroup Name="MainScene" Type="Scene" ID="b60a79ff-e18e-436e-948b-0074fa3e824c" Version="3.10.0.0" />
   <Content ctype="GameProjectContent">
     <Content>
       <Animation Duration="0" Speed="1.0000" />
@@ -35,7 +35,7 @@
             <OutlineColor A="255" R="255" G="0" B="0" />
             <ShadowColor A="255" R="110" G="110" B="110" />
           </AbstractNodeData>
-          <AbstractNodeData Name="info" CanEdit="False" ActionTag="-1711177253" Tag="19" IconVisible="False" RightMargin="936.0000" BackColorAlpha="102" ComboBoxIndex="1" ColorAngle="90.0000" ScrollDirectionType="Vertical" ctype="ScrollViewObjectData">
+          <AbstractNodeData Name="info" CanEdit="False" ActionTag="-1711177253" Tag="19" IconVisible="False" RightMargin="936.0000" ClipAble="False" BackColorAlpha="102" ComboBoxIndex="1" ColorAngle="90.0000" ScrollDirectionType="Vertical" ctype="ScrollViewObjectData">
             <Size X="200.0000" Y="640.0000" />
             <Children>
               <AbstractNodeData Name="close" ActionTag="1952165923" Tag="18" IconVisible="False" LeftMargin="200.0000" RightMargin="-20.0000" TopMargin="290.0000" BottomMargin="290.0000" TouchEnable="True" FontSize="14" ButtonText="《" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="16" Scale9Height="14" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="ButtonObjectData">
@@ -151,10 +151,10 @@
             <OutlineColor A="255" R="255" G="0" B="0" />
             <ShadowColor A="255" R="110" G="110" B="110" />
           </AbstractNodeData>
-          <AbstractNodeData Name="message" CanEdit="False" Visible="False" ActionTag="1653201798" Tag="25" IconVisible="False" TouchEnable="True" BackColorAlpha="102" ComboBoxIndex="1" ColorAngle="90.0000" ctype="PanelObjectData">
+          <AbstractNodeData Name="message" CanEdit="False" Visible="False" ActionTag="1653201798" Tag="25" IconVisible="False" TouchEnable="True" ClipAble="False" BackColorAlpha="102" ComboBoxIndex="1" ColorAngle="90.0000" ctype="PanelObjectData">
             <Size X="1136.0000" Y="640.0000" />
             <Children>
-              <AbstractNodeData Name="Panel_2" ActionTag="1866796176" Tag="26" IconVisible="False" LeftMargin="318.0000" RightMargin="318.0000" TopMargin="220.0000" BottomMargin="220.0000" BackColorAlpha="102" ComboBoxIndex="1" ColorAngle="90.0000" ctype="PanelObjectData">
+              <AbstractNodeData Name="Panel_2" ActionTag="1866796176" Tag="26" IconVisible="False" LeftMargin="318.0000" RightMargin="318.0000" TopMargin="220.0000" BottomMargin="220.0000" ClipAble="False" BackColorAlpha="102" ComboBoxIndex="1" ColorAngle="90.0000" ctype="PanelObjectData">
                 <Size X="500.0000" Y="200.0000" />
                 <AnchorPoint />
                 <Position X="318.0000" Y="220.0000" />
@@ -194,4 +194,4 @@
       </ObjectData>
     </Content>
   </Content>
-</GameProjectFile>
+</GameFile>

@@ -1,12 +1,12 @@
-<GameProjectFile>
-  <PropertyGroup Type="Node" Name="bt_node" ID="6e6af251-6318-4e99-af25-8e1e8cb27251" Version="2.3.1.2" />
+<GameFile>
+  <PropertyGroup Name="bt_node" Type="Node" ID="6e6af251-6318-4e99-af25-8e1e8cb27251" Version="3.10.0.0" />
   <Content ctype="GameProjectContent">
     <Content>
       <Animation Duration="0" Speed="1.0000" />
       <ObjectData Name="Node" ctype="GameNodeObjectData">
         <Size X="0.0000" Y="0.0000" />
         <Children>
-          <AbstractNodeData Name="bk" ActionTag="1105007864" Tag="3" IconVisible="False" LeftMargin="-75.0000" RightMargin="-75.0000" TopMargin="-75.0000" BottomMargin="-75.0000" TouchEnable="True" BackColorAlpha="102" ComboBoxIndex="1" ColorAngle="90.0000" ctype="PanelObjectData">
+          <AbstractNodeData Name="bk" ActionTag="1105007864" Tag="3" IconVisible="False" LeftMargin="-75.0000" RightMargin="-75.0000" TopMargin="-75.0000" BottomMargin="-75.0000" TouchEnable="True" ClipAble="False" BackColorAlpha="102" ComboBoxIndex="1" ColorAngle="90.0000" ctype="PanelObjectData">
             <Size X="150.0000" Y="150.0000" />
             <Children>
               <AbstractNodeData Name="delete" ActionTag="-1030796698" Tag="4" IconVisible="False" LeftMargin="137.5000" RightMargin="-12.5000" TopMargin="-12.5000" BottomMargin="137.5000" TouchEnable="True" FontSize="14" ButtonText="X" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="16" Scale9Height="14" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="ButtonObjectData">
@@ -129,4 +129,4 @@
       </ObjectData>
     </Content>
   </Content>
-</GameProjectFile>
+</GameFile>

@@ -10,6 +10,15 @@
     <Filter Include="src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
+    <Filter Include="file">
+      <UniqueIdentifier>{07fff6ea-200c-4155-9c8d-c61d77d0e557}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tree">
+      <UniqueIdentifier>{f92c3c20-8183-422b-95f9-2e1cfb6f1368}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui">
+      <UniqueIdentifier>{a106ccb0-abc4-45d7-86ab-6a141fe6c5f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,23 +30,26 @@
     <ClCompile Include="..\Classes\HelloWorldScene.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\bt_node.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\bt_node_manager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Tools.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\read_file.cpp">
-      <Filter>src</Filter>
+      <Filter>file</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\menu_list.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\Classes\bt_node.cpp">
+      <Filter>tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\bt_node_manager.cpp">
+      <Filter>tree</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\attr_item.cpp">
-      <Filter>src</Filter>
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\menu_list.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\write_code_file.cpp">
+      <Filter>file</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -50,12 +62,6 @@
     <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\bt_Node.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\bt_node_manager.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Singleton.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -65,17 +71,26 @@
     <ClInclude Include="..\Classes\enum.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\read_file.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\struct.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\menu_list.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\Classes\read_file.h">
+      <Filter>file</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\bt_Node.h">
+      <Filter>tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\bt_node_manager.h">
+      <Filter>tree</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\attr_item.h">
-      <Filter>src</Filter>
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\menu_list.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\write_code_file.h">
+      <Filter>file</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

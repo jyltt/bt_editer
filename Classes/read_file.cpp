@@ -6,7 +6,7 @@
 ReadFile::ReadFile()
 {
 	m_DecTree = new FileList();
-	OpenDoc("bt\\",m_DecTree);
+	OpenDoc("bt/",m_DecTree);
 }
 
 void ReadFile::OpenDoc(std::string filepath,FileList *doc)
@@ -28,7 +28,7 @@ void ReadFile::OpenDoc(std::string filepath,FileList *doc)
 				newDoc->docName = file.name;
 				doc->PuchDoc(newDoc);
 				doc->docListName.push_back(file.name);
-				OpenDoc(filepath+"\\"+file.name+"\\", newDoc);
+				OpenDoc(filepath+file.name+"/", newDoc);
 			}
 			else
 			{
@@ -71,6 +71,7 @@ void ReadFile::ReadClass(std::string path)
 			auto data = new ClassData();
 			auto fileName = Tools::FormPathToName(path);
 			m_ClassList[fileName] = data;
+			data->filePath = path.substr(3, path.npos);
 			data->className = str;
 			data->type = type;
 			bool isPublic = false;

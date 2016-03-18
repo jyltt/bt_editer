@@ -1,11 +1,11 @@
 <Solution>
-  <PropertyGroup Name="bt_editer" Version="2.3.1.2" Type="CocosStudio" />
+  <PropertyGroup Name="bt_editer" Version="3.10.0.0" Type="CocosStudio" />
   <SolutionFolder>
     <Group ctype="ResourceGroup">
       <RootFolder Name=".">
+        <Project Name="attr_list.csd" Type="Node" />
         <Project Name="bt_node.csd" Type="Node" />
         <Project Name="MainScene.csd" Type="Scene" />
-        <Project Name="attr_list.csd" Type="Node" />
       </RootFolder>
     </Group>
   </SolutionFolder>

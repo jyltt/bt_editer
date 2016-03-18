@@ -48,6 +48,7 @@ struct Attr
 };
 struct ClassData
 {
+	std::string filePath;
 	std::string className;
 	NodeType type;
 	std::vector<Attr*> attrList;
