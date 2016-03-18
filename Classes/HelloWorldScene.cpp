@@ -5,6 +5,7 @@
 #include "bt_node_manager.h"
 #include "read_file.h"
 #include "attr_item.h"
+#include "write_code_file.h"
 
 USING_NS_CC;
 using namespace cocostudio::timeline;
@@ -81,6 +82,7 @@ void HelloWorld::CreateNode()
 			node_type = atoi(n_type->GetText());
 			auto a_type = n_type->NextSiblingElement();
 			abort_type = atoi(a_type->GetText());
+			abort_type = n_type->IntAttribute("abort");
 			auto n_uuid = a_type->NextSiblingElement();
 			uuid = atoi(n_uuid->GetText());
 			auto n_pos = n_uuid->NextSiblingElement();
@@ -249,7 +251,9 @@ void HelloWorld::GetChild(BtNode* node)
 void HelloWorld::onCreateCode(cocos2d::Ref* ref)
 {
 	m_bk->setVisible(true);
-	m_text->setString(BtNodeManager::getSingleton().WriteFile());
+	auto root = BtNodeManager::getSingleton().getRootNode();
+	auto des = WriteCodeFile::getSingleton().WriteFile(root);
+	m_text->setString(des);
 	WriteFile();
 }
 
