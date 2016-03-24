@@ -32,10 +32,6 @@ private:
 	void onOpenInfo(cocos2d::Ref* ref);
 	void funcallback(float time);
 
-	void CreateNode();
-	void WriteFile();
-	void GetChild(BtNode* node);
-
 	ui::ScrollView* m_scroll;
 	ui::ScrollView *m_scrInfo;
 	ui::ListView *m_AttrList;

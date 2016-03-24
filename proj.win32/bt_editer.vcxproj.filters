@@ -51,6 +51,9 @@
     <ClCompile Include="..\Classes\write_code_file.cpp">
       <Filter>file</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\xml_file.cpp">
+      <Filter>file</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -90,6 +93,9 @@
       <Filter>ui</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\write_code_file.h">
+      <Filter>file</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\xml_file.h">
       <Filter>file</Filter>
     </ClInclude>
   </ItemGroup>
