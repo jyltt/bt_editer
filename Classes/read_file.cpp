@@ -1,5 +1,11 @@
 #include "read_file.h"
+#ifndef WIN32
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#else
 #include <io.h>
+#endif
 #include <fstream>
 #include "Tools.h"
 
@@ -9,15 +15,65 @@ ReadFile::ReadFile()
 	OpenDoc("bt/",m_DecTree);
 }
 
+#ifndef WIN32
+void ReadFile::OpenDoc(std::string filepath,FileList *doc)
+{
+    DIR *dir;
+    if(!(dir = opendir(filepath.c_str())))
+    {
+        return;
+    }
+    dirent *d_ent;
+    char fullpath[128];
+    while ( (d_ent = readdir(dir)) != NULL )
+    {
+        struct stat file_stat;
+        if ( strncmp(d_ent->d_name, ".", 1) == 0 )
+        {
+          continue;   // å¿½ç•¥"."ç›®å½•
+        }
+        memset(fullpath, '\0', sizeof(fullpath));
+        strcpy( fullpath,  filepath.c_str());
+        if ( !strcmp(fullpath, "/") )
+        {
+            fullpath[0] = '\0';
+        }
+        strcat(fullpath, "/");
+        strcat(fullpath, d_ent->d_name);
+        if ( lstat(fullpath, &file_stat) < 0 )
+        {
+            return;
+        }
+        if ((d_ent->d_type&DT_DIR) != 0)
+        {
+            auto newDoc = new FileList();
+            newDoc->docName = d_ent->d_name;
+            doc->PuchDoc(newDoc);
+            doc->docListName.push_back(d_ent->d_name);
+            OpenDoc(filepath+d_ent->d_name+"/", newDoc);
+        }
+        else
+        {
+            if (strstr(d_ent->d_name, ".h"))
+            {
+                auto path = filepath+d_ent->d_name;
+                doc->fileList.push_back(path);
+                ReadClass(path);
+            }
+        }
+    }
+    closedir(dir);
+}
+#else
 void ReadFile::OpenDoc(std::string filepath,FileList *doc)
 {
 	_finddata_t file;
 	auto path = filepath+"*.*";
 	long lf;
-	//ÊäÈëÎÄ¼þ¼ÐÂ·¾¶  
+	//Â â€°Â»ÃŽÅ’Æ’ÂºË›Âºâ€“Â¬âˆ‘Ã¦âˆ‚  
 	if ((lf = _findfirst(path.c_str() , &file))!=-1)
 	{
-		//Êä³öÎÄ¼þÃû  
+		//Â â€°â‰¥Ë†Å’Æ’ÂºË›âˆšËš  
 		while (_findnext(lf, &file)==0)
 		{
 			if (strcmp(file.name, "..")==0) continue;
@@ -43,6 +99,7 @@ void ReadFile::OpenDoc(std::string filepath,FileList *doc)
 	}
 	_findclose(lf);
 }
+#endif
 
 FileList *ReadFile::GetDoc(std::string doc)
 {
