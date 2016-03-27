@@ -14,7 +14,8 @@ public:
 	BtNode* CreateNode(std::string name, std::function<BtNode *(cocos2d::Vec2, ClassData*)> set_node);
 	void WriteFile(BtNode *root,std::string name);
 protected:
-	void GetChild(BtNode* node);
+	tinyxml2::XMLNode* GetChild(BtNode* node);
+	BtNode* CreateChild(tinyxml2::XMLElement* node, std::function<BtNode *(cocos2d::Vec2, ClassData*)> set_node);
 private:
 	tinyxml2::XMLDocument *m_pDoc;
 };
