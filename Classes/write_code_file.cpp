@@ -6,7 +6,7 @@ WriteCodeFile::WriteCodeFile()
 WriteCodeFile::~WriteCodeFile()
 { }
 
-std::string WriteCodeFile::WriteFile(BtNode *rootNode)
+std::string WriteCodeFile::WriteFile(BtNode *rootNode,std::string file_name)
 {
 	if (rootNode == nullptr)
 		return "rootNode is nullptr!";
@@ -31,7 +31,7 @@ std::string WriteCodeFile::WriteFile(BtNode *rootNode)
 			return ret;
 	}
 
-	FILE *fp = fopen("bt_tree.txt", "wb");
+	FILE *fp = fopen(file_name.c_str(), "wb");
 	if (fp)
 	{
 		fwrite(m_FileBuff.c_str(), 1, strlen(m_FileBuff.c_str()), fp);

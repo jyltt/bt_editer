@@ -10,7 +10,7 @@ class WriteCodeFile
 {
 	Singleton(WriteCodeFile);
 public:
-	std::string WriteFile(BtNode *rootNode);
+    std::string WriteFile(BtNode *rootNode,std::string file_name);
 protected:
 	std::string GetChild(BtNode* parent, BtNode* node);
 	std::string FileCreateNode(NodeType type, std::string var, std::string class_name);
