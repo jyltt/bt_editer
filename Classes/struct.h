@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "enum.h"
+#include "cocos2d.h"
 
 struct FileList
 {
@@ -79,6 +80,14 @@ struct ClassData
 			delete attrList[i];
 		attrList.clear();
 	}
+};
+struct NodeInfo
+{
+	ClassData *cd;
+	int uuid;
+	cocos2d::Vec2 pos;
+	AbortType abort_type;
+	std::vector<NodeInfo*> child_list;
 };
 
 #endif // !STRUCT_H_

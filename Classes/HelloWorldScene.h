@@ -31,6 +31,7 @@ private:
 	void updateInfo();
 	void onOpenInfo(cocos2d::Ref* ref);
 	void funcallback(float time);
+	BtNode* CreateNodeByInfo(NodeInfo *node);
 
 	ui::ScrollView* m_scroll;
 	ui::ScrollView *m_scrInfo;

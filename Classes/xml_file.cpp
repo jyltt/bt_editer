@@ -63,51 +63,56 @@ tinyxml2::XMLNode* XmlFile::GetChild(BtNode* node)
 	return n_node;
 }
 
-BtNode* XmlFile::CreateNode(std::string name, std::function<BtNode *(cocos2d::Vec2, ClassData*)> set_node)
+NodeInfo* XmlFile::ReadFileToNodeInfo(std::string name)
 {
 	m_pDoc = new tinyxml2::XMLDocument();
 	if (m_pDoc->LoadFile(name.c_str())== tinyxml2::XML_SUCCESS)
 	{
 		auto root = m_pDoc->RootElement();
-		return CreateChild(root,set_node);
+		return CreateChild(root);
 	}
 	return nullptr;
 }
 
-BtNode *XmlFile::CreateChild(tinyxml2::XMLElement* node, std::function<BtNode *(cocos2d::Vec2, ClassData*)> set_node)
+NodeInfo *XmlFile::CreateChild(tinyxml2::XMLElement* node)
 {
-	BtNode *_node;
-	ClassData cd;
-	cd.type = (NodeType)node->IntAttribute("type");
-	cd.className = node->Attribute("class_name");
+	NodeInfo *_node = new NodeInfo();
+	ClassData *cd = new ClassData();
+	cd->type = (NodeType)node->IntAttribute("type");
+	cd->className = node->Attribute("class_name");
 	int abort_type = node->IntAttribute("abort");
 	int uuid = node->IntAttribute("uuid");
-	Vec2 pos;
-	pos.x = node->IntAttribute("x");
-	pos.y = node->IntAttribute("y");
+	_node->pos.x = node->IntAttribute("x");
+	_node->pos.y = node->IntAttribute("y");
 
 	auto child_node = node->FirstChildElement("attr");
-	auto attr = child_node->FirstChildElement();
-	while (attr)
+	if (child_node)
 	{
-		auto a = new Attr();
-		a->name = attr->Attribute("attr_name");
-		a->str = attr->Attribute("attr_value");
-		a->type = (AttrType)attr->IntAttribute("attr_type");
-		cd.attrList.push_back(a);
-		attr = attr->NextSiblingElement();
+		auto attr = child_node->FirstChildElement();
+		while (attr)
+		{
+			auto a = new Attr();
+			a->name = attr->Attribute("attr_name");
+			a->str = attr->Attribute("attr_value");
+			a->type = (AttrType)attr->IntAttribute("attr_type");
+			cd->attrList.push_back(a);
+			attr = attr->NextSiblingElement();
+		}
 	}
-	_node = set_node(pos, &cd);
-	_node->setAbortType((AbortType)abort_type);
-	_node->setUUID(uuid);
+	_node->abort_type = (AbortType)abort_type;
+	_node->cd = cd;
+	_node->uuid = uuid;
 
 	child_node = child_node->NextSiblingElement("child");
-	auto n_child = child_node->FirstChildElement();
-	while (n_child)
+	if (child_node)
 	{
-		auto child = CreateChild(n_child, set_node);
-		_node->addNode(child);
-		n_child = n_child->NextSiblingElement();
+		auto n_child = child_node->FirstChildElement();
+		while (n_child)
+		{
+			auto child = CreateChild(n_child);
+			_node->child_list.push_back(child);
+			n_child = n_child->NextSiblingElement();
+		}
 	}
 	return _node;
 }

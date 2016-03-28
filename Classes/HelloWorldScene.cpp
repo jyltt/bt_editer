@@ -57,10 +57,32 @@ bool HelloWorld::init()
 	m_AttrList = (ui::ListView*)m_scrInfo->getChildByName("attr_list");
 
 	//CreateNode();
-	auto root = XmlFile::getSingleton().CreateNode("bt.xml", CC_CALLBACK_2(HelloWorld::SetNode, this));
+	auto node = XmlFile::getSingleton().ReadFileToNodeInfo("bt.xml");
+	auto root = CreateNodeByInfo(node);
 	BtNodeManager::getSingleton().setRootNode(root);
 
     return true;
+}
+
+BtNode* HelloWorld::CreateNodeByInfo(NodeInfo *node)
+{
+	BtNode*_node;
+	ClassData *cd = node->cd;
+	AbortType abort_type = node->abort_type;
+	int uuid = node->uuid;
+	Vec2 pos = node->pos;
+
+	_node = SetNode(pos, cd);
+	_node->setAbortType(abort_type);
+	_node->setUserData(cd);
+	_node->setUUID(uuid);
+
+	for (auto n_child : node->child_list)
+	{
+		auto child = CreateNodeByInfo(n_child);
+		_node->addNode(child);
+	}
+	return _node;
 }
 
 void HelloWorld::onCreateCode(cocos2d::Ref* ref)
@@ -107,7 +129,7 @@ BtNode *HelloWorld::SetNode(cocos2d::Vec2 vec,ClassData *node_info)
 	node->setPosition(vec);
 	node->setClassName(node_info->className);
 	node->setNodeType(node_info->type);
-	node->setUserData(new ClassData(node_info));
+	node->setUserData(node_info);
 
 	m_scroll->addChild(node);
 	if (m_RightList)
