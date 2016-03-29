@@ -1,4 +1,5 @@
 #include "write_code_file.h"
+#include "xml_file.h"
 
 WriteCodeFile::WriteCodeFile()
 { }
@@ -6,27 +7,28 @@ WriteCodeFile::WriteCodeFile()
 WriteCodeFile::~WriteCodeFile()
 { }
 
-std::string WriteCodeFile::WriteFile(BtNode *rootNode,std::string file_name)
+std::string WriteCodeFile::WriteFile(std::string xml_file, std::string file_name)
 {
-	if (rootNode == nullptr)
-		return "rootNode is nullptr!";
-	auto class_name = rootNode->getClassName();
+	auto _nodeInfo = XmlFile::getSingleton().ReadFileToNodeInfo(xml_file);
+	if (_nodeInfo == nullptr)
+		return "no find file:"+xml_file;
+	auto class_name = _nodeInfo->cd->className;
 	if (class_name == "")
 		return "rootNode class name is nullptr!";
-	auto name = class_name + std::to_string(rootNode->getUUID());
-	auto type = Tools::GetEnumToString(rootNode->getNodeType());
+	auto name = class_name + std::to_string(_nodeInfo->uuid);
+	auto type = Tools::GetEnumToString(_nodeInfo->cd->type);
 	if (type == "")
 		return "rootNode type is nullptr!";
 
-	m_FileBuff = FileCreateNode(rootNode->getNodeType(), name, class_name);
-	m_FileBuff += FileSetAbort(rootNode->getAbortType(), name);
+	m_FileBuff = FileCreateNode(_nodeInfo->cd->type, name, class_name);
+	m_FileBuff += FileSetAbort(_nodeInfo->abort_type, name);
 	char buff[300];
 	sprintf(buff, "m_root = %s; \n", name.c_str());
 	m_FileBuff += buff;
-	for (int i = 0; i < rootNode->GetChild().size(); i++)
+	for (int i = 0; i < _nodeInfo->child_list.size(); i++)
 	{
 		std::string ret = "successs!!!";
-		ret = GetChild(rootNode, rootNode->GetChild()[i]);
+		ret = GetChild(_nodeInfo, _nodeInfo->child_list[i]);
 		if (ret != "successs!!!")
 			return ret;
 	}
@@ -40,38 +42,34 @@ std::string WriteCodeFile::WriteFile(BtNode *rootNode,std::string file_name)
 	}
 	else
 		return "Write failed";
-
 }
 
-std::string WriteCodeFile::GetChild(BtNode* parent, BtNode* node)
+std::string WriteCodeFile::GetChild(NodeInfo* parent, NodeInfo* node)
 {
-	auto parent_name = parent->getClassName()+std::to_string(parent->getUUID());
-	auto class_name = node->getClassName();
-	if (class_name == "")
-		return parent_name + " has child(level " + std::to_string(node->getLevel()) +") class name is nullptr!";
-	auto child_name = class_name+std::to_string(node->getUUID());
-	auto type = Tools::GetEnumToString(node->getNodeType());
-	if (type == "")
-		return child_name+" type is nullptr!";
+	auto parent_name = parent->cd->className+std::to_string(parent->uuid);
+	auto class_name = node->cd->className;
+	auto child_name = class_name+std::to_string(node->uuid);
+	auto e_type = node->cd->type;
+	auto type = Tools::GetEnumToString(e_type);
 
-	m_FileBuff += FileCreateNode(node->getNodeType(), child_name, class_name);
-	switch (node->getNodeType())
+	m_FileBuff += FileCreateNode(e_type, child_name, class_name);
+	switch (e_type)
 	{
 	case NodeType::Action:
 	case NodeType::Condition:
 	case NodeType::Decorate:
-		m_FileBuff += FileSetAttr((ClassData*)node->getUserData(), child_name);
+		m_FileBuff += FileSetAttr(node->cd, child_name);
 		break;
 	default:
-		m_FileBuff += FileSetAbort(node->getAbortType(), child_name);
+		m_FileBuff += FileSetAbort(node->abort_type, child_name);
 		break;
 	}
 	m_FileBuff += FileAddChild(child_name, parent_name);
 
 	std::string ret = "successs!!!";
-	for (int i = 0; i<node->GetChild().size(); i++)
+	for (int i = 0; i<node->child_list.size(); i++)
 	{
-		ret = GetChild(node, node->GetChild()[i]);
+		ret = GetChild(node, node->child_list[i]);
 		if (ret != "successs!!!")
 			break;
 	}

@@ -90,7 +90,7 @@ void HelloWorld::onCreateCode(cocos2d::Ref* ref)
 	m_bk->setVisible(true);
 	auto root = BtNodeManager::getSingleton().getRootNode();
 	XmlFile::getSingleton().WriteFile(root,"bt.xml");
-	auto des = WriteCodeFile::getSingleton().WriteFile(root,"bt_tree.txt");
+	auto des = WriteCodeFile::getSingleton().WriteFile("bt.xml", "bt_tree.txt");
 	m_text->setString(des);
 	//WriteFile();
 }

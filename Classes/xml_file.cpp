@@ -24,9 +24,10 @@ tinyxml2::XMLNode* XmlFile::GetChild(BtNode* node)
 	auto class_type = node->getNodeType();
 	auto abort_type = node->getAbortType();
 	auto text = node->getClassName();
-	int uuid = node->getUUID();
+	auto uuid = node->getUUID();
 	auto pos = node->getPosition();
 	auto class_data = (ClassData*)node->getUserData();
+	auto child_list = node->GetChild();
 
 	auto n_node = m_pDoc->NewElement("node");
 	{
@@ -52,9 +53,9 @@ tinyxml2::XMLNode* XmlFile::GetChild(BtNode* node)
 
 		// 子节点
 		auto n_child = m_pDoc->NewElement("child");
-		for (int i = 0; i< node->GetChild().size(); i++)
+		for (int i = 0; i< child_list.size(); i++)
 		{
-			auto n = node->GetChild()[i];
+			auto n = child_list[i];
 			auto node = GetChild(n);
 			n_child->LinkEndChild(node);
 		}
@@ -80,8 +81,8 @@ NodeInfo *XmlFile::CreateChild(tinyxml2::XMLElement* node)
 	ClassData *cd = new ClassData();
 	cd->type = (NodeType)node->IntAttribute("type");
 	cd->className = node->Attribute("class_name");
-	int abort_type = node->IntAttribute("abort");
-	int uuid = node->IntAttribute("uuid");
+	auto abort_type = node->IntAttribute("abort");
+	auto uuid = node->IntAttribute("uuid");
 	_node->pos.x = node->IntAttribute("x");
 	_node->pos.y = node->IntAttribute("y");
 
