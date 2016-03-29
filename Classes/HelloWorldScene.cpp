@@ -101,8 +101,8 @@ void HelloWorld::onChangeAbortType(cocos2d::Ref* obj)
 	if (node)
 	{
 		node->onChangeAbortType(nullptr);
-		updateInfo();
 	}
+	updateInfo();
 }
 
 void HelloWorld::onDoubleClick(cocos2d::Ref* ref)
@@ -176,7 +176,7 @@ void HelloWorld::updateInfo()
 		for (int i = 0; i<attrList.size(); i++)
 		{
 			auto item = AttrItem::create();
-			item->SetAttr(attrList[0]);
+			item->SetAttr(attrList[i]);
 			m_AttrList->addChild(item);
 		}
 		m_AttrList->refreshView();

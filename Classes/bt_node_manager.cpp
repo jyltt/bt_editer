@@ -29,6 +29,8 @@ void BtNodeManager::DeleteNode(BtNode* node)
 			{
 				setChoseNode(nullptr);
 			}
+			if (m_RootNode->getUUID() == node->getUUID())
+				return;
 			(*it)->Delete();
 			m_NodeList.erase(it);
 			break;

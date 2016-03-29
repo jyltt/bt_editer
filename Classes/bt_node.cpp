@@ -207,8 +207,9 @@ void BtNode::onDraw()
 
 bool BtNode::isTouch(Vec2 vec)
 {
-	auto local_pos = m_LyotBk->convertToNodeSpace(vec);
-	return m_LyotBk->getBoundingBox().containsPoint(local_pos);
+	auto local_pos = convertToNodeSpace(vec);
+	auto box = m_LyotBk->getBoundingBox();
+	return box.containsPoint(local_pos);
 }
 void BtNode::addNode(BtNode* node)
 {
