@@ -58,8 +58,11 @@ bool HelloWorld::init()
 
 	//CreateNode();
 	auto node = XmlFile::getSingleton().ReadFileToNodeInfo("bt.xml");
-	auto root = CreateNodeByInfo(node);
-	BtNodeManager::getSingleton().setRootNode(root);
+    if (node)
+    {
+        auto root = CreateNodeByInfo(node);
+        BtNodeManager::getSingleton().setRootNode(root);
+    }
 
     return true;
 }
