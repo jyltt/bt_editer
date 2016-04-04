@@ -12,15 +12,15 @@ std::string WriteCodeFile::WriteFile(std::string xml_file, std::string file_name
 	auto _nodeInfo = XmlFile::getSingleton().ReadFileToNodeInfo(xml_file);
 	if (_nodeInfo == nullptr)
 		return "no find file:"+xml_file;
-	auto class_name = _nodeInfo->cd->className;
+	auto class_name = _nodeInfo->cd.className;
 	if (class_name == "")
 		return "rootNode class name is nullptr!";
 	auto name = class_name + std::to_string(_nodeInfo->uuid);
-	auto type = Tools::GetEnumToString(_nodeInfo->cd->type);
+	auto type = Tools::GetEnumToString(_nodeInfo->cd.type);
 	if (type == "")
 		return "rootNode type is nullptr!";
 
-	m_FileBuff = FileCreateNode(_nodeInfo->cd->type, name, class_name);
+	m_FileBuff = FileCreateNode(_nodeInfo->cd.type, name, class_name);
 	m_FileBuff += FileSetAbort(_nodeInfo->abort_type, name);
 	char buff[300];
 	sprintf(buff, "m_root = %s; \n", name.c_str());
@@ -46,10 +46,10 @@ std::string WriteCodeFile::WriteFile(std::string xml_file, std::string file_name
 
 std::string WriteCodeFile::GetChild(NodeInfo* parent, NodeInfo* node)
 {
-	auto parent_name = parent->cd->className+std::to_string(parent->uuid);
-	auto class_name = node->cd->className;
+	auto parent_name = parent->cd.className+std::to_string(parent->uuid);
+	auto class_name = node->cd.className;
 	auto child_name = class_name+std::to_string(node->uuid);
-	auto e_type = node->cd->type;
+	auto e_type = node->cd.type;
 	auto type = Tools::GetEnumToString(e_type);
 
 	m_FileBuff += FileCreateNode(e_type, child_name, class_name);
@@ -103,11 +103,11 @@ std::string WriteCodeFile::FileSetAbort(AbortType type, std::string var)
 	sprintf(buff, "%s->setAbortType(EBTAbortType::%s);\n", var.c_str(), Tools::GetEnumToString(type).c_str());
 	return buff;
 }
-std::string WriteCodeFile::FileSetAttr(ClassData *data, std::string var)
+std::string WriteCodeFile::FileSetAttr(const ClassData &data, std::string var)
 {
 	std::string attr_str = "";
 	char buff[600];
-	auto &attr_list = data->attrList;
+	auto &attr_list = data.attrList;
 	for (auto attr:attr_list)
 	{
 		switch (attr->type)

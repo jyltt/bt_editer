@@ -2,7 +2,7 @@
 #define BT_NODE_H_
 
 #include "cocos2d.h"
-#include "enum.h"
+#include "struct.h"
 #include <vector>
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
@@ -32,11 +32,13 @@ public:
 	void onChangeNodeType(Ref* obj);
 	void onChangeAbortType(Ref* obj);
 	CC_SYNTHESIZE(BtNode*, m_ParentNode, ParentNode);
-	CC_SYNTHESIZE(int, m_uuid,UUID);
+	CC_SYNTHESIZE(ClassData*, m_BtInfo, ClassData);
+	CC_PROPERTY(int, m_uuid,UUID);
 	CC_PROPERTY(int, m_Index, Level);
 	CC_PROPERTY(NodeType, m_ENodeType,NodeType);
 	CC_PROPERTY(AbortType, m_EAbortType,AbortType);
 	CC_PROPERTY(std::string, m_Name, ClassName);
+    void setInfo(NodeInfo* info);
 	std::vector<BtNode*> GetChild();
 protected:
 	struct Line

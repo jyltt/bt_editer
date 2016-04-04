@@ -83,7 +83,7 @@ struct ClassData
 };
 struct NodeInfo
 {
-	ClassData *cd;
+	ClassData cd;
 	int uuid;
 	cocos2d::Vec2 pos;
 	AbortType abort_type;

@@ -26,7 +26,7 @@ tinyxml2::XMLNode* XmlFile::GetChild(BtNode* node)
 	auto text = node->getClassName();
 	auto uuid = node->getUUID();
 	auto pos = node->getPosition();
-	auto class_data = (ClassData*)node->getUserData();
+	auto class_data = node->getClassData();
 	auto child_list = node->GetChild();
 
 	auto n_node = m_pDoc->NewElement("node");
@@ -78,9 +78,9 @@ NodeInfo* XmlFile::ReadFileToNodeInfo(std::string name)
 NodeInfo *XmlFile::CreateChild(tinyxml2::XMLElement* node)
 {
 	NodeInfo *_node = new NodeInfo();
-	ClassData *cd = new ClassData();
-	cd->type = (NodeType)node->IntAttribute("type");
-	cd->className = node->Attribute("class_name");
+	//ClassData *cd = new ClassData();
+	_node->cd.type = (NodeType)node->IntAttribute("type");
+	_node->cd.className = node->Attribute("class_name");
 	auto abort_type = node->IntAttribute("abort");
 	auto uuid = node->IntAttribute("uuid");
 	_node->pos.x = node->IntAttribute("x");
@@ -96,12 +96,12 @@ NodeInfo *XmlFile::CreateChild(tinyxml2::XMLElement* node)
 			a->name = attr->Attribute("attr_name");
 			a->str = attr->Attribute("attr_value");
 			a->type = (AttrType)attr->IntAttribute("attr_type");
-			cd->attrList.push_back(a);
+			_node->cd.attrList.push_back(a);
 			attr = attr->NextSiblingElement();
 		}
 	}
 	_node->abort_type = (AbortType)abort_type;
-	_node->cd = cd;
+	//_node->cd = cd;
 	_node->uuid = uuid;
 
 	child_node = child_node->NextSiblingElement("child");

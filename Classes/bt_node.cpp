@@ -9,7 +9,6 @@ USING_NS_CC::ui;
 
 BtNode::BtNode()
 	:m_AddLine(nullptr)
-	, m_ENodeType(NodeType::Sequence)
 	, m_EAbortType(AbortType::none)
 	, m_Index(-1)
 	, m_ParentNode(nullptr)
@@ -41,12 +40,23 @@ BtNode::BtNode()
 	m_labAbortType = (ui::Text*)m_LyotBk->getChildByName("abort_type");
 }
 
+void BtNode::setInfo(NodeInfo *info)
+{
+    auto &data = info->cd;
+    setClassData(&data);
+    setClassName(data.className);
+    setNodeType(data.type);
+	setAbortType(info->abort_type);
+	setUUID(info->uuid);
+    setPosition(info->pos);
+}
+
 void BtNode::onChangeNodeType(Ref* obj)
 {
-	m_ENodeType = Tools::GetNextEnum(m_ENodeType);
-	std::string name = Tools::GetEnumToString(m_ENodeType);
+	m_BtInfo->type = Tools::GetNextEnum(m_BtInfo->type);
+	std::string name = Tools::GetEnumToString(m_BtInfo->type);
 	m_labNodeType->setString(name);
-	NodeTypeCfg(m_ENodeType);
+	NodeTypeCfg(m_BtInfo->type);
 }
 
 void BtNode::onChangeAbortType(Ref* obj)
@@ -220,7 +230,7 @@ void BtNode::addNode(BtNode* node)
 	{
 		node->getParentNode()->removeNode(node);
 	}
-	if (m_ENodeType != NodeType::Decorate)
+	if (m_BtInfo->type != NodeType::Decorate)
 	{
 		m_ChildNode.push_back(node);
 		node->setParentNode(this);
@@ -290,6 +300,14 @@ int BtNode::getLevel()
 {
 	return m_Index;
 }
+void BtNode::setUUID(int var)
+{
+    m_uuid = var;
+}
+int BtNode::getUUID()
+{
+    return m_uuid;
+}
 
 void BtNode::setAbortType(AbortType var)
 {
@@ -305,19 +323,19 @@ AbortType BtNode::getAbortType()
 
 NodeType BtNode::getNodeType()
 {
-	return m_ENodeType;
+	return m_BtInfo->type;
 }
 
 void BtNode::setNodeType(NodeType node_type)
 {
-	m_ENodeType = node_type;
-	std::string name = Tools::GetEnumToString(m_ENodeType);
+	m_BtInfo->type = node_type;
+	std::string name = Tools::GetEnumToString(m_BtInfo->type);
 	m_labNodeType->setString(name);
-	NodeTypeCfg(m_ENodeType);
+	NodeTypeCfg(m_BtInfo->type);
 }
 void BtNode::NodeTypeCfg(NodeType type)
 {
-	switch (m_ENodeType)
+	switch (m_BtInfo->type)
 	{
 	case NodeType::Sequence:
 	case NodeType::Selector:
@@ -357,6 +375,4 @@ std::vector<BtNode*> BtNode::GetChild()
 BtNode::~BtNode()
 {
 	ClearData();
-	if (getUserData())
-		delete getUserData();
 }

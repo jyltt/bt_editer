@@ -70,15 +70,15 @@ bool HelloWorld::init()
 BtNode* HelloWorld::CreateNodeByInfo(NodeInfo *node)
 {
 	BtNode*_node;
-	ClassData *cd = node->cd;
-	AbortType abort_type = node->abort_type;
-	int uuid = node->uuid;
-	Vec2 pos = node->pos;
+	//auto *cd = &node->cd;
+	//AbortType abort_type = node->abort_type;
+	//int uuid = node->uuid;
+	//Vec2 pos = node->pos;
 
-	_node = SetNode(pos, cd);
-	_node->setAbortType(abort_type);
-	_node->setUserData(cd);
-	_node->setUUID(uuid);
+	_node = SetNode(node);
+	//_node->setAbortType(abort_type);
+	//_node->setUserData(cd);
+	//_node->setUUID(uuid);
 
 	for (auto n_child : node->child_list)
 	{
@@ -125,15 +125,28 @@ void HelloWorld::onDoubleClick(cocos2d::Ref* ref)
 	m_RightList->setShow(true);
 }
 
-BtNode *HelloWorld::SetNode(cocos2d::Vec2 vec,ClassData *node_info)
+BtNode *HelloWorld::SetNode(NodeInfo *node_info)
+{
+    auto node = _CreateNode();
+    node->setInfo(node_info);
+
+	return node;
+}
+BtNode *HelloWorld::SetNode(Vec2 vec, ClassData* node_info)
+{
+    auto node = _CreateNode();
+	node->setPosition(vec);
+	node->setClassData(node_info);
+	node->setClassName(node_info->className);
+	node->setNodeType(node_info->type);
+
+	return node;
+}
+BtNode *HelloWorld::_CreateNode()
 {
 	auto node = BtNodeManager::getSingleton().CreateNode();
 	node->setClickCallback(CC_CALLBACK_1(HelloWorld::onChoseNode, this));
-	node->setPosition(vec);
-	node->setClassName(node_info->className);
-	node->setNodeType(node_info->type);
-	node->setUserData(node_info);
-
+    
 	m_scroll->addChild(node);
 	if (m_RightList)
 	{
@@ -141,7 +154,7 @@ BtNode *HelloWorld::SetNode(cocos2d::Vec2 vec,ClassData *node_info)
 		m_RightList->removeFromParent();
 		m_RightList = nullptr;
 	}
-	return node;
+    return node;
 }
 
 void HelloWorld::onChoseNode(cocos2d::Ref* obj)
@@ -155,7 +168,7 @@ void HelloWorld::updateInfo()
 	auto node = BtNodeManager::getSingleton().getChoseNode();
 	if (node)
 	{
-		auto info = (ClassData*)node->getUserData();
+		auto info = node->getClassData();
 		m_fileClassName->setString(node->getClassName());
 		switch (node->getNodeType())
 		{

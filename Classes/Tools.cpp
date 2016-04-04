@@ -68,6 +68,8 @@ NodeType Tools::GetNextEnum(NodeType type)
 		return NodeType::Decorate;
 	case NodeType::Decorate:
 		return NodeType::Sequence;
+    default:
+		return NodeType::Sequence;
 	}
 }
 
@@ -82,6 +84,8 @@ AbortType Tools::GetNextEnum(AbortType type)
 	case AbortType::priority:
 		return AbortType::both;
 	case AbortType::both:
+		return AbortType::none;
+    default:
 		return AbortType::none;
 	}
 }
