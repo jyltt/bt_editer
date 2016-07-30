@@ -27,9 +27,6 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Tools.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -54,15 +51,21 @@
     <ClCompile Include="..\Classes\xml_file.cpp">
       <Filter>file</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tip_layer.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\save_dlg.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Singleton.h">
@@ -97,6 +100,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\xml_file.h">
       <Filter>file</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HelloWorldScene.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tip_layer.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\save_dlg.h">
+      <Filter>ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

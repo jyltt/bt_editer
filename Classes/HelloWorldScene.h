@@ -7,6 +7,8 @@
 #include "tinyxml2/tinyxml2.h"
 #include "menu_list.h"
 
+class SaveDlg;
+
 class HelloWorld : public cocos2d::Layer
 {
 public:
@@ -24,7 +26,6 @@ public:
 private:
 	void onDoubleClick(cocos2d::Ref* ref);
 	void onClick(cocos2d::Ref* ref);
-	void onClose(cocos2d::Ref* ref);
 	void onChoseNode(cocos2d::Ref* obj);
 	void onChangeAbortType(cocos2d::Ref* obj);
 	void onCreateCode(cocos2d::Ref* ref);
@@ -38,8 +39,6 @@ private:
 	ui::ScrollView* m_scroll;
 	ui::ScrollView *m_scrInfo;
 	ui::ListView *m_AttrList;
-	ui::Layout *m_bk;
-	ui::Text *m_text;
 	ui::Text *m_fileClassName;
 	ui::Text *m_labNodeType;
 	ui::TextField *m_labNote;
@@ -50,6 +49,7 @@ private:
 	tinyxml2::XMLDocument *m_pDoc;
 	bool m_isClick;
 	MenuList *m_RightList=nullptr;
+	SaveDlg *m_dlgSave=nullptr;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

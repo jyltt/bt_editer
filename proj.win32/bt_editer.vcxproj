@@ -146,6 +146,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\menu_list.cpp" />
     <ClCompile Include="..\Classes\read_file.cpp" />
+    <ClCompile Include="..\Classes\save_dlg.cpp" />
+    <ClCompile Include="..\Classes\tip_layer.cpp" />
     <ClCompile Include="..\Classes\Tools.cpp" />
     <ClCompile Include="..\Classes\write_code_file.cpp" />
     <ClCompile Include="..\Classes\xml_file.cpp" />
@@ -160,8 +162,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="..\Classes\bt_Node.h" />
     <ClInclude Include="..\Classes\menu_list.h" />
     <ClInclude Include="..\Classes\read_file.h" />
+    <ClInclude Include="..\Classes\save_dlg.h" />
     <ClInclude Include="..\Classes\Singleton.h" />
     <ClInclude Include="..\Classes\struct.h" />
+    <ClInclude Include="..\Classes\tip_layer.h" />
     <ClInclude Include="..\Classes\Tools.h" />
     <ClInclude Include="..\Classes\write_code_file.h" />
     <ClInclude Include="..\Classes\xml_file.h" />

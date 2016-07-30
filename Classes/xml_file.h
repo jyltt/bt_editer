@@ -12,7 +12,7 @@ class XmlFile
 	Singleton(XmlFile);
 public:
 	NodeInfo* ReadFileToNodeInfo(std::string name);
-	void WriteFile(BtNode *root,std::string name);
+	int WriteFile(BtNode *root,std::string name);
 protected:
 	tinyxml2::XMLNode* GetChild(BtNode* node);
 	NodeInfo* CreateChild(tinyxml2::XMLElement* node);

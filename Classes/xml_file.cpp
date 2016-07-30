@@ -6,8 +6,12 @@ XmlFile::XmlFile()
 XmlFile::~XmlFile()
 { }
 
-void XmlFile::WriteFile(BtNode* root,std::string name)
+int XmlFile::WriteFile(BtNode* root,std::string name)
 {
+	name = "cfg/" + name;
+	if (name.find(".xml", name.length()-4) == std::string::npos)
+		return 20;
+
 	m_pDoc = new tinyxml2::XMLDocument();
 	auto pDel = m_pDoc->NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8\"");
 	m_pDoc->LinkEndChild(pDel);
@@ -15,8 +19,10 @@ void XmlFile::WriteFile(BtNode* root,std::string name)
 	auto node = GetChild(root);
 	m_pDoc->LinkEndChild(node);
 
-	m_pDoc->SaveFile(name.c_str());
+	auto error = m_pDoc->SaveFile(name.c_str());
+
 	delete m_pDoc;
+	return error;
 }
 
 tinyxml2::XMLNode* XmlFile::GetChild(BtNode* node)

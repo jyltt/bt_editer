@@ -7,6 +7,7 @@
 #include "attr_item.h"
 #include "write_code_file.h"
 #include "xml_file.h"
+#include "save_dlg.h"
 
 USING_NS_CC;
 using namespace cocostudio::timeline;
@@ -36,11 +37,6 @@ bool HelloWorld::init()
 
 	auto btn = (ui::Button*)rootNode->getChildByName("create");
 	btn->addClickEventListener(CC_CALLBACK_1(HelloWorld::onCreateCode, this));
-
-	m_bk = (ui::Layout *)rootNode->getChildByName("message");
-	m_bk->addClickEventListener(CC_CALLBACK_1(HelloWorld::onClose, this));
-	m_bk->setVisible(false);
-	m_text = (ui::Text *)m_bk->getChildByName("text");
 
 	m_btnOpen = (ui::Button *)rootNode->getChildByName("open");
 	m_btnOpen->addClickEventListener(CC_CALLBACK_1(HelloWorld::onOpenInfo, this));
@@ -90,12 +86,17 @@ BtNode* HelloWorld::CreateNodeByInfo(NodeInfo *node)
 
 void HelloWorld::onCreateCode(cocos2d::Ref* ref)
 {
-	m_bk->setVisible(true);
-	auto root = BtNodeManager::getSingleton().getRootNode();
-	XmlFile::getSingleton().WriteFile(root,"bt.xml");
-	auto des = WriteCodeFile::getSingleton().WriteFile("bt.xml", "bt_tree.txt");
-	m_text->setString(des);
+	//auto root = BtNodeManager::getSingleton().getRootNode();
+	//XmlFile::getSingleton().WriteFile(root,"bt.xml");
+	//auto des = WriteCodeFile::getSingleton().WriteFile("bt.xml", "bt_tree.txt");
+	//m_text->setString(des);
 	//WriteFile();
+	if (m_dlgSave == nullptr)
+	{
+		m_dlgSave = SaveDlg::create();
+		addChild(m_dlgSave);
+	}
+	m_dlgSave->setVisible(true);
 }
 
 void HelloWorld::onChangeAbortType(cocos2d::Ref* obj)
@@ -228,11 +229,6 @@ void HelloWorld::onClick(cocos2d::Ref* ref)
 void HelloWorld::funcallback(float time)
 {
 	m_isClick = false;
-}
-
-void HelloWorld::onClose(cocos2d::Ref* ref)
-{
-	m_bk->setVisible(false);
 }
 
 void HelloWorld::onCloseInfo(cocos2d::Ref* ref)
