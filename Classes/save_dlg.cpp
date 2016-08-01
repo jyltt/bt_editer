@@ -48,13 +48,13 @@ void SaveDlg::onSave(Ref* pSender)
 	}
 }
 
+void SaveDlg::SetTipsDlg(TipLayer* node)
+{
+	m_dlgTips = node;
+}
+
 void SaveDlg::ShowDlg(std::string name)
 {
-	if (m_dlgTips == nullptr)
-	{
-		m_dlgTips = TipLayer::create();
-		getParent()->addChild(m_dlgTips);
-	}
 	m_dlgTips->ShowDlg(name);
 }
 

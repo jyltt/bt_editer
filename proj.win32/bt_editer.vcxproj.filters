@@ -60,6 +60,9 @@
     <ClCompile Include="..\Classes\save_dlg.cpp">
       <Filter>ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\open_dlg.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -108,6 +111,9 @@
       <Filter>ui</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\save_dlg.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\open_dlg.h">
       <Filter>ui</Filter>
     </ClInclude>
   </ItemGroup>

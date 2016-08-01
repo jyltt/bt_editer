@@ -10,7 +10,7 @@ int XmlFile::WriteFile(BtNode* root,std::string name)
 {
 	name = "cfg/" + name;
 	if (name.find(".xml", name.length()-4) == std::string::npos)
-		return 20;
+		name = name + ".xml";
 
 	m_pDoc = new tinyxml2::XMLDocument();
 	auto pDel = m_pDoc->NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8\"");

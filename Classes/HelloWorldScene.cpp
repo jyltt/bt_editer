@@ -8,6 +8,8 @@
 #include "write_code_file.h"
 #include "xml_file.h"
 #include "save_dlg.h"
+#include "tip_layer.h"
+#include "open_dlg.h"
 
 USING_NS_CC;
 using namespace cocostudio::timeline;
@@ -42,6 +44,9 @@ bool HelloWorld::init()
 	m_btnOpen->addClickEventListener(CC_CALLBACK_1(HelloWorld::onOpenInfo, this));
 	m_btnOpen->setVisible(false);
 
+	m_btnOpenFile = (ui::Button *)rootNode->getChildByName("btn_open");
+	m_btnOpenFile->addClickEventListener(CC_CALLBACK_1(HelloWorld::onOpenFile, this));
+
 	m_scrInfo = (ui::ScrollView*)rootNode->getChildByName("info");
 	m_fileClassName = (ui::Text*)m_scrInfo->getChildByName("class_name");
 	m_labNodeType = (ui::Text*)m_scrInfo->getChildByName("node_type");
@@ -53,7 +58,7 @@ bool HelloWorld::init()
 	m_AttrList = (ui::ListView*)m_scrInfo->getChildByName("attr_list");
 
 	//CreateNode();
-	auto node = XmlFile::getSingleton().ReadFileToNodeInfo("bt.xml");
+	auto node = XmlFile::getSingleton().ReadFileToNodeInfo("cfg/bt.xml");
     if (node)
     {
         auto root = CreateNodeByInfo(node);
@@ -91,12 +96,7 @@ void HelloWorld::onCreateCode(cocos2d::Ref* ref)
 	//auto des = WriteCodeFile::getSingleton().WriteFile("bt.xml", "bt_tree.txt");
 	//m_text->setString(des);
 	//WriteFile();
-	if (m_dlgSave == nullptr)
-	{
-		m_dlgSave = SaveDlg::create();
-		addChild(m_dlgSave);
-	}
-	m_dlgSave->setVisible(true);
+	GetSaveDlg()->setVisible(true);
 }
 
 void HelloWorld::onChangeAbortType(cocos2d::Ref* obj)
@@ -243,7 +243,45 @@ void HelloWorld::onOpenInfo(cocos2d::Ref* ref)
 	m_btnOpen->setVisible(false);
 }
 
+void HelloWorld::onOpenFile(cocos2d::Ref* ref)
+{
+	//BtNodeManager::getSingleton().ClearNode();
+	GetOpenDlg()->setVisible(true);
+}
+
 void HelloWorld::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 {
 	BtNodeManager::getSingleton().onDraw();
+}
+
+TipLayer *HelloWorld::GetTipsDlg()
+{
+	if (m_TipsDlg == nullptr)
+	{
+		m_TipsDlg = TipLayer::create();
+		addChild(m_TipsDlg);
+	}
+	return m_TipsDlg;
+}
+
+OpenDlg *HelloWorld::GetOpenDlg()
+{
+	if (m_OpenDlg == nullptr)
+	{
+		m_OpenDlg = OpenDlg::create();
+		m_OpenDlg->SetTipsDlg(GetTipsDlg());
+		addChild(m_OpenDlg);
+	}
+	return m_OpenDlg;
+}
+
+SaveDlg *HelloWorld::GetSaveDlg()
+{
+	if (m_dlgSave == nullptr)
+	{
+		m_dlgSave = SaveDlg::create();
+		m_dlgSave->SetTipsDlg(GetTipsDlg());
+		addChild(m_dlgSave);
+	}
+	return m_dlgSave;
 }

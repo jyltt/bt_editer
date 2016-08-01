@@ -18,6 +18,7 @@ public:
 	BtNode* TouchNode(Vec2 vec);
 	void onDraw();
 	BtNode* FindBtNode(int uuid);
+	void ClearNode();
 protected:
 private:
 	int id = 0;

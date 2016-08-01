@@ -14,8 +14,8 @@ bool TipLayer::init()
 
 	m_layBk = (ui::Layout *)_ui->getChildByName("message");
 	m_layBk->addClickEventListener(CC_CALLBACK_1(TipLayer::onClickBackground, this));
-	m_layBk->setVisible(false);
 	m_labDes = (ui::Text *)m_layBk->getChildByName("text");
+	setVisible(false);
 
 	return true;
 }

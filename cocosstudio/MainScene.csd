@@ -136,13 +136,28 @@
             <ColorVector ScaleY="1.0000" />
             <InnerNodeSize Width="200" Height="640" />
           </AbstractNodeData>
-          <AbstractNodeData Name="create" CanEdit="False" ActionTag="1821852643" Tag="24" IconVisible="False" LeftMargin="996.0554" RightMargin="39.9446" TopMargin="560.5634" BottomMargin="39.4366" TouchEnable="True" FontSize="14" ButtonText="生成代码" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="16" Scale9Height="14" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="ButtonObjectData">
+          <AbstractNodeData Name="create" ActionTag="1821852643" Tag="24" IconVisible="False" LeftMargin="996.0554" RightMargin="39.9446" TopMargin="560.5634" BottomMargin="39.4366" TouchEnable="True" FontSize="14" ButtonText="保存" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="16" Scale9Height="14" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="ButtonObjectData">
             <Size X="100.0000" Y="40.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position X="1046.0554" Y="59.4366" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.9208" Y="0.0929" />
+            <PreSize X="0.0880" Y="0.0625" />
+            <TextColor A="255" R="65" G="65" B="70" />
+            <DisabledFileData Type="Default" Path="Default/Button_Disable.png" Plist="" />
+            <PressedFileData Type="Default" Path="Default/Button_Press.png" Plist="" />
+            <NormalFileData Type="Default" Path="Default/Button_Normal.png" Plist="" />
+            <OutlineColor A="255" R="255" G="0" B="0" />
+            <ShadowColor A="255" R="110" G="110" B="110" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="btn_open" ActionTag="158649383" Tag="31" IconVisible="False" LeftMargin="995.2230" RightMargin="40.7770" TopMargin="507.7222" BottomMargin="92.2778" TouchEnable="True" FontSize="14" ButtonText="打开" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="16" Scale9Height="14" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="ButtonObjectData">
+            <Size X="100.0000" Y="40.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="1045.2230" Y="112.2778" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.9201" Y="0.1754" />
             <PreSize X="0.0880" Y="0.0625" />
             <TextColor A="255" R="65" G="65" B="70" />
             <DisabledFileData Type="Default" Path="Default/Button_Disable.png" Plist="" />

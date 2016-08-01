@@ -8,6 +8,8 @@
 #include "menu_list.h"
 
 class SaveDlg;
+class TipLayer;
+class OpenDlg;
 
 class HelloWorld : public cocos2d::Layer
 {
@@ -31,10 +33,14 @@ private:
 	void onCreateCode(cocos2d::Ref* ref);
 	void onCloseInfo(cocos2d::Ref* ref);
 	void onOpenInfo(cocos2d::Ref* ref);
+	void onOpenFile(cocos2d::Ref* ref);
 	void updateInfo();
 	void funcallback(float time);
     BtNode *_CreateNode();
 	BtNode* CreateNodeByInfo(NodeInfo *node);
+	TipLayer *GetTipsDlg();
+	OpenDlg *GetOpenDlg();
+	SaveDlg *GetSaveDlg();
 
 	ui::ScrollView* m_scroll;
 	ui::ScrollView *m_scrInfo;
@@ -45,11 +51,14 @@ private:
 	ui::Button *m_btnAbortType;
 	ui::Button *m_btnClose;
 	ui::Button *m_btnOpen;
+	ui::Button *m_btnOpenFile;
 
 	tinyxml2::XMLDocument *m_pDoc;
 	bool m_isClick;
 	MenuList *m_RightList=nullptr;
 	SaveDlg *m_dlgSave=nullptr;
+	TipLayer *m_TipsDlg = nullptr;
+	OpenDlg *m_OpenDlg = nullptr;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

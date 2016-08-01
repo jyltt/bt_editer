@@ -15,6 +15,8 @@ public:
 	CREATE_FUNC(SaveDlg);
 	virtual bool init();
 
+	void SetTipsDlg(TipLayer* node);
+
 private:
 	void onSave(Ref* pSender);
 	void onCancel(Ref* pSender);

@@ -6,7 +6,7 @@ def main():
 	filepath = "cfg";
 	file = ReadDir.GetDir();
 	file.Open(filepath);
-	file.WriteFile("x.txt")
+	file.WriteFile("../../xxy003/Classes/config/bt_list.cpp")
 
 if __name__ == "__main__":
 	try:

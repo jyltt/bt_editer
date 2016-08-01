@@ -69,3 +69,14 @@ void BtNodeManager::onDraw()
 		bt->onDraw();
 	}
 }
+
+void BtNodeManager::ClearNode()
+{
+	setChoseNode(nullptr);
+	for (auto it = m_NodeList.begin(); it != m_NodeList.end(); it++)
+	{
+		(*it)->Delete();
+	}
+	m_NodeList.clear();
+	m_RootNode = nullptr;
+}
