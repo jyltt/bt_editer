@@ -58,14 +58,18 @@ bool HelloWorld::init()
 	m_AttrList = (ui::ListView*)m_scrInfo->getChildByName("attr_list");
 
 	//CreateNode();
-	auto node = XmlFile::getSingleton().ReadFileToNodeInfo("cfg/bt.xml");
+
+    return true;
+}
+
+void HelloWorld::OpenFile(std::string name)
+{
+	auto node = XmlFile::getSingleton().ReadFileToNodeInfo(name);
     if (node)
     {
         auto root = CreateNodeByInfo(node);
         BtNodeManager::getSingleton().setRootNode(root);
     }
-
-    return true;
 }
 
 BtNode* HelloWorld::CreateNodeByInfo(NodeInfo *node)
@@ -270,6 +274,7 @@ OpenDlg *HelloWorld::GetOpenDlg()
 	{
 		m_OpenDlg = OpenDlg::create();
 		m_OpenDlg->SetTipsDlg(GetTipsDlg());
+		m_OpenDlg->SetOpenFileFunc(CC_CALLBACK_1(HelloWorld::OpenFile, this));
 		addChild(m_OpenDlg);
 	}
 	return m_OpenDlg;

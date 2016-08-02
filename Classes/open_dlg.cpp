@@ -52,6 +52,9 @@ void OpenDlg::onClick(Ref* pSender)
 {
 	auto btn = (ui::Button*)pSender;
 	auto info = (FileInfo*)btn->getUserData();
+	BtNodeManager::getSingleton().ClearNode();
+	m_funcOpen(info->path);
+	setVisible(false);
 }
 
 void OpenDlg::ShowDlg(std::string name)
@@ -62,6 +65,11 @@ void OpenDlg::ShowDlg(std::string name)
 void OpenDlg::SetTipsDlg(TipLayer* node)
 {
 	m_dlgTips = node;
+}
+
+void OpenDlg::SetOpenFileFunc(std::function<void(std::string)> func)
+{
+	m_funcOpen = func;
 }
 
 void OpenDlg::onCancel(Ref* pSender)

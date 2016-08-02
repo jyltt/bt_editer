@@ -16,6 +16,7 @@ public:
 	virtual bool init();
 
 	void SetTipsDlg(TipLayer* node);
+	void SetOpenFileFunc(std::function<void(std::string)> func);
 private:
 	void UpdateItem();
 	void GetDoc(std::string filepath);
@@ -34,4 +35,5 @@ private:
 
 	TipLayer* m_dlgTips = nullptr;
 	std::vector<FileInfo*> m_fileList;
+	std::function<void(std::string)> m_funcOpen;
 };

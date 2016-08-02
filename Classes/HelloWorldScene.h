@@ -34,6 +34,7 @@ private:
 	void onCloseInfo(cocos2d::Ref* ref);
 	void onOpenInfo(cocos2d::Ref* ref);
 	void onOpenFile(cocos2d::Ref* ref);
+	void OpenFile(std::string name);
 	void updateInfo();
 	void funcallback(float time);
     BtNode *_CreateNode();
