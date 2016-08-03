@@ -47,6 +47,9 @@ bool HelloWorld::init()
 	m_btnOpenFile = (ui::Button *)rootNode->getChildByName("btn_open");
 	m_btnOpenFile->addClickEventListener(CC_CALLBACK_1(HelloWorld::onOpenFile, this));
 
+	m_btnClear = (ui::Button *)rootNode->getChildByName("btn_clear");
+	m_btnClear->addClickEventListener(CC_CALLBACK_1(HelloWorld::onClear, this));
+
 	m_scrInfo = (ui::ScrollView*)rootNode->getChildByName("info");
 	m_fileClassName = (ui::Text*)m_scrInfo->getChildByName("class_name");
 	m_labNodeType = (ui::Text*)m_scrInfo->getChildByName("node_type");
@@ -251,6 +254,11 @@ void HelloWorld::onOpenFile(cocos2d::Ref* ref)
 {
 	//BtNodeManager::getSingleton().ClearNode();
 	GetOpenDlg()->setVisible(true);
+}
+
+void HelloWorld::onClear(cocos2d::Ref* ref)
+{
+	BtNodeManager::getSingleton().ClearNode();
 }
 
 void HelloWorld::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)

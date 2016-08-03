@@ -34,6 +34,7 @@ private:
 	void onCloseInfo(cocos2d::Ref* ref);
 	void onOpenInfo(cocos2d::Ref* ref);
 	void onOpenFile(cocos2d::Ref* ref);
+	void onClear(cocos2d::Ref* ref);
 	void OpenFile(std::string name);
 	void updateInfo();
 	void funcallback(float time);
@@ -53,6 +54,7 @@ private:
 	ui::Button *m_btnClose;
 	ui::Button *m_btnOpen;
 	ui::Button *m_btnOpenFile;
+	ui::Button *m_btnClear;
 
 	tinyxml2::XMLDocument *m_pDoc;
 	bool m_isClick;
