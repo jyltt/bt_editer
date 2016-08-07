@@ -26,5 +26,6 @@ enum class AttrType
 {
 	number,
 	string,
+	boolean,
 };
 #endif

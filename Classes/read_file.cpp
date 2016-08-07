@@ -7,6 +7,7 @@
 #include <io.h>
 #endif
 #include <fstream>
+#include <regex>
 #include "Tools.h"
 
 ReadFile::ReadFile()
@@ -197,34 +198,58 @@ NodeType ReadFile::FindClassType(char* str,std::string class_name)
 		return NodeType::Error;
 }
 
-Attr *ReadFile::FindParam(char* str,ClassData* data)
+Attr *ReadFile::FindParam(std::string str,ClassData* data)
 {
-	int begin;
-	if (strstr(str, "CC_SYNTHESIZE("))
-		begin = sizeof("CC_SYNTHESIZE(");
-	else if (strstr(str, "CC_PROPERTY("))
-		begin = sizeof("CC_PROPERTY(");
+		//	buff = buff.substr(begin, end-begin);
+		//auto list = Tools::StringSegment(buff, ",");
+		//if (strstr(list[0].c_str(), "string"))
+		//{
+		//	attr->type = AttrType::string;
+		//	attr->name = list[2];
+		//}
+		//else
+		//{
+		//	attr->type = AttrType::number;
+		//	attr->name = list[2];
+		//}
+	std::match_results<std::string::const_iterator> result;
+	bool valid = false;
+	if (str.find("CC_SYNTHESIZE") != std::string::npos)
+	{
+		std::regex re(".*CC_SYNTHESIZE\\( *([a-zA-Z:]+) *,.*, *([a-zA-Z]+) *\\);");
+		valid = std::regex_match(str, result, re);
+	}
+	else if (str.find("CC_PROPERTY") != std::string::npos)
+	{
+		std::regex re(".*CC_PROPERTY\\( *([a-zA-Z:]+) *,.*, *([a-zA-Z]+) *\\);");
+		valid = std::regex_match(str, result, re);
+	}
+	else if (str.find("set") != std::string::npos || str.find("Set") != std::string::npos)
+	{
+		std::regex re(".*[sS]et([a-zA-Z]+)\\( *([a-zA-Z:]+) *.*\\);");
+		valid = std::regex_match(str, result, re);
+	}
 	else
 		return nullptr;
-	std::string buff = str;
-	auto end = buff.find(")");
-	if (end == buff.npos)
-		buff = buff.substr(begin);
-	else
-		buff = buff.substr(begin, end-begin);
-	auto list = Tools::StringSegment(buff, ",");
-	auto attr = new Attr();
-	if (strstr(list[0].c_str(), "string"))
+	if (valid)
 	{
-		attr->type = AttrType::string;
-		attr->name = list[2];
+		auto attr = new Attr();
+		if (strstr(result[1].str().c_str(), "string"))
+		{
+			attr->type = AttrType::string;
+		}
+		else if (strstr(result[1].str().c_str(), "bool"))
+		{
+			attr->type = AttrType::boolean;
+		}
+		else
+		{
+			attr->type = AttrType::number;
+		}
+		attr->name = result[2].str();
+		return attr;
 	}
-	else
-	{
-		attr->type = AttrType::number;
-		attr->name = list[2];
-	}
-	return attr;
+	return nullptr;
 }
 
 ClassData* ReadFile::GetNodeClassInfo(std::string name)

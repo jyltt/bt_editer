@@ -18,7 +18,7 @@ protected:
 	void ReadClass(std::string path);
 	std::string FindClass(char* str);
 	NodeType FindClassType(char* str,std::string class_name);
-	Attr *FindParam(char* str,ClassData* data);
+	Attr *FindParam(std::string str,ClassData* data);
 private:
 	FileList* m_DecTree;
 	std::map<std::string,ClassData*> m_ClassList;
