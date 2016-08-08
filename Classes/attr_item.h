@@ -17,10 +17,13 @@ public:
 protected:
 	void UpdateInfo();
 	void onChangeValue(Ref *ref, ui::TextField::EventType type);
+	void onChangeCheckValue(Ref *ref, ui::CheckBox::EventType type);
 
 	Attr *m_Attr;
 	ui::Text *m_Text;
 	ui::TextField *m_Value;
+	ui::CheckBox *m_Check;
+	ui::Layout *m_bk;
 	Node *m_RootNode;
 private:
 };

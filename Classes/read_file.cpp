@@ -143,9 +143,20 @@ void ReadFile::ReadClass(std::string path)
 					isPublic = false;
 				if (isPublic)
 				{
-					auto attr = FindParam(buff, data);
-					if (attr)
-						data->attrList.push_back(attr);
+					auto new_attr = FindParam(buff, data);
+					if (new_attr)
+					{
+						for (auto attr:data->attrList)
+						{
+							if (new_attr->name == attr->name)
+							{
+								delete new_attr;
+								new_attr = nullptr;
+							}
+						}
+						if (new_attr)
+							data->attrList.push_back(new_attr);
+					}
 				}
 
 			}
@@ -200,45 +211,41 @@ NodeType ReadFile::FindClassType(char* str,std::string class_name)
 
 Attr *ReadFile::FindParam(std::string str,ClassData* data)
 {
-		//	buff = buff.substr(begin, end-begin);
-		//auto list = Tools::StringSegment(buff, ",");
-		//if (strstr(list[0].c_str(), "string"))
-		//{
-		//	attr->type = AttrType::string;
-		//	attr->name = list[2];
-		//}
-		//else
-		//{
-		//	attr->type = AttrType::number;
-		//	attr->name = list[2];
-		//}
 	std::match_results<std::string::const_iterator> result;
+	std::string name;
+	std::string type;
 	bool valid = false;
 	if (str.find("CC_SYNTHESIZE") != std::string::npos)
 	{
 		std::regex re(".*CC_SYNTHESIZE\\( *([a-zA-Z:]+) *,.*, *([a-zA-Z]+) *\\);");
 		valid = std::regex_match(str, result, re);
+		name = result[2].str();
+		type = result[1].str();
 	}
 	else if (str.find("CC_PROPERTY") != std::string::npos)
 	{
 		std::regex re(".*CC_PROPERTY\\( *([a-zA-Z:]+) *,.*, *([a-zA-Z]+) *\\);");
 		valid = std::regex_match(str, result, re);
+		name = result[2].str();
+		type = result[1].str();
 	}
 	else if (str.find("set") != std::string::npos || str.find("Set") != std::string::npos)
 	{
 		std::regex re(".*[sS]et([a-zA-Z]+)\\( *([a-zA-Z:]+) *.*\\);");
 		valid = std::regex_match(str, result, re);
+		name = result[1].str();
+		type = result[2].str();
 	}
 	else
 		return nullptr;
 	if (valid)
 	{
 		auto attr = new Attr();
-		if (strstr(result[1].str().c_str(), "string"))
+		if (strstr(type.c_str(), "string"))
 		{
 			attr->type = AttrType::string;
 		}
-		else if (strstr(result[1].str().c_str(), "bool"))
+		else if (strstr(type.c_str(), "bool"))
 		{
 			attr->type = AttrType::boolean;
 		}
@@ -246,7 +253,7 @@ Attr *ReadFile::FindParam(std::string str,ClassData* data)
 		{
 			attr->type = AttrType::number;
 		}
-		attr->name = result[2].str();
+		attr->name = name;
 		return attr;
 	}
 	return nullptr;
