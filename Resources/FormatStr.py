@@ -57,6 +57,8 @@ def NodeAttrToStrs(node):
 				str += CreateLine(name+uuid+'->set'+attrName+'('+attrValue+');');
 			elif attrType == 1:#string
 				str += CreateLine(name+uuid+'->set'+attrName+'("'+attrValue+'");');
+			elif attrType == 2:#bool
+				str += CreateLine(name+uuid+'->set'+attrName+'('+attrValue+');');
 	return str;
 
 def NodeChildToStrs(node):

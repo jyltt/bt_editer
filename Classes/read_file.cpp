@@ -229,9 +229,9 @@ Attr *ReadFile::FindParam(std::string str,ClassData* data)
 		name = result[2].str();
 		type = result[1].str();
 	}
-	else if (str.find("set") != std::string::npos || str.find("Set") != std::string::npos)
+	else if (str.find("set") != std::string::npos)
 	{
-		std::regex re(".*[sS]et([a-zA-Z]+)\\( *([a-zA-Z:]+) *.*\\);");
+		std::regex re(".* set([a-zA-Z]+)\\( *([a-zA-Z:]+) *.*\\);");
 		valid = std::regex_match(str, result, re);
 		name = result[1].str();
 		type = result[2].str();
