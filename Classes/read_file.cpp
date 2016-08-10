@@ -170,13 +170,10 @@ std::string ReadFile::FindClass(char* str)
 	if(strstr(str, "class"))
 	{
 		std::string buff = str;
-		std::string className;
-		auto end = buff.find(":");
-		if (end == buff.npos)
-			className = buff.substr(6);
-		else
-			className = buff.substr(6, end-6);
-		return className.c_str();
+		std::regex re("class +(\\S+) *:?");
+		std::match_results<std::string::const_iterator> result;
+		bool valid = std::regex_match(buff, result, re);
+		return result[1].str();
 	}
 	return "";
 }
@@ -231,7 +228,7 @@ Attr *ReadFile::FindParam(std::string str,ClassData* data)
 	}
 	else if (str.find("set") != std::string::npos)
 	{
-		std::regex re(".* set([a-zA-Z]+)\\( *([a-zA-Z:]+) *.*\\);");
+		std::regex re(".* +set([a-zA-Z]+)\\([^, ]* *([a-zA-Z:^ ]+) +[^,]*\\);?");
 		valid = std::regex_match(str, result, re);
 		name = result[1].str();
 		type = result[2].str();
