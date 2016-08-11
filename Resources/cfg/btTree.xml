@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node class_name="BtParallelNode" type="2" abort="0" uuid="1" x="6015" y="3183">
+    <attr/>
+    <child>
+        <node class_name="BtSequenceNode" type="0" abort="0" uuid="2" x="5196" y="2985">
+            <attr/>
+            <child>
+                <node class_name="FL_BeginRound" type="4" abort="0" uuid="3" x="4918" y="2673">
+                    <attr/>
+                    <child/>
+                </node>
+                <node class_name="CL_Animation" type="4" abort="0" uuid="24" x="5215" y="2680">
+                    <attr>
+                        <attr attr_name="BeginAnimation" attr_value="begin_round.csb" attr_type="1"/>
+                    </attr>
+                    <child/>
+                </node>
+            </child>
+        </node>
+        <node class_name="BtSequenceNode" type="0" abort="0" uuid="4" x="5560" y="2943">
+            <attr/>
+            <child>
+                <node class_name="FL_EvnetCond" type="3" abort="0" uuid="7" x="5457" y="2674">
+                    <attr/>
+                    <child/>
+                </node>
+                <node class_name="FL_Evnet" type="4" abort="0" uuid="8" x="5681" y="2692">
+                    <attr/>
+                    <child/>
+                </node>
+            </child>
+        </node>
+        <node class_name="BtSequenceNode" type="0" abort="1" uuid="7" x="5988" y="2961">
+            <attr/>
+            <child>
+                <node class_name="BtInverterNode" type="5" abort="0" uuid="8" x="5873" y="2714">
+                    <attr/>
+                    <child>
+                        <node class_name="FL_IsFlag" type="3" abort="0" uuid="10" x="5848" y="2487">
+                            <attr>
+                                <attr attr_name="Flag" attr_value="over_drawcard" attr_type="1"/>
+                                <attr attr_name="Type" attr_value="" attr_type="0"/>
+                                <attr attr_name="DefValue" attr_value="1" attr_type="0"/>
+                            </attr>
+                            <child/>
+                        </node>
+                    </child>
+                </node>
+                <node class_name="FL_DrawCard" type="4" abort="0" uuid="9" x="6054" y="2698">
+                    <attr/>
+                    <child/>
+                </node>
+                <node class_name="FL_Running" type="4" abort="0" uuid="18" x="6199" y="2536">
+                    <attr/>
+                    <child/>
+                </node>
+            </child>
+        </node>
+        <node class_name="BtSequenceNode" type="0" abort="0" uuid="11" x="6318" y="2933">
+            <attr/>
+            <child>
+                <node class_name="FL_MonsterCond" type="3" abort="0" uuid="13" x="6303" y="2714">
+                    <attr/>
+                    <child/>
+                </node>
+                <node class_name="FL_MonsterFightBt" type="4" abort="0" uuid="12" x="6557" y="2722">
+                    <attr/>
+                    <child/>
+                </node>
+            </child>
+        </node>
+        <node class_name="BtSequenceNode" type="0" abort="0" uuid="14" x="6841" y="2948">
+            <attr/>
+            <child>
+                <node class_name="FL_GetOneHandCard" type="4" abort="0" uuid="15" x="6789" y="2714">
+                    <attr/>
+                    <child/>
+                </node>
+                <node class_name="FL_IsFlag" type="3" abort="0" uuid="16" x="6999" y="2720">
+                    <attr>
+                        <attr attr_name="Flag" attr_value="fight_monster" attr_type="1"/>
+                        <attr attr_name="Type" attr_value="" attr_type="0"/>
+                        <attr attr_name="DefValue" attr_value="1" attr_type="0"/>
+                    </attr>
+                    <child/>
+                </node>
+                <node class_name="FL_GetOneHandCard" type="4" abort="0" uuid="17" x="7184" y="2713">
+                    <attr/>
+                    <child/>
+                </node>
+            </child>
+        </node>
+        <node class_name="BtSequenceNode" type="0" abort="0" uuid="19" x="7529" y="2967">
+            <attr/>
+            <child>
+                <node class_name="FL_CheckPlayerHandcardNum" type="3" abort="0" uuid="20" x="7420" y="2717">
+                    <attr>
+                        <attr attr_name="CheckNum" attr_value="" attr_type="0"/>
+                        <attr attr_name="CheckPlayer" attr_value="" attr_type="0"/>
+                    </attr>
+                    <child/>
+                </node>
+                <node class_name="FL_Discard" type="4" abort="0" uuid="21" x="7674" y="2724">
+                    <attr/>
+                    <child/>
+                </node>
+                <node class_name="FL_Running" type="4" abort="0" uuid="22" x="7882" y="2720">
+                    <attr/>
+                    <child/>
+                </node>
+            </child>
+        </node>
+    </child>
+</node>
