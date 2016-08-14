@@ -31,7 +31,7 @@ void SaveDlg::onSave(Ref* pSender)
 	auto name = m_labSaveName->getString();
 	if (name == "")
 	{
-		ShowDlg("请输入文件名");
+		ShowDlg("SUCCESS");
 	}
 	else
 	{
@@ -40,7 +40,7 @@ void SaveDlg::onSave(Ref* pSender)
 		if (error != 0)
 		{
 			char str[30] = "";
-			sprintf(str, "保存失败 error id:%d", error);
+			sprintf(str, "error id:%d", error);
 			ShowDlg(str);
 		}
 		else
