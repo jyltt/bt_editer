@@ -143,6 +143,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="..\Classes\attr_item.cpp" />
     <ClCompile Include="..\Classes\bt_node.cpp" />
     <ClCompile Include="..\Classes\bt_node_manager.cpp" />
+    <ClCompile Include="..\Classes\file_item.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\menu_list.cpp" />
     <ClCompile Include="..\Classes\open_dlg.cpp" />
@@ -159,6 +160,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="..\Classes\attr_item.h" />
     <ClInclude Include="..\Classes\bt_node_manager.h" />
     <ClInclude Include="..\Classes\enum.h" />
+    <ClInclude Include="..\Classes\file_item.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\bt_Node.h" />
     <ClInclude Include="..\Classes\menu_list.h" />

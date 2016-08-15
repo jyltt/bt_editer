@@ -37,8 +37,9 @@
           <FilePathData Path="open_dlg.csd" />
           <FilePathData Path="save_dlg.csd" />
           <FilePathData Path="tip_layer.csd" />
+          <FilePathData Path="file_item.csd" />
         </OpenedDocuments>
-        <ActiveDocument Path="attr_list.csd" />
+        <ActiveDocument Path="tip_layer.csd" />
       </Value>
     </Item>
   </Properties>

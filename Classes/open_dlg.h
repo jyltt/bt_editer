@@ -7,6 +7,12 @@
 USING_NS_CC;
 
 class TipLayer;
+class FileItem;
+struct FileInfo
+{
+	std::string fileName;
+	std::string path;
+};
 
 class OpenDlg:
 	public cocos2d::Layer
@@ -17,21 +23,16 @@ public:
 
 	void SetTipsDlg(TipLayer* node);
 	void SetOpenFileFunc(std::function<void(std::string)> func);
-private:
 	void UpdateItem();
+private:
 	void GetDoc(std::string filepath);
 	void onClick(Ref* pSender);
 	void onCancel(Ref* pSender);
 	void ShowDlg(std::string name);
 private:
-	struct FileInfo
-	{
-		std::string fileName;
-		std::string path;
-	};
 	ui::Button *m_btnCancel;
 	ui::ListView *m_list;
-	std::vector<ui::Button*> m_btnList;
+	std::vector<FileItem*> m_btnList;
 
 	TipLayer* m_dlgTips = nullptr;
 	std::vector<FileInfo*> m_fileList;

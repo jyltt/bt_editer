@@ -4,6 +4,7 @@
 #include "bt_node_manager.h"
 #include "xml_file.h"
 #include "tip_layer.h"
+#include "file_item.h"
 #ifndef WIN32
 #include <dirent.h>
 #include <sys/types.h>
@@ -27,25 +28,46 @@ bool OpenDlg::init()
 	m_btnCancel->addClickEventListener(CC_CALLBACK_1(OpenDlg::onCancel, this));
 	m_list = (ui::ListView *)panel->getChildByName("list");
 
-	GetDoc("cfg/");
-	for (auto item:m_fileList)
-	{
-		//auto btn = ui::Button::create("Button_Normal.png");
-		auto btn = (ui::Button*)m_btnCancel->clone();
-		btn->setUserData(item);
-		btn->setContentSize(Size(150, 50));
-		btn->addClickEventListener(CC_CALLBACK_1(OpenDlg::onClick, this));
-		btn->setTitleText(item->fileName);
-		m_list->pushBackCustomItem(btn);
-		m_btnList.push_back(btn);
-	}
-	m_list->refreshView();
+	UpdateItem();
 
 	return true;
 }
 
 void OpenDlg::UpdateItem()
 {
+	for (auto file:m_fileList)
+	{
+		delete file;
+	}
+	m_fileList.clear();
+	m_list->removeAllChildren();
+	GetDoc("cfg/");
+	for (auto item:m_fileList)
+	{
+		auto btn = FileItem::create();
+		btn->SetAttr(item);
+		btn->SetOpenFileFunc(
+			[=](FileInfo* info)->void
+			{
+				m_funcOpen(info->path);
+				setVisible(false);
+			}
+		);
+		btn->SetDeleteFileFunc(
+			[=](FileInfo* info)
+			{
+				m_dlgTips->ShowDlg("are you sure delete file"+info->path, [=]()
+					{
+						remove(info->path.c_str());
+						UpdateItem();
+					}
+				);
+			}
+		);
+		m_list->pushBackCustomItem(btn);
+		m_btnList.push_back(btn);
+	}
+	m_list->refreshView();
 }
 
 void OpenDlg::onClick(Ref* pSender)

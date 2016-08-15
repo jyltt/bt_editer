@@ -253,6 +253,7 @@ void HelloWorld::onOpenInfo(cocos2d::Ref* ref)
 void HelloWorld::onOpenFile(cocos2d::Ref* ref)
 {
 	//BtNodeManager::getSingleton().ClearNode();
+	GetOpenDlg()->UpdateItem();
 	GetOpenDlg()->setVisible(true);
 }
 
@@ -271,7 +272,7 @@ TipLayer *HelloWorld::GetTipsDlg()
 	if (m_TipsDlg == nullptr)
 	{
 		m_TipsDlg = TipLayer::create();
-		addChild(m_TipsDlg);
+		addChild(m_TipsDlg,1000);
 	}
 	return m_TipsDlg;
 }

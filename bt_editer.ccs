@@ -5,6 +5,7 @@
       <RootFolder Name=".">
         <Project Name="attr_list.csd" Type="Node" />
         <Project Name="bt_node.csd" Type="Node" />
+        <Project Name="file_item.csd" Type="Node" />
         <Project Name="MainScene.csd" Type="Scene" />
         <Project Name="open_dlg.csd" Type="Layer" />
         <Project Name="save_dlg.csd" Type="Layer" />
