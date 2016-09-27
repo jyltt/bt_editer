@@ -170,7 +170,7 @@ std::string ReadFile::FindClass(char* str)
 	if(strstr(str, "class"))
 	{
 		std::string buff = str;
-		std::regex re("class +(\\S+) *:?");
+		std::regex re("class +([^ :]+) *:*");
 		std::match_results<std::string::const_iterator> result;
 		bool valid = std::regex_match(buff, result, re);
 		return result[1].str();
@@ -193,12 +193,18 @@ NodeType ReadFile::FindClassType(char* str,std::string class_name)
 			else
 				return NodeType::Error;
 		}
-		else if (strstr(str, "BtActionNode"))
+		else if (strstr(str, "ActionNode"))
 			return NodeType::Action;
-		else if (strstr(str, "BtConditionNode"))
+		else if (strstr(str, "ConditionNode"))
 			return NodeType::Condition;
-		else if (strstr(str, "BtDecorateNode"))
+		else if (strstr(str, "DecorateNode"))
 			return NodeType::Decorate;
+		else if (strstr(str, "SequenceNode"))
+			return NodeType::Sequence;
+		else if (strstr(str, "SelectorNode"))
+			return NodeType::Selector;
+		else if (strstr(str, "ParallelNode"))
+			return NodeType::Parallel;
 		else
 			return NodeType::Error;
 	}

@@ -2,11 +2,7 @@
 #ifndef FL_CHECK_PLAYER_HANDCARD_NUM_H_
 #define FL_CHECK_PLAYER_HANDCARD_NUM_H_
 
-#ifdef WIN32
-#include "tools/bt/node/actions/bt_condition_node.h"
-#else
 #include "bt_condition_node.h"
-#endif
 
 class FL_CheckPlayerHandcardNum:
 	public BtConditionNode

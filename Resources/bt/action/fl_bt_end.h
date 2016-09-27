@@ -1,20 +1,24 @@
-#ifndef FL_DRAW_CARD_H_
-#define FL_DRAW_CARD_H_
+#ifndef FL_BT_END_H_
+#define FL_BT_END_H_
 
 #include "bt_action_node.h"
+#include "cocos2d.h"
 
-//出牌
-class FL_DrawCard:
+// BT流程结束ACT
+class FL_BT_End :
 	public BtActionNode
 {
 public:
-	FL_DrawCard(std::string name);
+	FL_BT_End(std::string name) :BtActionNode(name)
+	{ }
+
+public:
 	virtual void onBegin()override;
 	virtual EBTState onUpdate()override;
 	virtual void onEnd()override;
+
 protected:
 private:
-	int i = 0;
 };
 
 #endif

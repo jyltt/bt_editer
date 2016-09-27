@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node class_name="SkillParallelNode" type="2" abort="0" uuid="0" x="5765.86" y="3373.71">
+    <attr/>
+    <child>
+        <node class_name="FL_ChoosePlayer" type="4" abort="0" uuid="1" x="5469.89" y="3069.48">
+            <attr/>
+            <child/>
+        </node>
+        <node class_name="FL_GetHandcard" type="4" abort="0" uuid="5" x="5670.28" y="3084.53">
+            <attr/>
+            <child/>
+        </node>
+        <node class_name="FL_ChoosePlayer" type="4" abort="0" uuid="3" x="5892.73" y="3087.74">
+            <attr/>
+            <child/>
+        </node>
+        <node class_name="FL_GetHandcard" type="4" abort="0" uuid="6" x="6130.52" y="3079.54">
+            <attr/>
+            <child/>
+        </node>
+    </child>
+</node>

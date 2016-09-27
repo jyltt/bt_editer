@@ -1,13 +1,8 @@
 #ifndef FL_IS_FLAG_H_
 #define FL_IS_FLAG_H_
 
-#ifdef WIN32
-#include "tools/bt/node/actions/bt_condition_node.h"
-#include "manager/SceneManager.h"
-#else
 #include "bt_condition_node.h"
 #include "SceneManager.h"
-#endif
 #include "cocos2d.h"
 
 
