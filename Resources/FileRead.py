@@ -1,5 +1,6 @@
 import os
 import xml.dom.minidom
+import re
 
 class FileRead:
 	def __init__(self, path):
@@ -41,3 +42,12 @@ class FileRead:
 
 	def GetRootNode(self):
 		return self.rootNode;
+
+	def IsSkill(self):
+		name = self.rootNode["className"];
+		ret = re.match( r'Bt', name)
+		if ret:
+			return False
+		else:
+			return True
+

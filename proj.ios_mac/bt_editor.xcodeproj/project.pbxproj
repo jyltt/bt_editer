@@ -99,6 +99,10 @@
 		7C7EF75E1CA6AAAC00046F43 /* Plist.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C7EF74B1CA6AAAC00046F43 /* Plist.png */; };
 		7C7EF75F1CA6AAAC00046F43 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 7C7EF74C1CA6AAAC00046F43 /* res */; };
 		7C7EF7601CA6AAAC00046F43 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 7C7EF74C1CA6AAAC00046F43 /* res */; };
+		7CF4F79A1DA37A310027F323 /* file_item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF4F7981DA37A310027F323 /* file_item.cpp */; };
+		7CF4F79B1DA37A310027F323 /* file_item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF4F7981DA37A310027F323 /* file_item.cpp */; };
+		7CF4F79D1DA37AA60027F323 /* file_item.csb in Resources */ = {isa = PBXBuildFile; fileRef = 7CF4F79C1DA37AA60027F323 /* file_item.csb */; };
+		7CF4F79E1DA37AA60027F323 /* file_item.csb in Resources */ = {isa = PBXBuildFile; fileRef = 7CF4F79C1DA37AA60027F323 /* file_item.csb */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -225,6 +229,9 @@
 		7C7EF74A1CA6AAAC00046F43 /* Plist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Plist.plist; sourceTree = "<group>"; };
 		7C7EF74B1CA6AAAC00046F43 /* Plist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Plist.png; sourceTree = "<group>"; };
 		7C7EF74C1CA6AAAC00046F43 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
+		7CF4F7981DA37A310027F323 /* file_item.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_item.cpp; sourceTree = "<group>"; };
+		7CF4F7991DA37A310027F323 /* file_item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_item.h; sourceTree = "<group>"; };
+		7CF4F79C1DA37AA60027F323 /* file_item.csb */ = {isa = PBXFileReference; lastKnownFileType = file; path = file_item.csb; sourceTree = "<group>"; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -350,6 +357,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7CF4F79C1DA37AA60027F323 /* file_item.csb */,
 				7C1C53EB1D604327003E7A9F /* cfg */,
 				7C1C53E21D604283003E7A9F /* open_dlg.csb */,
 				7C1C53E31D604283003E7A9F /* save_dlg.csb */,
@@ -372,6 +380,8 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				7CF4F7981DA37A310027F323 /* file_item.cpp */,
+				7CF4F7991DA37A310027F323 /* file_item.h */,
 				7C1C53D61D604196003E7A9F /* open_dlg.cpp */,
 				7C1C53D71D604196003E7A9F /* open_dlg.h */,
 				7C1C53D81D604196003E7A9F /* save_dlg.cpp */,
@@ -574,6 +584,7 @@
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
+				7CF4F79D1DA37AA60027F323 /* file_item.csb in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
@@ -593,6 +604,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C7EF75C1CA6AAAC00046F43 /* Plist.plist in Resources */,
+				7CF4F79E1DA37AA60027F323 /* file_item.csb in Resources */,
 				7C7EF7601CA6AAAC00046F43 /* res in Resources */,
 				7C1C53EA1D6042EF003E7A9F /* tip_layer.csb in Resources */,
 				7C1C53ED1D605931003E7A9F /* cfg in Resources */,
@@ -629,6 +641,7 @@
 				7C7EF71D1CA6A83900046F43 /* bt_node_manager.cpp in Sources */,
 				7C1C53DC1D604196003E7A9F /* open_dlg.cpp in Sources */,
 				7C1C53DD1D604196003E7A9F /* save_dlg.cpp in Sources */,
+				7CF4F79A1DA37A310027F323 /* file_item.cpp in Sources */,
 				7C7EF7291CA6A83900046F43 /* xml_file.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				7C7EF7251CA6A83900046F43 /* Tools.cpp in Sources */,
@@ -649,6 +662,7 @@
 				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				7C7EF7261CA6A83900046F43 /* Tools.cpp in Sources */,
 				7C7EF71C1CA6A83900046F43 /* attr_item.cpp in Sources */,
+				7CF4F79B1DA37A310027F323 /* file_item.cpp in Sources */,
 				7C1C53E11D6041C4003E7A9F /* open_dlg.cpp in Sources */,
 				7C7EF7281CA6A83900046F43 /* write_code_file.cpp in Sources */,
 				7C7EF7221CA6A83900046F43 /* menu_list.cpp in Sources */,

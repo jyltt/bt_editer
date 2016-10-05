@@ -5,14 +5,8 @@
         <node class_name="BtSequenceNode" type="0" abort="0" uuid="2" x="5196" y="2985">
             <attr/>
             <child>
-                <node class_name="FL_BeginRound" type="4" abort="0" uuid="3" x="4918" y="2673">
+                <node class_name="FL_BeginRound" type="4" abort="0" uuid="3" x="5072.26" y="2676.44">
                     <attr/>
-                    <child/>
-                </node>
-                <node class_name="CL_Animation" type="4" abort="0" uuid="24" x="5215" y="2680">
-                    <attr>
-                        <attr attr_name="BeginAnimation" attr_value="begin_round.csb" attr_type="1"/>
-                    </attr>
                     <child/>
                 </node>
             </child>

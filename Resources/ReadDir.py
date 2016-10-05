@@ -29,12 +29,21 @@ class GetDir:
 				print "write File:"+name;
 				key = os.path.splitext(name)[0];
 				node = self.filedir[name].GetRootNode();
-				file_object.write('\tm_BtList["'+key+'"] = \n');
-				file_object.write('\t\t[]()->BtParallelNode*{\n');
-				strInfo = FormatStr.FormatStrs(node);
-				file_object.write(strInfo);
-				file_object.write("\t\t\treturn "+ node["className"] + node["uuid"] +";\n\n");
-				file_object.write("\t\t};\n\n");
+				node_type = self.filedir[name].IsSkill();
+				if node_type:
+					file_object.write('\tm_SkillList["'+key+'"] = \n');
+					file_object.write('\t\t[]()->SkillParallelNode*{\n');
+					strInfo = FormatStr.FormatStrs(node);
+					file_object.write(strInfo);
+					file_object.write("\t\t\treturn "+ node["className"] + node["uuid"] +";\n");
+					file_object.write("\t\t};\n\n");
+				else:
+					file_object.write('\tm_BtList["'+key+'"] = \n');
+					file_object.write('\t\t[]()->BtParallelNode*{\n');
+					strInfo = FormatStr.FormatStrs(node);
+					file_object.write(strInfo);
+					file_object.write("\t\t\treturn "+ node["className"] + node["uuid"] +";\n");
+					file_object.write("\t\t};\n\n");
 			file_object.write('}\n');
 		finally:
 			file_object.close();
