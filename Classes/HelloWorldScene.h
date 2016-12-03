@@ -3,13 +3,18 @@
 
 #include "cocos2d.h"
 #include <list>
-#include "bt_Node.h"
 #include "tinyxml2/tinyxml2.h"
-#include "menu_list.h"
+#include "ui/CocosGUI.h"
+
+USING_NS_CC;
 
 class SaveDlg;
 class TipLayer;
 class OpenDlg;
+class MenuList;
+class BtNode;
+struct ClassData;
+struct NodeInfo;
 
 class HelloWorld : public cocos2d::Layer
 {

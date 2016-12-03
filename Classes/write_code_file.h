@@ -1,9 +1,13 @@
 #ifndef WRITE_CODE_FILE_H_
 #define WRITE_CODE_FILE_H_
 
-#include "tools.h"
-#include "struct.h"
+#include <string>
 #include "Singleton.h"
+
+struct NodeInfo;
+struct ClassData;
+enum class AbortType;
+enum class NodeType;
 
 class WriteCodeFile
 {

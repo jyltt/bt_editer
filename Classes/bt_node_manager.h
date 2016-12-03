@@ -1,11 +1,11 @@
 #ifndef BT_NODE_MANAGER_H_
 #define BT_NODE_MANAGER_H_
 
-#include "bt_Node.h"
 #include "Singleton.h"
-#include "tools.h"
-#include "struct.h"
+#include "cocos2d.h"
 #include <Vector>
+
+class BtNode;
 
 class BtNodeManager
 {
@@ -15,7 +15,7 @@ public:
 	CC_SYNTHESIZE(BtNode*, m_btNode, ChoseNode);
 	BtNode *CreateNode();
 	void DeleteNode(BtNode* node);
-	BtNode* TouchNode(Vec2 vec);
+	BtNode* TouchNode(const cocos2d::Vec2 &vec);
 	void onDraw();
 	BtNode* FindBtNode(int uuid);
 	void ClearNode();

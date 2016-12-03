@@ -2,6 +2,8 @@
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
 #include "bt_node_manager.h"
+#include "struct.h"
+#include "Tools.h"
 
 USING_NS_CC;
 using namespace cocostudio::timeline;

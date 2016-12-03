@@ -4,23 +4,22 @@
 #include <vector>
 #include <map>
 #include "Singleton.h"
-#include "struct.h"
+
+enum class NodeType;
+struct ClassData;
+struct FileList;
+struct Attr;
 
 class ReadFile
 {
 	Singleton(ReadFile);
 public:
-	void LoadFile();
-	FileList *GetDoc(std::string doc);
-	ClassData* GetNodeClassInfo(std::string name);
-protected:
 	void OpenDoc(std::string filepath,FileList *doc);
+protected:
 	void ReadClass(std::string path);
 	std::string FindClass(char* str);
 	NodeType FindClassType(char* str,std::string class_name);
 	Attr *FindParam(std::string str,ClassData* data);
 private:
-	FileList* m_DecTree;
-	std::map<std::string,ClassData*> m_ClassList;
 };
 #endif // !READ_FILE_H_

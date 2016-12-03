@@ -2,10 +2,14 @@
 #define BT_NODE_H_
 
 #include "cocos2d.h"
-#include "struct.h"
 #include <vector>
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
+
+struct ClassData;
+struct NodeInfo;
+enum class AbortType;
+enum class NodeType;
 
 USING_NS_CC;
 using namespace cocostudio::timeline;

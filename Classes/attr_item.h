@@ -2,9 +2,10 @@
 #define ATTR_ITEM_H_
 
 #include "cocos2d.h"
-#include "struct.h"
 #include "ui/CocosGUI.h"
 USING_NS_CC;
+
+struct Attr;
 
 class AttrItem
 	:public ui::Widget

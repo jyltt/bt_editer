@@ -2,13 +2,12 @@
 #define MENU_LIST_H_
 
 #include "cocos2d.h"
-#include "struct.h"
-#include "enum.h"
 #include <vector>
 #include "ui/CocosGUI.h"
 
 USING_NS_CC;
 class HelloWorld;
+struct FileList;
 
 class MenuList:
 	public cocos2d::Node

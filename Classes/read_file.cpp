@@ -9,11 +9,11 @@
 #include <fstream>
 #include <regex>
 #include "Tools.h"
+#include "struct.h"
+#include "file_manager.h"
 
 ReadFile::ReadFile()
 {
-	m_DecTree = new FileList();
-	OpenDoc("bt/",m_DecTree);
 }
 
 #ifndef WIN32
@@ -49,7 +49,7 @@ void ReadFile::OpenDoc(std::string filepath,FileList *doc)
         {
             auto newDoc = new FileList();
             newDoc->docName = d_ent->d_name;
-            doc->PuchDoc(newDoc);
+            doc->PushDoc(newDoc);
             doc->docListName.push_back(d_ent->d_name);
             OpenDoc(filepath+d_ent->d_name+"/", newDoc);
         }
@@ -83,7 +83,7 @@ void ReadFile::OpenDoc(std::string filepath,FileList *doc)
 			{
 				auto newDoc = new FileList();
 				newDoc->docName = file.name;
-				doc->PuchDoc(newDoc);
+				doc->PushDoc(newDoc);
 				doc->docListName.push_back(file.name);
 				OpenDoc(filepath+file.name+"/", newDoc);
 			}
@@ -101,11 +101,6 @@ void ReadFile::OpenDoc(std::string filepath,FileList *doc)
 	_findclose(lf);
 }
 #endif
-
-FileList *ReadFile::GetDoc(std::string doc)
-{
-	return m_DecTree;
-}
 
 void ReadFile::ReadClass(std::string path)
 {
@@ -128,7 +123,6 @@ void ReadFile::ReadClass(std::string path)
 
 			auto data = new ClassData();
 			auto fileName = Tools::FormPathToName(path);
-			m_ClassList[fileName] = data;
 			data->filePath = path.substr(3, path.npos);
 			data->className = str;
 			data->type = type;
@@ -160,6 +154,7 @@ void ReadFile::ReadClass(std::string path)
 				}
 
 			}
+			FileManager::getSingleton().AddClassData(fileName, data);
 		}
 	}
 	file.close();
@@ -260,11 +255,6 @@ Attr *ReadFile::FindParam(std::string str,ClassData* data)
 		return attr;
 	}
 	return nullptr;
-}
-
-ClassData* ReadFile::GetNodeClassInfo(std::string name)
-{
-	return m_ClassList[name];
 }
 
 ReadFile::~ReadFile()

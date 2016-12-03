@@ -1,9 +1,10 @@
 #ifndef TOOLS_H_
 #define TOOLS_H_
 
-#include <iostream>
 #include <vector>
-#include "enum.h"
+
+enum class NodeType;
+enum class AbortType;
 
 class Tools
 {

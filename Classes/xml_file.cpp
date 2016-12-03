@@ -1,4 +1,6 @@
 #include "xml_file.h"
+#include "bt_Node.h"
+#include "struct.h"
 
 XmlFile::XmlFile()
 { }

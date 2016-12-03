@@ -1,5 +1,7 @@
 #include "write_code_file.h"
 #include "xml_file.h"
+#include "tools.h"
+#include "struct.h"
 
 WriteCodeFile::WriteCodeFile()
 { }

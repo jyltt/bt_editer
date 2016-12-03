@@ -1,7 +1,9 @@
 #include "menu_list.h"
 #include "Tools.h"
 #include "HelloWorldScene.h"
-#include "read_file.h"
+#include "file_manager.h"
+#include "struct.h"
+#include "enum.h"
 
 MenuList::MenuList()
 { }
@@ -94,8 +96,7 @@ void MenuList::onClick(Ref*obj)
 	{
 		int id = btn->getTag();
 		auto path = m_List->fileList[id];
-		auto name = Tools::FormPathToName(path);
-		auto class_node = ReadFile::getSingleton().GetNodeClassInfo(name);
+		auto class_node = FileManager::getSingleton().FindClassDataByPath(path);
 		//创建节点
 		m_Root->SetNode(m_RootPos,class_node);
 	}

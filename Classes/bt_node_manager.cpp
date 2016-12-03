@@ -1,4 +1,7 @@
 #include "bt_node_manager.h"
+#include "bt_Node.h"
+#include "tools.h"
+#include "struct.h"
 
 BtNodeManager::BtNodeManager()
 :m_RootNode(nullptr)
@@ -38,7 +41,7 @@ void BtNodeManager::DeleteNode(BtNode* node)
 	}
 }
 
-BtNode* BtNodeManager::TouchNode(Vec2 vec)
+BtNode* BtNodeManager::TouchNode(const Vec2 &vec)
 {
 	for (auto node:m_NodeList)
 	{

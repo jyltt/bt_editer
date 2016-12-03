@@ -1,11 +1,12 @@
 #ifndef XML_FILE_H_
 #define XML_FILE_H_
 
-#include "bt_Node.h"
 #include "tinyxml2/tinyxml2.h"
-#include "struct.h"
-#include "bt_node_manager.h"
 #include "Singleton.h"
+#include <string>
+
+class BtNode;
+struct NodeInfo;
 
 class XmlFile
 {

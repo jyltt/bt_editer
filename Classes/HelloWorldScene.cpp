@@ -1,15 +1,17 @@
 #include "HelloWorldScene.h"
 #include "cocostudio/CocoStudio.h"
-#include "ui/CocosGUI.h"
 #include "bt_Node.h"
 #include "bt_node_manager.h"
-#include "read_file.h"
+#include "file_manager.h"
 #include "attr_item.h"
 #include "write_code_file.h"
 #include "xml_file.h"
 #include "save_dlg.h"
 #include "tip_layer.h"
 #include "open_dlg.h"
+#include "menu_list.h"
+#include "struct.h"
+#include "Tools.h"
 
 USING_NS_CC;
 using namespace cocostudio::timeline;
@@ -61,6 +63,7 @@ bool HelloWorld::init()
 	m_AttrList = (ui::ListView*)m_scrInfo->getChildByName("attr_list");
 
 	//CreateNode();
+	FileManager::getSingleton().Init();
 
     return true;
 }
@@ -124,7 +127,7 @@ void HelloWorld::onDoubleClick(cocos2d::Ref* ref)
 	if (m_RightList == nullptr)
 	{
 		m_RightList = MenuList::create();
-		m_RightList->SetFileList(ReadFile::getSingleton().GetDoc("root"));
+		m_RightList->SetFileList(FileManager::getSingleton().GetFileTree());
 		m_RightList->SetNodeRoot(this);
 		m_scroll->addChild(m_RightList);
 	}

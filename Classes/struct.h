@@ -19,7 +19,7 @@ struct FileList
 		}
 		return nullptr;
 	}
-	void PuchDoc(FileList *doc)
+	void PushDoc(FileList *doc)
 	{
 		docList.push_back(doc);
 	}

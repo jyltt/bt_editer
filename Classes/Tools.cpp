@@ -1,4 +1,5 @@
 #include "Tools.h"
+#include "enum.h"
 
 std::string Tools::GetEnumToString(NodeType type)
 {

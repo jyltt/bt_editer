@@ -66,6 +66,9 @@
     <ClCompile Include="..\Classes\file_item.cpp">
       <Filter>ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\file_manager.cpp">
+      <Filter>file</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -121,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\file_item.h">
       <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\file_manager.h">
+      <Filter>file</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

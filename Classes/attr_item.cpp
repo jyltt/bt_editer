@@ -1,6 +1,7 @@
 #include "attr_item.h"
 #include "cocostudio/CocoStudio.h"
 #include <regex>
+#include "struct.h"
 
 AttrItem::AttrItem()
 {
