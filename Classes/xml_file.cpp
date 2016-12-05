@@ -1,6 +1,7 @@
 #include "xml_file.h"
 #include "bt_Node.h"
 #include "struct.h"
+#include "file_manager.h"
 
 XmlFile::XmlFile()
 { }
@@ -52,9 +53,9 @@ tinyxml2::XMLNode* XmlFile::GetChild(BtNode* node)
 		for (auto attr:attr_list)
 		{
 			auto n_attr = m_pDoc->NewElement("attr");
-			n_attr->SetAttribute("attr_name", attr->name.c_str());
-			n_attr->SetAttribute("attr_value", attr->str.c_str());
-			n_attr->SetAttribute("attr_type", (int)attr->type);
+			n_attr->SetAttribute("attr_name", attr.second->name.c_str());
+			n_attr->SetAttribute("attr_value", attr.second->str.c_str());
+			n_attr->SetAttribute("attr_type", (int)attr.second->type);
 			n_attrList->LinkEndChild(n_attr);
 		}
 		n_node->LinkEndChild(n_attrList);
@@ -88,27 +89,45 @@ NodeInfo *XmlFile::CreateChild(tinyxml2::XMLElement* node)
 	NodeInfo *_node = new NodeInfo();
 	//ClassData *cd = new ClassData();
 	_node->cd.type = (NodeType)node->IntAttribute("type");
-	_node->cd.className = node->Attribute("class_name");
+	auto className = node->Attribute("class_name");
+	_node->cd.className = className;
 	auto abort_type = node->IntAttribute("abort");
 	auto uuid = node->IntAttribute("uuid");
 	_node->pos.x = node->IntAttribute("x");
 	_node->pos.y = node->IntAttribute("y");
 
 	auto child_node = node->FirstChildElement("attr");
+	auto new_class_info = FileManager::getSingleton().FindClassDataByClassName(className);
+	bool isFailure = false;
+	if (new_class_info == nullptr)
+		isFailure = true;
+	if (!isFailure)
+	{
+		for (auto attr:new_class_info->attrList)
+		{
+			auto a = new Attr();
+			a->name = attr.second->name;
+			a->str = attr.second->str;
+			a->type = (AttrType)attr.second->type;
+			_node->cd.attrList[a->name] = a;
+		}
+	}
 	if (child_node)
 	{
 		auto attr = child_node->FirstChildElement();
 		while (attr)
 		{
-			auto a = new Attr();
-			a->name = attr->Attribute("attr_name");
-			a->str = attr->Attribute("attr_value");
-			a->type = (AttrType)attr->IntAttribute("attr_type");
-			_node->cd.attrList.push_back(a);
+			auto list = _node->cd.attrList;
+			auto name = attr->Attribute("attr_name");
+			if (list.find(name)!=list.end())
+			{
+				list[name]->str = attr->Attribute("attr_value");
+			}
 			attr = attr->NextSiblingElement();
 		}
 	}
 	_node->abort_type = (AbortType)abort_type;
+	_node->isFailure = isFailure;
 	//_node->cd = cd;
 	_node->uuid = uuid;
 

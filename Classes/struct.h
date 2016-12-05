@@ -52,7 +52,7 @@ struct ClassData
 	std::string filePath;
 	std::string className;
 	NodeType type;
-	std::vector<Attr*> attrList;
+	std::map<std::string, Attr*> attrList;
 	ClassData() {};
 	ClassData(ClassData *data)
 	{
@@ -60,24 +60,19 @@ struct ClassData
 		type = data->type;
 		for (auto attr:data->attrList)
 		{
-			attrList.push_back(new Attr(attr));
+			attrList[attr.second->name] = new Attr(attr.second);
 		}
 	}
 	void SetAttr(std::string name,std::string value)
 	{
-		for (int i = 0; i<attrList.size(); i++)
-		{
-			if (attrList[i]->name == name)
-			{
-				attrList[i]->str = value;
-				return;
-			}
-		}
+		attrList[name]->str = value;
 	}
 	~ClassData()
 	{
-		for (int i = 0; i<attrList.size(); i++)
-			delete attrList[i];
+		for (auto attr:attrList)
+		{
+			delete attr.second;
+		}
 		attrList.clear();
 	}
 };
@@ -85,6 +80,7 @@ struct NodeInfo
 {
 	ClassData cd;
 	int uuid;
+	bool isFailure;
 	cocos2d::Vec2 pos;
 	AbortType abort_type;
 	std::vector<NodeInfo*> child_list;

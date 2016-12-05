@@ -200,10 +200,10 @@ void HelloWorld::updateInfo()
 		m_labNodeType->setString(Tools::GetEnumToString(node->getNodeType()));
 		auto &attrList = info->attrList;
 		m_AttrList->removeAllItems(); 
-		for (int i = 0; i<attrList.size(); i++)
+		for (auto attr:attrList)
 		{
 			auto item = AttrItem::create();
-			item->SetAttr(attrList[i]);
+			item->SetAttr(attr.second);
 			m_AttrList->addChild(item);
 		}
 		m_AttrList->refreshView();

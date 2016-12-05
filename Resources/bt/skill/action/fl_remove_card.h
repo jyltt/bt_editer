@@ -1,17 +1,16 @@
 // author: wuming
-#ifndef FL_GET_HANDCARD_H_
-#define FL_GET_HANDCARD_H_
+#pragma once
 
 #include "skill_action_node.h"
 
 enum class ECardAccessType;
-enum class EStorageLocation;
 
-class FL_GetHandcard :
-	public SkillActionNode 
+class FL_RemoveCard:
+	public SkillActionNode
 {
 public:
-	FL_GetHandcard(std::string name);
+	FL_RemoveCard(std::string name);
+	virtual void onBegin() override;
 	// 从什么地方获取卡牌
 	CC_SYNTHESIZE(ECardAccessType, m_eCardAccessType, CardAccessType);
 	/* 卡牌序列id
@@ -23,11 +22,6 @@ public:
 	// 仅用于ECardAccessType为AssignCard时生效
 	*/
 	CC_SYNTHESIZE(int, m_nUUID, CardUUID);
-	// 将卡牌存放在玩家什么地方
-	CC_SYNTHESIZE(EStorageLocation, m_eStorageLocation, StorageLocation);
-	virtual void onBegin() override;
 protected:
 private:
 };
-
-#endif

@@ -140,16 +140,13 @@ void ReadFile::ReadClass(std::string path)
 					auto new_attr = FindParam(buff, data);
 					if (new_attr)
 					{
-						for (auto attr:data->attrList)
+						if (data->attrList.find(new_attr->name) != data->attrList.end())
 						{
-							if (new_attr->name == attr->name)
-							{
-								delete new_attr;
-								new_attr = nullptr;
-							}
+							delete new_attr;
+							new_attr = nullptr;
 						}
-						if (new_attr)
-							data->attrList.push_back(new_attr);
+						else
+							data->attrList[new_attr->name] = new_attr;
 					}
 				}
 

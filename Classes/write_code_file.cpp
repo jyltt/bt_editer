@@ -110,8 +110,9 @@ std::string WriteCodeFile::FileSetAttr(const ClassData &data, std::string var)
 	std::string attr_str = "";
 	char buff[600];
 	auto &attr_list = data.attrList;
-	for (auto attr:attr_list)
+	for (auto attr_pair:attr_list)
 	{
+		auto attr = attr_pair.second;
 		if (!attr->str.empty())
 		{
 			switch (attr->type)
