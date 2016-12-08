@@ -51,6 +51,14 @@ void BtNode::setInfo(NodeInfo *info)
 	setAbortType(info->abort_type);
 	setUUID(info->uuid);
     setPosition(info->pos);
+	if (info->isFailure)
+	{
+		m_LyotBk->setBackGroundColor(Color3B(255, 0, 0));
+	}
+	else
+	{
+		m_LyotBk->setBackGroundColor(Color3B(150, 200, 255));
+	}
 }
 
 void BtNode::onChangeNodeType(Ref* obj)

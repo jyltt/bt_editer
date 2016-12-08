@@ -15,6 +15,7 @@ AttrItem::AttrItem()
 	m_Value->addEventListener(CC_CALLBACK_2(AttrItem::onChangeValue, this));
 	m_Check = (ui::CheckBox *)m_RootNode->getChildByName("check");
 	m_Check->addEventListener(CC_CALLBACK_2(AttrItem::onChangeCheckValue, this));
+	m_btnEnum = (ui::Button *)m_RootNode->getChildByName("enum");
 }
 
 void AttrItem::SetAttr(Attr *attr)
@@ -73,16 +74,19 @@ void AttrItem::UpdateInfo()
 	case AttrType::string:
 		m_bk->setVisible(true);
 		m_Check->setVisible(false);
+		m_btnEnum->setVisible(false);
 		m_Value->setString(m_Attr->str);
 		break;
 	case AttrType::number:
 		m_bk->setVisible(true);
 		m_Check->setVisible(false);
+		m_btnEnum->setVisible(false);
 		m_Value->setString(m_Attr->str);
 		break;
 	case AttrType::boolean:
 		m_bk->setVisible(false);
 		m_Check->setVisible(true);
+		m_btnEnum->setVisible(false);
 		if (m_Attr->str == "true")
 			m_Check->setSelectedState(true);
 		else

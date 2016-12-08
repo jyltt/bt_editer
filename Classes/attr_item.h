@@ -25,6 +25,7 @@ protected:
 	ui::TextField *m_Value;
 	ui::CheckBox *m_Check;
 	ui::Layout *m_bk;
+	ui::Button *m_btnEnum;
 	Node *m_RootNode;
 private:
 };
