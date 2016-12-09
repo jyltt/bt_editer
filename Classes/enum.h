@@ -24,8 +24,9 @@ enum class ClassType
 };
 enum class AttrType
 {
-	number,
-	string,
-	boolean,
+	Number,
+	String,
+	Boolean,
+	Enum,
 };
 #endif

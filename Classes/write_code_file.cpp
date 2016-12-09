@@ -117,10 +117,10 @@ std::string WriteCodeFile::FileSetAttr(const ClassData &data, std::string var)
 		{
 			switch (attr->type)
 			{
-			case AttrType::number:
+			case AttrType::Number:
 				sprintf(buff, "%s->set%s(%s);\n", var.c_str(), attr->name.c_str(), attr->str.c_str());
 				break;
-			case AttrType::string:
+			case AttrType::String:
 				sprintf(buff, "%s->set%s(\"%s\");\n", var.c_str(), attr->name.c_str(), attr->str.c_str());
 			default:
 				break;

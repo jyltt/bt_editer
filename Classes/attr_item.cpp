@@ -29,10 +29,10 @@ void AttrItem::onChangeValue(Ref *ref, ui::TextField::EventType type)
 	auto str =  m_Value->getString();
 	switch (m_Attr->type)
 	{
-	case AttrType::string:
+	case AttrType::String:
 		m_Attr->str = str;
 		break;
-	case AttrType::number:
+	case AttrType::Number:
 	{
 		std::regex re("[0-9]+");
 		auto valid = std::regex_match(str, re);
@@ -71,19 +71,19 @@ void AttrItem::UpdateInfo()
 	m_Text->setString(m_Attr->name);
 	switch (m_Attr->type)
 	{
-	case AttrType::string:
+	case AttrType::String:
 		m_bk->setVisible(true);
 		m_Check->setVisible(false);
 		m_btnEnum->setVisible(false);
 		m_Value->setString(m_Attr->str);
 		break;
-	case AttrType::number:
+	case AttrType::Number:
 		m_bk->setVisible(true);
 		m_Check->setVisible(false);
 		m_btnEnum->setVisible(false);
 		m_Value->setString(m_Attr->str);
 		break;
-	case AttrType::boolean:
+	case AttrType::Boolean:
 		m_bk->setVisible(false);
 		m_Check->setVisible(true);
 		m_btnEnum->setVisible(false);

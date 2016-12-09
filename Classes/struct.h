@@ -43,7 +43,7 @@ struct Attr
 		str = data->str;
 	}
 	Attr() {};
-	AttrType type = AttrType::number;
+	AttrType type = AttrType::Number;
 	std::string name;
 	std::string str = "";
 };

@@ -14,12 +14,15 @@ class ReadFile
 {
 	Singleton(ReadFile);
 public:
-	void OpenDoc(std::string filepath,FileList *doc);
+	void OpenDoc(const std::string &filepath,FileList *doc);
 protected:
-	void ReadClass(std::string path);
-	std::string FindClass(char* str);
-	NodeType FindClassType(char* str,std::string class_name);
-	Attr *FindParam(std::string str,ClassData* data);
+	void ParsingFile(const std::string &path);
+	const std::string FindClass(const std::string &str);
+	NodeType FindClassType(const std::string &str, const std::string &class_name);
+	Attr *FindParam(const std::string &str,ClassData* data);
+	void SetBraceNum(const std::string &buff);
+	void ReadClass(const std::string &buff,std::ifstream &file, const std::string &path);
 private:
+	int m_nbraceNum = 0;
 };
 #endif // !READ_FILE_H_

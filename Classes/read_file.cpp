@@ -17,7 +17,7 @@ ReadFile::ReadFile()
 }
 
 #ifndef WIN32
-void ReadFile::OpenDoc(std::string filepath,FileList *doc)
+void ReadFile::OpenDoc(const std::string &filepath,FileList *doc)
 {
     DIR *dir;
     if(!(dir = opendir(filepath.c_str())))
@@ -59,14 +59,14 @@ void ReadFile::OpenDoc(std::string filepath,FileList *doc)
             {
                 auto path = filepath+d_ent->d_name;
                 doc->fileList.push_back(path);
-                ReadClass(path);
+				ParsingFile(path);
             }
         }
     }
     closedir(dir);
 }
 #else
-void ReadFile::OpenDoc(std::string filepath,FileList *doc)
+void ReadFile::OpenDoc(const std::string &filepath,FileList *doc)
 {
 	_finddata_t file;
 	auto path = filepath+"*.*";
@@ -93,7 +93,7 @@ void ReadFile::OpenDoc(std::string filepath,FileList *doc)
 				{
 					auto path = filepath+file.name;
 					doc->fileList.push_back(path);
-					ReadClass(path);
+					ParsingFile(path);
 				}
 			}
 		}
@@ -102,109 +102,109 @@ void ReadFile::OpenDoc(std::string filepath,FileList *doc)
 }
 #endif
 
-void ReadFile::ReadClass(std::string path)
+void ReadFile::ParsingFile(const std::string &path)
 {
 	char buff[1000];
 	std::ifstream file(path);
 	while(file)
 	{
 		file.getline(buff, 1000);
+		SetBraceNum(buff);
 		auto str = FindClass(buff);
-		if (str != "")
+		if (!str.empty())
 		{
-			auto type = FindClassType(buff,str);
-			if (type == NodeType::Error)
-			{
-				file.getline(buff, 1000);
-				type = FindClassType(buff,str);
-			}
-			if (type == NodeType::Error)
-				continue;
-
-			auto data = new ClassData();
-			auto fileName = Tools::FormPathToName(path);
-			data->filePath = path.substr(3, path.npos);
-			data->className = str;
-			data->type = type;
-			bool isPublic = false;
-			
-			while (file)
-			{
-				file.getline(buff, 1000);
-				if (strstr(buff, "public:"))
-					isPublic = true;
-				else if (strstr(buff, "private:") || strstr(buff, "protected:"))
-					isPublic = false;
-				if (isPublic)
-				{
-					auto new_attr = FindParam(buff, data);
-					if (new_attr)
-					{
-						if (data->attrList.find(new_attr->name) != data->attrList.end())
-						{
-							delete new_attr;
-							new_attr = nullptr;
-						}
-						else
-							data->attrList[new_attr->name] = new_attr;
-					}
-				}
-
-			}
-			FileManager::getSingleton().AddClassData(fileName, data);
+			ReadClass(str, file, path);
 		}
 	}
 	file.close();
 }
 
-std::string ReadFile::FindClass(char* str)
+void ReadFile::ReadClass(const std::string &str,std::ifstream &file,const std::string &path)
 {
-	if(strstr(str, "class"))
+	char buff[1000];
+	file.getline(buff, 1000);
+	SetBraceNum(buff);
+	auto type = FindClassType(buff, str);
+	if (type == NodeType::Error)
+		return;
+
+	auto data = new ClassData();
+	auto fileName = Tools::FormPathToName(path);
+	data->filePath = path.substr(3, path.npos);
+	data->className = str;
+	data->type = type;
+	bool isPublic = false;
+
+	while (file)
 	{
-		std::string buff = str;
-		std::regex re("class +([^ :]+) *:*");
-		std::match_results<std::string::const_iterator> result;
-		bool valid = std::regex_match(buff, result, re);
-		return result[1].str();
+		file.getline(buff, 1000);
+		SetBraceNum(buff);
+		if (m_nbraceNum == 0)
+			break;
+		if (strstr(buff, "public:"))
+			isPublic = true;
+		else if (strstr(buff, "private:") || strstr(buff, "protected:"))
+			isPublic = false;
+		if (isPublic)
+		{
+			auto new_attr = FindParam(buff, data);
+			if (new_attr)
+			{
+				if (data->attrList.find(new_attr->name) != data->attrList.end())
+				{
+					delete new_attr;
+					new_attr = nullptr;
+				}
+				else
+					data->attrList[new_attr->name] = new_attr;
+			}
+		}
+
 	}
-	return "";
+	FileManager::getSingleton().AddClassData(fileName, data);
 }
 
-NodeType ReadFile::FindClassType(char* str,std::string class_name)
+const std::string ReadFile::FindClass(const std::string &buff)
 {
-	if (strstr(str, "public "))
+	std::regex re("class +([^ :]+) *:*");
+	std::match_results<std::string::const_iterator> result;
+	bool valid = std::regex_match(buff, result, re);
+	if (valid)
+		return result[1].str();
+	else
+		return "";
+}
+
+NodeType ReadFile::FindClassType(const std::string &str, const std::string &class_name)
+{
+	if (str.find("BtCompositeNode") != str.npos)
 	{
-		if (strstr(str, "BtCompositeNode"))
-		{
-			if (class_name.find("BtSequenceNode") != class_name.npos)
-				return NodeType::Sequence;
-			else if (class_name.find("BtSelectorNode") != class_name.npos)
-				return NodeType::Selector;
-			else if (class_name.find("BtParallelNode") != class_name.npos)
-				return NodeType::Parallel;
-			else
-				return NodeType::Error;
-		}
-		else if (strstr(str, "ActionNode"))
-			return NodeType::Action;
-		else if (strstr(str, "ConditionNode"))
-			return NodeType::Condition;
-		else if (strstr(str, "DecorateNode"))
-			return NodeType::Decorate;
-		else if (strstr(str, "SequenceNode"))
+		if (class_name.find("BtSequenceNode") != class_name.npos)
 			return NodeType::Sequence;
-		else if (strstr(str, "SelectorNode"))
+		else if (class_name.find("BtSelectorNode") != class_name.npos)
 			return NodeType::Selector;
-		else if (strstr(str, "ParallelNode"))
+		else if (class_name.find("BtParallelNode") != class_name.npos)
 			return NodeType::Parallel;
 		else
 			return NodeType::Error;
 	}
+	else if (str.find("ActionNode") != str.npos)
+		return NodeType::Action;
+	else if (str.find("ConditionNode") != str.npos)
+		return NodeType::Condition;
+	else if (str.find("DecorateNode") != str.npos)
+		return NodeType::Decorate;
+	else if (str.find("SequenceNode") != str.npos)
+		return NodeType::Sequence;
+	else if (str.find("SelectorNode") != str.npos)
+		return NodeType::Selector;
+	else if (str.find("ParallelNode") != str.npos)
+		return NodeType::Parallel;
 	else
 		return NodeType::Error;
 }
 
-Attr *ReadFile::FindParam(std::string str,ClassData* data)
+Attr *ReadFile::FindParam(const std::string &str,ClassData* data)
 {
 	std::match_results<std::string::const_iterator> result;
 	std::string name;
@@ -238,20 +238,28 @@ Attr *ReadFile::FindParam(std::string str,ClassData* data)
 		auto attr = new Attr();
 		if (strstr(type.c_str(), "string"))
 		{
-			attr->type = AttrType::string;
+			attr->type = AttrType::String;
 		}
 		else if (strstr(type.c_str(), "bool"))
 		{
-			attr->type = AttrType::boolean;
+			attr->type = AttrType::Boolean;
 		}
 		else
 		{
-			attr->type = AttrType::number;
+			attr->type = AttrType::Number;
 		}
 		attr->name = name;
 		return attr;
 	}
 	return nullptr;
+}
+
+void ReadFile::SetBraceNum(const std::string &buff)
+{
+	if (buff.find("{") != std::string::npos)
+		++m_nbraceNum;
+	if (buff.find("}") != std::string::npos)
+		--m_nbraceNum;
 }
 
 ReadFile::~ReadFile()
