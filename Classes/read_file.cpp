@@ -11,6 +11,7 @@
 #include "Tools.h"
 #include "struct.h"
 #include "file_manager.h"
+#include "enum_manager.h"
 
 ReadFile::ReadFile()
 {
@@ -115,6 +116,11 @@ void ReadFile::ParsingFile(const std::string &path)
 		{
 			ReadClass(str, file, path);
 		}
+		str = FindEnum(buff);
+		if (!str.empty())
+		{
+			ReadEnum(str, file);
+		}
 	}
 	file.close();
 }
@@ -122,6 +128,7 @@ void ReadFile::ParsingFile(const std::string &path)
 void ReadFile::ReadClass(const std::string &str,std::ifstream &file,const std::string &path)
 {
 	char buff[1000];
+	auto break_num = m_nbraceNum;
 	file.getline(buff, 1000);
 	SetBraceNum(buff);
 	auto type = FindClassType(buff, str);
@@ -139,7 +146,7 @@ void ReadFile::ReadClass(const std::string &str,std::ifstream &file,const std::s
 	{
 		file.getline(buff, 1000);
 		SetBraceNum(buff);
-		if (m_nbraceNum == 0)
+		if (m_nbraceNum == break_num)
 			break;
 		if (strstr(buff, "public:"))
 			isPublic = true;
@@ -164,6 +171,33 @@ void ReadFile::ReadClass(const std::string &str,std::ifstream &file,const std::s
 	FileManager::getSingleton().AddClassData(fileName, data);
 }
 
+void ReadFile::ReadEnum(const std::string &str, std::ifstream &file)
+{
+	char buff[1000];
+	auto break_num = m_nbraceNum;
+	auto enum_data = new EnumData();
+	enum_data->name = str;
+	while (file)
+	{
+		file.getline(buff, 1000);
+		SetBraceNum(buff);
+		if (m_nbraceNum == break_num)
+			return;
+		// TODO: 
+		std::regex re("\\s(\\w+)\\W*(=\\W*([0-9]+))*,?");
+		std::match_results<std::string::const_iterator> result;
+		std::string str = buff;
+		bool valid = std::regex_match(str, result, re);
+		if (valid)
+		{
+			auto enum_type = result[1].str();
+			auto enum_value = result[3].str();
+			enum_data->PushValue(enum_type, enum_value);
+		}
+	}
+	FileManager::getSingleton().AddEnumData(enum_data);
+}
+
 const std::string ReadFile::FindClass(const std::string &buff)
 {
 	std::regex re("class +([^ :]+) *:*");
@@ -171,6 +205,17 @@ const std::string ReadFile::FindClass(const std::string &buff)
 	bool valid = std::regex_match(buff, result, re);
 	if (valid)
 		return result[1].str();
+	else
+		return "";
+}
+
+const std::string ReadFile::FindEnum(const std::string &buff)
+{
+	std::regex re("enum +(class)? *(\\w+) *\\{*");
+	std::match_results<std::string::const_iterator> result;
+	bool valid = std::regex_match(buff, result, re);
+	if (valid)
+		return result[2].str();
 	else
 		return "";
 }
@@ -209,49 +254,52 @@ Attr *ReadFile::FindParam(const std::string &str,ClassData* data)
 	std::match_results<std::string::const_iterator> result;
 	std::string name;
 	std::string type;
-	bool valid = false;
-	if (str.find("CC_SYNTHESIZE") != std::string::npos)
+	EClassFuncType eType = EClassFuncType::none;
+	std::vector<std::string> re_str = 
 	{
-		std::regex re(".*CC_SYNTHESIZE\\( *([a-zA-Z:]+) *,.*, *([a-zA-Z]+) *\\);");
-		valid = std::regex_match(str, result, re);
+		"\\W*CC_SYNTHESIZE\\( *([\\w:]+) *,.*, *(\\w+) *\\);?",
+		"\\W*CC_PROPERTY\\( *([\\w:]+) *,.*, *(\\w+) *\\);?",
+		".* +set([\\w]+)\\(\\w* *([\\w:^ ]+) +[^,]*\\);?",
+	};
+	for (int i=0;i>re_str.size();i++)
+	{
+		if (std::regex_match(str, result, std::regex(re_str[1])))
+		{
+			eType = (EClassFuncType)i;
+		}
+	}
+	switch (eType)
+	{
+	case ReadFile::EClassFuncType::synthesize:
 		name = result[2].str();
 		type = result[1].str();
-	}
-	else if (str.find("CC_PROPERTY") != std::string::npos)
-	{
-		std::regex re(".*CC_PROPERTY\\( *([a-zA-Z:]+) *,.*, *([a-zA-Z]+) *\\);");
-		valid = std::regex_match(str, result, re);
+		break;
+	case ReadFile::EClassFuncType::property:
 		name = result[2].str();
 		type = result[1].str();
-	}
-	else if (str.find("set") != std::string::npos)
-	{
-		std::regex re(".* +set([a-zA-Z]+)\\([^, ]* *([a-zA-Z:^ ]+) +[^,]*\\);?");
-		valid = std::regex_match(str, result, re);
+		break;
+	case ReadFile::EClassFuncType::set:
 		name = result[1].str();
 		type = result[2].str();
+		break;
+	default:
+		return nullptr;
+	}
+	auto attr = new Attr();
+	if (strstr(type.c_str(), "string"))
+	{
+		attr->type = AttrType::String;
+	}
+	else if (strstr(type.c_str(), "bool"))
+	{
+		attr->type = AttrType::Boolean;
 	}
 	else
-		return nullptr;
-	if (valid)
 	{
-		auto attr = new Attr();
-		if (strstr(type.c_str(), "string"))
-		{
-			attr->type = AttrType::String;
-		}
-		else if (strstr(type.c_str(), "bool"))
-		{
-			attr->type = AttrType::Boolean;
-		}
-		else
-		{
-			attr->type = AttrType::Number;
-		}
-		attr->name = name;
-		return attr;
+		attr->type = AttrType::Number;
 	}
-	return nullptr;
+	attr->name = name;
+	return attr;
 }
 
 void ReadFile::SetBraceNum(const std::string &buff)

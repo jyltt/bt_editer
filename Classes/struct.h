@@ -47,6 +47,26 @@ struct Attr
 	std::string name;
 	std::string str = "";
 };
+struct EnumData
+{
+	std::string name;
+	std::map<std::string, int> value;
+	void PushValue(const std::string &str, const std::string &value)
+	{
+		if (value.empty())
+		{
+			this->value[str] = ++lastNum;
+		}
+		else
+		{
+			auto num = atoi(value.c_str());
+			this->value[str] = num;
+			lastNum = num;
+		}
+	}
+private:
+	int lastNum=-1;
+};
 struct ClassData
 {
 	std::string filePath;
