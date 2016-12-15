@@ -40,11 +40,14 @@ struct Attr
 	{
 		type = data->type;
 		name = data->name;
+		strType = data->strType;
 		str = data->str;
 	}
 	Attr() {};
 	AttrType type = AttrType::Number;
 	std::string name;
+	std::string strType = "";
+	// value
 	std::string str = "";
 };
 struct EnumData

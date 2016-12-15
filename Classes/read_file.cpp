@@ -11,7 +11,6 @@
 #include "Tools.h"
 #include "struct.h"
 #include "file_manager.h"
-#include "enum_manager.h"
 
 ReadFile::ReadFile()
 {
@@ -182,7 +181,7 @@ void ReadFile::ReadEnum(const std::string &str, std::ifstream &file)
 		file.getline(buff, 1000);
 		SetBraceNum(buff);
 		if (m_nbraceNum == break_num)
-			return;
+			break;
 		// TODO: 
 		std::regex re("\\s(\\w+)\\W*(=\\W*([0-9]+))*,?");
 		std::match_results<std::string::const_iterator> result;
@@ -261,9 +260,9 @@ Attr *ReadFile::FindParam(const std::string &str,ClassData* data)
 		"\\W*CC_PROPERTY\\( *([\\w:]+) *,.*, *(\\w+) *\\);?",
 		".* +set([\\w]+)\\(\\w* *([\\w:^ ]+) +[^,]*\\);?",
 	};
-	for (int i=0;i>re_str.size();i++)
+	for (int i=0;i<re_str.size();i++)
 	{
-		if (std::regex_match(str, result, std::regex(re_str[1])))
+		if (std::regex_match(str, result, std::regex(re_str[i])))
 		{
 			eType = (EClassFuncType)i;
 		}
@@ -296,9 +295,16 @@ Attr *ReadFile::FindParam(const std::string &str,ClassData* data)
 	}
 	else
 	{
-		attr->type = AttrType::Number;
+		std::regex re("e|E[A-Z][A-Za-z0-9_]*");
+		std::match_results<std::string::const_iterator> result;
+		bool valid = std::regex_match(type, result, re);
+		if (valid)
+			attr->type = AttrType::Enum;
+		else
+			attr->type = AttrType::Number;
 	}
 	attr->name = name;
+	attr->strType = type;
 	return attr;
 }
 

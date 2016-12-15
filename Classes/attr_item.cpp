@@ -2,6 +2,7 @@
 #include "cocostudio/CocoStudio.h"
 #include <regex>
 #include "struct.h"
+#include "file_manager.h"
 
 AttrItem::AttrItem()
 {
@@ -16,6 +17,7 @@ AttrItem::AttrItem()
 	m_Check = (ui::CheckBox *)m_RootNode->getChildByName("check");
 	m_Check->addEventListener(CC_CALLBACK_2(AttrItem::onChangeCheckValue, this));
 	m_btnEnum = (ui::Button *)m_RootNode->getChildByName("enum");
+	m_btnEnum->addClickEventListener(CC_CALLBACK_1(AttrItem::onChangeEnum, this));
 }
 
 void AttrItem::SetAttr(Attr *attr)
@@ -66,6 +68,28 @@ void AttrItem::onChangeCheckValue(Ref *ref, ui::CheckBox::EventType type)
 	}
 }
 
+void AttrItem::onChangeEnum(Ref *ref)
+{
+	auto enumList = FileManager::getSingleton().GetEnumData(m_Attr->strType);
+	std::string str;
+	bool isFind = false;
+	CC_ASSERT(enumList);
+	for (auto value:enumList->value)
+	{
+		if (str.empty())
+			str = value.first;
+		if (isFind)
+		{
+			str = value.first;
+			break;
+		}
+		if (value.first==m_Attr->str)
+			isFind = true;
+	}
+	m_Attr->str = str;
+	m_btnEnum->setTitleText(str);
+}
+
 void AttrItem::UpdateInfo()
 {
 	m_Text->setString(m_Attr->name);
@@ -92,6 +116,11 @@ void AttrItem::UpdateInfo()
 		else
 			m_Check->setSelectedState(false);
 		break;
+	case AttrType::Enum:
+		m_bk->setVisible(false);
+		m_Check->setVisible(false);
+		m_btnEnum->setVisible(true);
+		m_btnEnum->setTitleText(m_Attr->str);
 	default:
 		break;
 	}

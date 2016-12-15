@@ -19,7 +19,7 @@ public:
 	ClassData* FindClassDataByPath(const std::string &name);
 	ClassData* FindClassDataByFileName(const std::string &name);
 	void AddEnumData(EnumData *data);
-	const EnumData &GetEnumData(const std::string &name);
+	const EnumData *GetEnumData(const std::string &name);
 protected:
 private:
 	FileList* m_DecTree;

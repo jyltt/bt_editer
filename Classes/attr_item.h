@@ -19,6 +19,7 @@ protected:
 	void UpdateInfo();
 	void onChangeValue(Ref *ref, ui::TextField::EventType type);
 	void onChangeCheckValue(Ref *ref, ui::CheckBox::EventType type);
+	void onChangeEnum(Ref *ref);
 
 	Attr *m_Attr;
 	ui::Text *m_Text;

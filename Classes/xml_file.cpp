@@ -55,6 +55,7 @@ tinyxml2::XMLNode* XmlFile::GetChild(BtNode* node)
 			auto n_attr = m_pDoc->NewElement("attr");
 			n_attr->SetAttribute("attr_name", attr.second->name.c_str());
 			n_attr->SetAttribute("attr_value", attr.second->str.c_str());
+			n_attr->SetAttribute("attr_type_str", attr.second->strType.c_str());
 			n_attr->SetAttribute("attr_type", (int)attr.second->type);
 			n_attrList->LinkEndChild(n_attr);
 		}
@@ -108,6 +109,7 @@ NodeInfo *XmlFile::CreateChild(tinyxml2::XMLElement* node)
 			auto a = new Attr();
 			a->name = attr.second->name;
 			a->str = attr.second->str;
+			a->strType = attr.second->strType;
 			a->type = (AttrType)attr.second->type;
 			_node->cd.attrList[a->name] = a;
 		}

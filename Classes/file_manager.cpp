@@ -57,7 +57,10 @@ void FileManager::AddEnumData(EnumData *data)
 	m_listEnum[data->name] = data;
 }
 
-const EnumData& FileManager::GetEnumData(const std::string &name)
+const EnumData* FileManager::GetEnumData(const std::string &name)
 {
-	return *(m_listEnum[name]);
+	if (m_listEnum.find(name)==m_listEnum.end())
+		return nullptr;
+	else
+		return m_listEnum[name];
 }
