@@ -52,6 +52,7 @@ def NodeAttrToStrs(node):
 		attrType = int(attr["type"]);
 		attrName = attr["name"];
 		attrValue = attr["value"];
+		attrEnumStr = attr["type_str"];
 		if attrValue != "":
 			if attrType == 0:#number
 				str += CreateLine(name+uuid+'->set'+attrName+'('+attrValue+');');
@@ -59,6 +60,8 @@ def NodeAttrToStrs(node):
 				str += CreateLine(name+uuid+'->set'+attrName+'("'+attrValue+'");');
 			elif attrType == 2:#bool
 				str += CreateLine(name+uuid+'->set'+attrName+'('+attrValue+');');
+			elif attrType == 3:#enum
+				str += CreateLine(name+uuid+'->set'+attrName+'('+attrEnumStr+"::"+attrValue+');');
 	return str;
 
 def NodeChildToStrs(node):

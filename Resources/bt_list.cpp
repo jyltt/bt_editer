@@ -2,20 +2,25 @@
 
 BTList::BTList()
 {
-	m_BtList["shengguxiaowu"] = 
-		[]()->BtParallelNode*{
+	m_SkillList["shengguxiaowu"] = 
+		[]()->SkillParallelNode*{
 			auto SkillParallelNode0 = BT_Create(SkillParallelNode, "SkillParallelNode");
 			SkillParallelNode0->setAbortType(EBTAbortType::none);
 			auto FL_ChoosePlayer1 = BT_Create(FL_ChoosePlayer, "FL_ChoosePlayer");
+			FL_ChoosePlayer1->setChosePerson(EChosePerson::Friend);
 			SkillParallelNode0->AddChild(FL_ChoosePlayer1);
 			auto FL_GetHandcard5 = BT_Create(FL_GetHandcard, "FL_GetHandcard");
+			FL_GetHandcard5->setCardAccessType(ECardAccessType::AssignCard);
+			FL_GetHandcard5->setStorageLocation(EStorageLocation::All);
 			SkillParallelNode0->AddChild(FL_GetHandcard5);
 			auto FL_ChoosePlayer3 = BT_Create(FL_ChoosePlayer, "FL_ChoosePlayer");
+			FL_ChoosePlayer3->setChosePerson(EChosePerson::Enemy);
 			SkillParallelNode0->AddChild(FL_ChoosePlayer3);
 			auto FL_GetHandcard6 = BT_Create(FL_GetHandcard, "FL_GetHandcard");
+			FL_GetHandcard6->setCardAccessType(ECardAccessType::AssignCard);
+			FL_GetHandcard6->setStorageLocation(EStorageLocation::All);
 			SkillParallelNode0->AddChild(FL_GetHandcard6);
 			return SkillParallelNode0;
-
 		};
 
 	m_BtList["btTree"] = 
@@ -27,9 +32,6 @@ BTList::BTList()
 			BtParallelNode1->AddChild(BtSequenceNode2);
 			auto FL_BeginRound3 = BT_Create(FL_BeginRound, "FL_BeginRound");
 			BtSequenceNode2->AddChild(FL_BeginRound3);
-			auto CL_Animation24 = BT_Create(CL_Animation, "CL_Animation");
-			CL_Animation24->setBeginAnimation("begin_round.csb");
-			BtSequenceNode2->AddChild(CL_Animation24);
 			auto BtSequenceNode4 = BT_Create(BtSequenceNode, "BtSequenceNode");
 			BtSequenceNode4->setAbortType(EBTAbortType::none);
 			BtParallelNode1->AddChild(BtSequenceNode4);
@@ -78,7 +80,6 @@ BTList::BTList()
 			auto FL_Running22 = BT_Create(FL_Running, "FL_Running");
 			BtSequenceNode19->AddChild(FL_Running22);
 			return BtParallelNode1;
-
 		};
 
 }

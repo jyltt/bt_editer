@@ -38,6 +38,7 @@ class FileRead:
 		attr["name"] = node.getAttribute("attr_name");
 		attr["value"] = node.getAttribute("attr_value");
 		attr["type"] = node.getAttribute("attr_type");
+		attr["type_str"] = node.getAttribute("attr_type_str");
 		return attr;
 
 	def GetRootNode(self):
